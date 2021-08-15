@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
 namespace SocialMediumForMusicians.Data.Models
 {
+    [Table("Users")]
     public class User
     {
         [Key]
@@ -22,15 +21,14 @@ namespace SocialMediumForMusicians.Data.Models
 
         public string Description { get; set; }
 
-        public List<Meeting> Meetings { get; set; }
+        public List<Meeting> HostedMeetings { get; set; }
 
-        [InverseProperty("Recipent")]
+        public List<Meeting> GuestMeetings { get; set; }
+
         public List<Message> InMessages { get; set; }
 
-        [InverseProperty("Author")]
         public List<Message> OutMessages { get; set; }
 
-        [InverseProperty("Author")]
         public List<Review> MyReviews { get; set; }
 
         public List<int> FavouriteMusiciansIds { get; set; }

@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMediumForMusicians.Data.Models
 {
+    [Table("Messages")]
     public class Message
     {
         [Key]
         [Required]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(User))]
         public int AuthorId { get; set; }
 
-        [ForeignKey(nameof(User))]
         public int RecipentId { get; set; }
 
         [Required]
