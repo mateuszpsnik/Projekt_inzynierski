@@ -57,6 +57,7 @@ namespace SocialMediumForMusicians.Data
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Musician> Musicians { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
     }

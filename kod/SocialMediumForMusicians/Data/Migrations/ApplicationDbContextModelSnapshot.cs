@@ -82,6 +82,27 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Justification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reports");
+                });
+
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -191,6 +212,17 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Navigation("Author");
 
                     b.Navigation("Recipent");
+                });
+
+            modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Report", b =>
+                {
+                    b.HasOne("SocialMediumForMusicians.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Review", b =>
