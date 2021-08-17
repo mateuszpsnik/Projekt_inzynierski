@@ -26,6 +26,9 @@ namespace SocialMediumForMusicians.Data
             modelBuilder.Entity<Musician>().Property(nameof(Musician.Instruments))
                 .HasConversion(splitStringConverter);
 
+            modelBuilder.Entity<User>().HasIndex(u => u.Email)
+                                       .IsUnique();
+
             modelBuilder.Entity<Meeting>().HasOne(m => m.Host)
                                           .WithMany(u => u.HostedMeetings)
                                           .HasForeignKey(m => m.HostId)

@@ -10,7 +10,7 @@ using SocialMediumForMusicians.Data;
 namespace SocialMediumForMusicians.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210816151719_Initial")]
+    [Migration("20210817172734_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,7 +145,7 @@ namespace SocialMediumForMusicians.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FavouriteMusiciansIds")
                         .HasColumnType("nvarchar(max)");
@@ -158,6 +158,9 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
