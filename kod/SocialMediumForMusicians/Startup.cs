@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using SocialMediumForMusicians.Data;
 
 namespace SocialMediumForMusicians
@@ -77,6 +78,9 @@ namespace SocialMediumForMusicians
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            // Log HTTP requests
+            app.UseSerilogRequestLogging();
         }
     }
 }
