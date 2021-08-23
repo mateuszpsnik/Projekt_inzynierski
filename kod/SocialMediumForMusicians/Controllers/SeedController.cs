@@ -48,7 +48,8 @@ namespace SocialMediumForMusicians.Controllers
                                             StringComparer.OrdinalIgnoreCase);
 
             var musicianA = new Musician() { Email = "aaa@bbb.com", Name = "Aaa", Price = 20.00M,
-                Instruments = new List<string>() { "Guitar", "Piano" }
+                Instruments = new List<string>() { "Guitar", "Piano" },
+                FavouriteMusiciansIds = new List<int>() { 1, 2, 3 }
             };
             var musicianB = new Musician() { Email = "bbb@ccc.com", Name = "Bbb", Price = 30.00M,
                 Instruments = new List<string>() { "Bass Guitar" }
@@ -156,6 +157,18 @@ namespace SocialMediumForMusicians.Controllers
             var reviews = new List<Review>() { review1, review2 };
 
             await context.Reviews.AddRangeAsync(reviews);
+
+            var guitar = new Instrument
+            {
+                Name = "Guitar"
+            };
+            var piano = new Instrument
+            {
+                Name = "Piano"
+            };
+            var instruments = new List<Instrument> { guitar, piano };
+
+            await context.Instruments.AddRangeAsync(instruments);
 
             await context.SaveChangesAsync();
 

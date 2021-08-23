@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialMediumForMusicians.Data.Models;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace SocialMediumForMusicians.Data
                                          .OnDelete(DeleteBehavior.NoAction);
         }
 
+        public DbSet<Instrument> Instruments { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Musician> Musicians { get; set; }

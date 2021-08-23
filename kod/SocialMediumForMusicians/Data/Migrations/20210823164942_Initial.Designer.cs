@@ -10,7 +10,7 @@ using SocialMediumForMusicians.Data;
 namespace SocialMediumForMusicians.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210817172734_Initial")]
+    [Migration("20210823164942_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,22 @@ namespace SocialMediumForMusicians.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Instrument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Instruments");
+                });
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Meeting", b =>
                 {
