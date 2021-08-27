@@ -35,128 +35,35 @@ namespace SocialMediumForMusicians.Controllers
                 throw new SecurityException("Seeding not allowed in the prod env.");
             }
 
-            int numOfMusiciansAdded = 0;
-            int numOfUsersAdded = 0;
-
-            // dictionary of musicians already existing in the database
-            var musiciansByEmail = context.Musicians.AsNoTracking()
-                                        .ToDictionary(m => m.Email,
-                                            StringComparer.OrdinalIgnoreCase);
-
-            var usersByEmail = context.Users.AsNoTracking()
-                                        .ToDictionary(u => u.Email,
-                                            StringComparer.OrdinalIgnoreCase);
-
-            var musicianA = new Musician() { Email = "aaa@bbb.com", Name = "Aaa", Price = 20.00M,
+            var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Aaa", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
-                FavouriteMusiciansIds = new List<int>() { 1, 2, 3 }
+                FavouriteMusiciansIds = new List<int>() { 2, 3 },
+                ProfilePicFilename = "default.png"
             };
-            var musicianB = new Musician() { Email = "bbb@ccc.com", Name = "Bbb", Price = 30.00M,
-                Instruments = new List<string>() { "Bass Guitar" }
+            var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Bbb", Price = 30.00M,
+                Instruments = new List<string>() { "Bass Guitar" },
+                ProfilePicFilename = "default.png"
             };
-            var musicianC = new Musician() { Email = "ccc@ddd.com", Name = "Ccc", Price = 40.00M,
+            var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Ccc", Price = 40.00M,
                 Instruments = new List<string>() { "Drums" }    
             };
-            var musicians = new List<Musician>() { musicianA, musicianB, musicianC };
-
-            foreach (var musician in musicians)
-            {
-                // skip if already in the database
-                if (musiciansByEmail.ContainsKey(musician.Email))
-                {
-                    continue;
-                }
-                // add the musician to the DB context
-                await context.Musicians.AddAsync(musician);
-
-                musiciansByEmail.Add(musician.Email, musician);
-                numOfMusiciansAdded++;
-            }
-            // save the musicians in the DB
-            if (numOfMusiciansAdded > 0)
-            {
-                await context.SaveChangesAsync();
-            }
-
-            var userD = new User() { Email = "ddd@eee.com", Name = "user",
-                    FavouriteMusiciansIds = new List<int>() { 1, 2 }
+            var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Aaa", Price = 20.00M,
+                Instruments = new List<string>() { "Guitar", "Piano" },
+                FavouriteMusiciansIds = new List<int>() { 1, 2, 3 },
+                ProfilePicFilename = "default.png"
             };
-            var users = new List<User>() { userD };
-
-            foreach (var user in users)
-            {
-                // skip if already in the database
-                if (usersByEmail.ContainsKey(user.Email))
-                {
-                    continue;
-                }
-                // add the user to the DB context
-                await context.Users.AddAsync(user);
-
-                usersByEmail.Add(user.Email, user);
-                numOfUsersAdded++;
-            }
-            // save the users in the DB
-            if (numOfUsersAdded > 0)
-            {
-                await context.SaveChangesAsync();
-            }
-
-            // retrieve Ids of musicians and user
-            int mAId = musiciansByEmail[musicianA.Email].Id;
-            int mBId = musiciansByEmail[musicianB.Email].Id;
-            int mCId = musiciansByEmail[musicianC.Email].Id;
-            int uDId = usersByEmail[userD.Email].Id;
-
-            var meeting1 = new Meeting()
-            {
-                Host = musicianA,
-                //HostId = mAId,
-                Guest = userD,
-                //GuestId = uDId,
-                StartTime = DateTime.Now.AddHours(1),
-                EndTime = DateTime.Now.AddHours(2),
-                Notes = "aaa"
+            var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Bbb", Price = 30.00M,
+                Instruments = new List<string>() { "Bass Guitar" },
+                ProfilePicFilename = "default.png"
             };
-            var meetings = new List<Meeting>() { meeting1 };
-
-            await context.Meetings.AddRangeAsync(meetings);
-
-            var message1 = new Message()
-            {
-                Author = musicianB,
-                //AuthorId = mBId,
-                Recipent = musicianC,
-                //RecipentId = mCId,
-                Content = "Hej",
-                Read = false,
-                SentAt = DateTime.Now
+            var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Ccc", Price = 40.00M,
+                Instruments = new List<string>() { "Drums" },
+                ProfilePicFilename = "default.png"
             };
-            var messages = new List<Message>() { message1 };
+            var musicians = new List<Musician>() { musician0, musician1, musician2, musician3,
+                    musician4, musician5};
 
-            await context.Messages.AddRangeAsync(messages);
-
-            var review1 = new Review()
-            {
-                Author = userD,
-                //AuthorId = uDId,
-                Target = musicianA,
-                //TargetId = mAId,
-                Rate = 5,
-                Description = "asdas"
-            };
-            var review2 = new Review()
-            {
-                Author = userD,
-                //AuthorId = uDId,
-                Target = musicianB,
-                //TargetId = mBId,
-                Rate = 4,
-                Description = "asda"
-            };
-            var reviews = new List<Review>() { review1, review2 };
-
-            await context.Reviews.AddRangeAsync(reviews);
+            await context.Musicians.AddRangeAsync(musicians);
 
             var guitar = new Instrument
             {
@@ -166,16 +73,45 @@ namespace SocialMediumForMusicians.Controllers
             {
                 Name = "Piano"
             };
-            var instruments = new List<Instrument> { guitar, piano };
+            var bass = new Instrument
+            {
+                Name = "Bass Guitar"
+            };
+            var drums = new Instrument
+            {
+                Name = "Drums"
+            };
+            var instruments = new List<Instrument> { guitar, piano, bass, drums };
 
             await context.Instruments.AddRangeAsync(instruments);
+
+            var review0 = new Review
+            {
+                Author = musician4,
+                Target = musician0,
+                Rate = 5
+            };
+            var review1 = new Review
+            {
+                Author = musician4,
+                Target = musician1,
+                Rate = 4
+            };
+            var review2 = new Review
+            {
+                Author = musician4,
+                Target = musician2,
+                Rate = 3
+            };
+            var reviews = new List<Review> { review0, review1, review2 };
+
+            await context.Reviews.AddRangeAsync(reviews);
 
             await context.SaveChangesAsync();
 
             return new JsonResult(new
             {
-                num_users = numOfUsersAdded + numOfMusiciansAdded,
-                num_musicians = numOfMusiciansAdded
+                result = "OK"
             });
         }
     }

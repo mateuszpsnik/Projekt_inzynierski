@@ -23,9 +23,11 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Musicians
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Musician>>> GetMusicians()
+        public async Task<ActionResult<PaginationApiResult<Musician>>> GetMusicians(
+            int pageIndex = 0, int pageSize = 3)
         {
-            return await _context.Musicians.ToListAsync();
+            return await PaginationApiResult<Musician>.CreateAsync(
+                _context.Musicians, pageIndex, pageSize);
         }
 
         // GET: api/Musicians/5
