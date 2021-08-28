@@ -6,7 +6,6 @@ import { FormGroup, FormControl } from "@angular/forms";
     selector: "app-home-form",
     templateUrl: "./home-form.component.html"
 })
-
 export class HomeFormComponent implements OnInit {
     // form model
     form: FormGroup;

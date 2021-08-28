@@ -1,22 +1,43 @@
-import { Component, Inject, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Musician } from "./musician";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Musician } from "../musician/musician";
+import { MusicianService, PaginationApiResult } from "../musician/musicians.service";
 
 @Component({
     selector: "app-musicians-list",
     templateUrl: "./musicians.component.html"
 })
-
 export class MusiciansComponent implements OnInit {
     public musicians: Musician[];
-
+    @ViewChild(MatPaginator)
+    private paginator: MatPaginator;
+    public defaultPageSize: number;
     constructor(
-        private http: HttpClient,
         private activatedRoute: ActivatedRoute,
-        @Inject("BASE_URL") private baseUrl: string) { }
+        private service: MusicianService) { }
 
     ngOnInit() {
-        console.log(this.activatedRoute.snapshot.queryParamMap.get("aaa"));
+        this.defaultPageSize = 3;
+
+        let pageEvent = new PageEvent();
+        // default page index
+        pageEvent.pageIndex = 0;
+        // default page size
+        pageEvent.pageSize = this.defaultPageSize;
+
+        // load musicians list
+        this.getElements(pageEvent);
+    }
+
+    getElements(event: PageEvent) {
+        this.service.getMusicians<PaginationApiResult<Musician>>(event.pageIndex,
+                event.pageSize)
+                    .subscribe(result => {
+            this.paginator.length = result.totalCount;
+            this.paginator.pageIndex = result.pageIndex;
+            this.paginator.pageSize = result.pageSize;
+            this.musicians = result.elements;
+        }, err => console.error(err));
     }
 }

@@ -1,1 +1,13 @@
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, dolor?
+<div class="container" [hidden]="!musicians">
+    <div class="row" *ngFor="let musician of musicians">
+        {{ musician.email }}
+    </div>
+</div>
+
+<mat-paginator
+    [hidden]="!musicians"
+    (page)="getElements($event)"
+    [pageSize]="defaultPageSize"
+    [pageSizeOptions]="[3, 5, 10]"
+    showFirstLastButtons>
+</mat-paginator>

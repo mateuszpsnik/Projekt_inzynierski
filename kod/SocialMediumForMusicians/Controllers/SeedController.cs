@@ -38,11 +38,11 @@ namespace SocialMediumForMusicians.Controllers
             var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Aaa", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 2, 3 },
-                ProfilePicFilename = "default.png"
+                ProfilePicFilename = "aaa.png"
             };
             var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Bbb", Price = 30.00M,
                 Instruments = new List<string>() { "Bass Guitar" },
-                ProfilePicFilename = "default.png"
+                ProfilePicFilename = "aaa.png"
             };
             var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Ccc", Price = 40.00M,
                 Instruments = new List<string>() { "Drums" }    
@@ -50,15 +50,13 @@ namespace SocialMediumForMusicians.Controllers
             var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Aaa", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 1, 2, 3 },
-                ProfilePicFilename = "default.png"
+                ProfilePicFilename = "aaa.png"
             };
             var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Bbb", Price = 30.00M,
-                Instruments = new List<string>() { "Bass Guitar" },
-                ProfilePicFilename = "default.png"
+                Instruments = new List<string>() { "Bass Guitar" }
             };
             var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Ccc", Price = 40.00M,
-                Instruments = new List<string>() { "Drums" },
-                ProfilePicFilename = "default.png"
+                Instruments = new List<string>() { "Drums" }
             };
             var musicians = new List<Musician>() { musician0, musician1, musician2, musician3,
                     musician4, musician5};
