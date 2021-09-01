@@ -1,7 +1,40 @@
 <div class="container" [hidden]="!musicians">
-    <div class="row" *ngFor="let musician of musicians">
-        {{ musician.email }}
-    </div>
+    <a href="#" class="row align-items-center text-dark text-decoration-none" *ngFor="let musician of musicians">
+        <div class="col-md-2">
+            <div *ngIf="musician.profilePicFilename; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+                <img src="{{ musician.profilePicFilename }}" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block mx-md-0"
+                    style="max-height: 300px;">
+            </ng-template>
+            <ng-template #elseBlock>
+                <img src="default.png" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block mx-md-0"
+                    style="max-height: 300px;">
+            </ng-template>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center justify-content-md-start">
+            <p class="fs-2 mx-2">{{ musician.name }}</p>
+        </div>
+        <div class="col-md-4 fw-light fs-4">
+            <div class="row my-2 text-center">
+                <div class="col">
+                    <span *ngFor="let instrument of musician.instruments; let i=index">
+                        {{ instrument }}<span 
+                            *ngIf="i < musician.instruments.length - 1">&#44; </span>
+                    </span>
+                </div>
+            </div>
+            <div class="row my-2 text-center">
+                <div class="col">{{ musician.price }} zł/h</div>
+                <div class="col" *ngIf="musician.avgScore > 0; else elseB">
+                    {{ musician.avgScore | number:"1.2" }}</div>
+                <ng-template #elseB>
+                    No reviews
+                </ng-template>
+            </div>
+        </div>
+    </a>        
 </div>
 
 <mat-paginator

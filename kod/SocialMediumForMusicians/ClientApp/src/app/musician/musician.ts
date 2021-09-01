@@ -6,4 +6,6 @@ export interface Musician {
     name: string;
     price: number;
     profilePicFilename: string;
+    instruments: string[];
+    avgScore: number;
 }

@@ -23,11 +23,21 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Musicians
         [HttpGet]
-        public async Task<ActionResult<PaginationApiResult<Musician>>> GetMusicians(
+        public async Task<ActionResult<PaginationApiResult<MusiciansListDTO>>> GetMusicians(
             int pageIndex = 0, int pageSize = 3)
         {
-            return await PaginationApiResult<Musician>.CreateAsync(
-                _context.Musicians, pageIndex, pageSize);
+            return await PaginationApiResult<MusiciansListDTO>.CreateAsync(
+                _context.Musicians.Select(m => new MusiciansListDTO()
+                {
+                    Id = m.Id,
+                    Email = m.Email,
+                    Name = m.Name,
+                    Price = m.Price,
+                    ProfilePicFilename = m.ProfilePicFilename,
+                    Instruments = m.Instruments,
+                    AvgScore = m.Reviews.Count != 0 ? 
+                                (from r in m.Reviews select r.Rate).Average() : 0
+                }).OrderByDescending(m => m.AvgScore), pageIndex, pageSize);
         }
 
         // GET: api/Musicians/5

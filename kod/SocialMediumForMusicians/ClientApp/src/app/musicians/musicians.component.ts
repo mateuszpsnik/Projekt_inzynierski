@@ -38,6 +38,7 @@ export class MusiciansComponent implements OnInit {
             this.paginator.pageIndex = result.pageIndex;
             this.paginator.pageSize = result.pageSize;
             this.musicians = result.elements;
+            console.log(this.musicians);
         }, err => console.error(err));
     }
 }
