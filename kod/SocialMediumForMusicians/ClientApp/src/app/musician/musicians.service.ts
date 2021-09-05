@@ -18,11 +18,23 @@ export class MusicianService {
         @Inject("BASE_URL") 
         private baseUrl: string) { }
 
-    getMusicians<PaginationApiResult>(pageIndex: number, pageSize: number)
+    getMusicians<PaginationApiResult>(pageIndex: number, pageSize: number,
+        type: number, instrument: string, minPrice: number, maxPrice: number,
+        minAvgScore: number)
             : Observable<PaginationApiResult> {
         let url = this.baseUrl + "api/Musicians/";
         let params = new HttpParams().set("pageIndex", pageIndex.toString())
-                                     .set("pageSize", pageSize.toString());
+                                     .set("pageSize", pageSize.toString())
+                                     .set("minPrice", minPrice.toString())
+                                     .set("maxPrice", maxPrice.toString())
+                                     .set("minAvgScore", minAvgScore.toString());
+        if (type !== null) {
+            params = params.append("type", type.toString());
+            console.log(type.toString());
+        }
+        if (instrument) {
+            params = params.append("instrument", instrument);
+        }
         return this.http.get<PaginationApiResult>(url, { params });
     }
 

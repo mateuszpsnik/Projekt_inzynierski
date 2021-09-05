@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 namespace SocialMediumForMusicians.Data.Models
 {
+    public enum MusicianType
+    {
+        Teacher,
+        Jamming, 
+        Session
+    }
+
     [Table("Musicians")]
     public class Musician : User
     {
@@ -16,5 +23,7 @@ namespace SocialMediumForMusicians.Data.Models
         public List<Review> Reviews { get; set; }
 
         public List<string> Instruments { get; set; }
+
+        public List<MusicianType> Types { get; set; }
     }
 }

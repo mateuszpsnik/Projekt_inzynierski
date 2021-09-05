@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialMediumForMusicians.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace SocialMediumForMusicians.Data
 {
@@ -21,11 +22,32 @@ namespace SocialMediumForMusicians.Data
             var splitIntConverter = new ValueConverter<List<int>, string>(
                 v => string.Join(";", v),
                 v => v.Split(new[] { ';' }).Select(int.Parse).ToList());
+            var splitEnumConverter = new ValueConverter<List<MusicianType>, string>(
+                v => string.Join(";", v.Select(e => e.ToString("D"))),
+                v => v.Split(new[] { ';' }).Select(e => Enum.Parse(typeof(MusicianType), e))
+                      .Cast<MusicianType>().ToList());
+
+            var stringComparer = new ValueComparer<List<string>>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToList());
+
+            var intComparer = new ValueComparer<List<int>>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToList());
+
+            var enumComparer = new ValueComparer<List<MusicianType>>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToList());
 
             modelBuilder.Entity<User>().Property(nameof(User.FavouriteMusiciansIds))
-                .HasConversion(splitIntConverter);
+                .HasConversion(splitIntConverter, intComparer);
             modelBuilder.Entity<Musician>().Property(nameof(Musician.Instruments))
-                .HasConversion(splitStringConverter);
+                .HasConversion(splitStringConverter, stringComparer);
+            modelBuilder.Entity<Musician>().Property(nameof(Musician.Types))
+                .HasConversion(splitEnumConverter, enumComparer);
 
             modelBuilder.Entity<User>().HasIndex(u => u.Email)
                                        .IsUnique();

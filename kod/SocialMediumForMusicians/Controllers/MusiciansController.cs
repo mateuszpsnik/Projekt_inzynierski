@@ -24,8 +24,11 @@ namespace SocialMediumForMusicians.Controllers
         // GET: api/Musicians
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<MusiciansListDTO>>> GetMusicians(
-            int pageIndex = 0, int pageSize = 3)
+            int pageIndex = 0, int pageSize = 3, int? type = null,
+            string instrument = null, decimal minPrice = 0.0M, decimal maxPrice = 1000.0M,
+            double minAvgScore = 0.0)
         {
+            // get elements from the database, filter and sort them
             return await PaginationApiResult<MusiciansListDTO>.CreateAsync(
                 _context.Musicians.Select(m => new MusiciansListDTO()
                 {
@@ -35,9 +38,10 @@ namespace SocialMediumForMusicians.Controllers
                     Price = m.Price,
                     ProfilePicFilename = m.ProfilePicFilename,
                     Instruments = m.Instruments,
-                    AvgScore = m.Reviews.Count != 0 ? 
+                    Types = m.Types,
+                    AvgScore = m.Reviews.Count != 0 ?
                                 (from r in m.Reviews select r.Rate).Average() : 0
-                }).OrderByDescending(m => m.AvgScore), pageIndex, pageSize);
+                }), pageIndex, pageSize, type, instrument, minPrice, maxPrice, minAvgScore);
         }
 
         // GET: api/Musicians/5

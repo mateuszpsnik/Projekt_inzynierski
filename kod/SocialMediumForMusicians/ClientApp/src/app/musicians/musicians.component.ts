@@ -13,12 +13,38 @@ export class MusiciansComponent implements OnInit {
     @ViewChild(MatPaginator)
     private paginator: MatPaginator;
     public defaultPageSize: number;
+    musicianType: number = null;
+    instrument: string = null;
+    minPrice: number = 0.0;
+    maxPrice: number = 1000.0;
+    avgScore: number = 0.0;
+
     constructor(
         private activatedRoute: ActivatedRoute,
         private service: MusicianService) { }
 
     ngOnInit() {
-        this.defaultPageSize = 3;
+        this.musicianType = parseInt(this.activatedRoute.snapshot.queryParamMap
+                                .get("type"));
+        if (isNaN(this.musicianType)) {
+            this.musicianType = null;
+        }
+        this.instrument = this.activatedRoute.snapshot.queryParamMap
+                                .get("instrument");
+        this.minPrice = +this.activatedRoute.snapshot.queryParamMap
+                                .get("minPrice");
+        this.maxPrice = +this.activatedRoute.snapshot.queryParamMap
+                                .get("maxPrice");
+        this.avgScore = +this.activatedRoute.snapshot.queryParamMap
+                                .get("minAvgScore");
+        this.defaultPageSize = parseInt(this.activatedRoute.snapshot.queryParamMap
+                                .get("pageSize"));
+        if (isNaN(this.defaultPageSize)) {
+            this.defaultPageSize = 3;
+        }
+        if (this.maxPrice == 0) {
+            this.maxPrice = 1000;
+        }      
 
         let pageEvent = new PageEvent();
         // default page index
@@ -32,7 +58,8 @@ export class MusiciansComponent implements OnInit {
 
     getElements(event: PageEvent) {
         this.service.getMusicians<PaginationApiResult<Musician>>(event.pageIndex,
-                event.pageSize)
+                event.pageSize, this.musicianType, this.instrument, this.minPrice,
+                this.maxPrice, this.avgScore)
                     .subscribe(result => {
             this.paginator.length = result.totalCount;
             this.paginator.pageIndex = result.pageIndex;

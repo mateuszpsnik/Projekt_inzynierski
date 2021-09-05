@@ -1,11 +1,51 @@
-<div class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="aaa">Aaa:</label><br>
-        <input type="text" id="aaa" formControlName="aaa" required
-            placeholder="Aaa..." class="form-control">
+<div class="form m-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" formControlName="btnradio" name="btnradio" id="btnradio1" value="0">
+        <label class="btn btn-outline-secondary" for="btnradio1">Do nauki</label>
+      
+        <input type="radio" class="btn-check" formControlName="btnradio" name="btnradio" id="btnradio2" value="1">
+        <label class="btn btn-outline-secondary" for="btnradio2">Do wspólnej gry</label>
+      
+        <input type="radio" class="btn-check" formControlName="btnradio" name="btnradio" id="btnradio3" value="2">
+        <label class="btn btn-outline-secondary" for="btnradio3">Sesyjny</label>
+      </div>
+    <div class="form-group" class="text-center mt-3">
+        <label for="instruments" class="fs-5">Instrument</label>
+        <select class="form-control" id="instruments" formControlName="instruments">
+            <option></option>
+            <option *ngFor="let instrument of options">{{ instrument.name }}</option> 
+        </select>
     </div>
-    <div class="form-group commands">
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row text-center">
+                    <span>Cena za godzinę</span>
+                </div>
+                <div class="row mt-1">
+                    <div class="col form-group d-flex justify-content-center align-items-center form-inline">
+                        <label class="fs-5" for="from">Od</label>
+                        <input class="form-control mx-2" type="number" id="from" formControlName="from">
+                        <label class="fs-5" for="to">Do</label>
+                        <input class="form-control mx-2" type="number" id="to" formControlName="to">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3 m-md-0 text-center">
+                <div class="row text-center">
+                    <span>Średnia ocen</span>
+                </div>
+                <div class="row mt-1">
+                    <div class="col form-group d-flex justify-content-center align-items-center form-inline">
+                        <label class="fs-5" for="avgScore">Od</label>
+                        <input class="form-control mx-2" type="number" id="avgScore" formControlName="avgScore">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group commands mt-3 d-flex justify-content-center">
         <button type="submit" (click)="onSubmit()"
-            class="btn btn-success">Aaa</button>
+            class="btn btn-secondary px-5">Szukaj</button>
     </div>
 </div>

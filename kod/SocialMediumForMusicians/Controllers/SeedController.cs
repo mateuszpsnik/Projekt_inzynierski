@@ -35,27 +35,30 @@ namespace SocialMediumForMusicians.Controllers
                 throw new SecurityException("Seeding not allowed in the prod env.");
             }
 
-            var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Aaa", Price = 20.00M,
+            var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Adam Przykładowy", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 2, 3 },
-                ProfilePicFilename = "aaa.png"
+                ProfilePicFilename = "aaa.png",
+                Types = new List<MusicianType> { MusicianType.Jamming }
             };
-            var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Bbb", Price = 30.00M,
+            var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Lorem Ipsum", Price = 30.00M,
                 Instruments = new List<string>() { "Bass Guitar" },
-                ProfilePicFilename = "aaa.png"
+                ProfilePicFilename = "aaa.png",
+                Types = new List<MusicianType> { MusicianType.Jamming, MusicianType.Session }
             };
-            var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Ccc", Price = 40.00M,
-                Instruments = new List<string>() { "Drums" }    
+            var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Adam Pierwszy", Price = 40.00M,
+                Instruments = new List<string>() { "Drums" }  ,
+                Types = new List<MusicianType> { MusicianType.Teacher, MusicianType.Session }
             };
-            var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Aaa", Price = 20.00M,
+            var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Adam Drugi", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 1, 2, 3 },
                 ProfilePicFilename = "aaa.png"
             };
-            var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Bbb", Price = 30.00M,
+            var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Adam Trzeci", Price = 30.00M,
                 Instruments = new List<string>() { "Bass Guitar" }
             };
-            var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Ccc", Price = 40.00M,
+            var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Adam Żyżyński", Price = 40.00M,
                 Instruments = new List<string>() { "Drums" }
             };
             var musicians = new List<Musician>() { musician0, musician1, musician2, musician3,
@@ -101,7 +104,13 @@ namespace SocialMediumForMusicians.Controllers
                 Target = musician2,
                 Rate = 3
             };
-            var reviews = new List<Review> { review0, review1, review2 };
+            var review3 = new Review
+            {
+                Author = musician4,
+                Target = musician1,
+                Rate = 3
+            };
+            var reviews = new List<Review> { review0, review1, review2, review3 };
 
             await context.Reviews.AddRangeAsync(reviews);
 

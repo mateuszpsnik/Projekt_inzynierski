@@ -192,6 +192,9 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<string>("Types")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Musicians");
                 });
 

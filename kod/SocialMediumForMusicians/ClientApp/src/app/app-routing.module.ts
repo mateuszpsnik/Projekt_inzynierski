@@ -5,7 +5,7 @@ import { MusiciansComponent } from "./musicians/musicians.component";
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'musicians', component: MusiciansComponent }
+    { path: 'Musicians', component: MusiciansComponent }
 ]
 
 @NgModule({

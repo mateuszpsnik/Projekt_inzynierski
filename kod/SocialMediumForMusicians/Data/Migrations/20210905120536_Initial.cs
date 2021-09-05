@@ -98,7 +98,8 @@ namespace SocialMediumForMusicians.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Instruments = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Instruments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Types = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
