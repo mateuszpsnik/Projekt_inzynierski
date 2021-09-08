@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 
-interface InstrumentItem {
+export interface InstrumentItem {
     id: number;
     name: string;
 }

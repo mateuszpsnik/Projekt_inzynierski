@@ -1,3 +1,107 @@
+<div class="text-center" [hidden]="musicians">Loading musicians...</div>
+
+<!-- Filtering/sorting -->
+<div class="container" [hidden]="!musicians">
+    <p class="d-flex justify-content-center">
+        <button class="btn btn-secondary px-5" type="button" (click)="isCollapsed = !isCollapsed" 
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseFilterSort">
+            Filtruj/sortuj
+        </button>
+    </p>
+    <div id="collapseFilterSort" [ngbCollapse]="isCollapsed">
+        <div class="container card card-body bg-light form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <span class="text-center fs-3">Filtruj</span>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <div class="btn-group-vertical w-100 p-2" role="group" aria-label="Choose musician type filter/sort button group">
+                                    <input type="radio" class="btn-check" formControlName="musicianTypeRadio" id="type1" value="0">
+                                    <label class="btn btn-outline-secondary" for="type1">Nauczyciel</label>
+                                  
+                                    <input type="radio" class="btn-check" formControlName="musicianTypeRadio" id="type2" value="1">
+                                    <label class="btn btn-outline-secondary" for="type2">Do wspólnej gry</label>
+                                  
+                                    <input type="radio" class="btn-check" formControlName="musicianTypeRadio" id="type3" value="2">
+                                    <label class="btn btn-outline-secondary" for="type3">Muzyk sesyjny</label>
+                                </div>
+                            </div>                            
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <div class="form-group w-100 p-2">
+                                    <label for="instrumentsList" class="fs-5">Instrument</label>
+                                    <select class="form-control mt-1" id="instrumentsList" formControlName="instrumentsList">
+                                        <option></option>
+                                        <option *ngFor="let instrument of options">{{ instrument.name }}</option> 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <div class="row text-center">
+                                    <span>Cena za godzinę</span>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col form-group d-flex justify-content-center align-items-center form-inline">
+                                        <label class="fs-5" for="min">Od</label>
+                                        <input class="form-control mx-2" type="number" id="min" formControlName="min">
+                                        <label class="fs-5" for="max">Do</label>
+                                        <input class="form-control mx-2" type="number" id="max" formControlName="max">
+                                    </div>
+                                </div>
+                            </div>    
+                            <div class="col-md-6">
+                                <div class="row text-center">
+                                    <span>Średnia ocen</span>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col form-group d-flex justify-content-center align-items-center form-inline">
+                                        <label class="fs-5" for="avg">Od</label>
+                                        <input class="form-control mx-2" type="number" id="avg" formControlName="avg">
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <span class="text-center fs-3">Sortuj</span>
+                    </div>
+                    <div class="row mt-3 mx-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="sortRadio" id="sort1" value="0">
+                            <label class="form-check-label" for="sort1">Ocena: malejąco</label>
+                        </div>
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="radio" formControlName="sortRadio" id="sort2" value="1">
+                            <label class="form-check-label" for="sort2">Ocena: rosnąco</label>
+                        </div>
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="radio" formControlName="sortRadio" id="sort3" value="2">
+                            <label class="form-check-label" for="sort3">Cena: rosnąco</label>
+                        </div>
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="radio" formControlName="sortRadio" id="sort4" value="3">
+                            <label class="form-check-label" for="sort4">Cena: malejąco</label>
+                        </div>
+                        <div class="form-check mt-1">
+                            <input class="form-check-input" type="radio" formControlName="sortRadio" id="sort5" value="4">
+                            <label class="form-check-label" for="sort5">Alfabetycznie</label>
+                        </div>
+                    </div>
+                    <div class="form-group commands mt-3 d-flex justify-content-center">
+                        <button type="submit" (click)="onSubmit()"
+                            class="btn btn-outline-secondary px-5">Zastosuj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- List -->
 <div class="container" [hidden]="!musicians">
     <a href="#" class="row align-items-center text-dark text-decoration-none" *ngFor="let musician of musicians">
         <div class="col-md-2">
@@ -37,6 +141,7 @@
     </a>        
 </div>
 
+<!-- Paginator -->
 <mat-paginator
     [hidden]="!musicians"
     (page)="getElements($event)"

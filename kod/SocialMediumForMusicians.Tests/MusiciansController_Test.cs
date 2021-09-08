@@ -57,7 +57,7 @@ namespace SocialMediumForMusicians.Tests
                 var m1 = new Musician()
                 {
                     Email = "example@aaa.com",
-                    Name = "Example",
+                    Name = "Aaa",
                     Price = 10.03M,
                     Types = new List<MusicianType>() { MusicianType.Jamming, 
                         MusicianType.Session, MusicianType.Teacher },
@@ -66,7 +66,7 @@ namespace SocialMediumForMusicians.Tests
                 var m2 = new Musician()
                 {
                     Email = "example1@aaa.com",
-                    Name = "Example1",
+                    Name = "Bbb",
                     Price = 20.03M,
                     Types = new List<MusicianType>() { MusicianType.Jamming },
                     Instruments = new List<string>() { "Guitar", "Bass Guitar", "Drums" }
@@ -74,7 +74,7 @@ namespace SocialMediumForMusicians.Tests
                 var m3 = new Musician()
                 {
                     Email = "example2@aaa.com",
-                    Name = "Example2",
+                    Name = "Ccc",
                     Price = 20.03M,
                     Types = new List<MusicianType>() { MusicianType.Teacher },
                     Instruments = new List<string>() { "Drums" }
@@ -82,7 +82,7 @@ namespace SocialMediumForMusicians.Tests
                 var m4 = new Musician()
                 {
                     Email = "example3@aaa.com",
-                    Name = "Example3",
+                    Name = "Ddd",
                     Price = 40.03M
                 };
                 context.AddRange(new List<Musician>() { m1, m2, m3, m4 });
@@ -111,6 +111,7 @@ namespace SocialMediumForMusicians.Tests
             }
 
             PaginationApiResult<MusiciansListDTO> result;
+
             PaginationApiResult<MusiciansListDTO> resultSession;
             PaginationApiResult<MusiciansListDTO> resultJamming;
             PaginationApiResult<MusiciansListDTO> resultTeacher;
@@ -121,11 +122,19 @@ namespace SocialMediumForMusicians.Tests
             PaginationApiResult<MusiciansListDTO> resultAvgAbove45;
             PaginationApiResult<MusiciansListDTO> resultTeacherDrumsMoreThan15;
 
+            PaginationApiResult<MusiciansListDTO> resultAlphabetically;
+            PaginationApiResult<MusiciansListDTO> resultScoreAsc;
+            PaginationApiResult<MusiciansListDTO> resultScoreDsc;
+            PaginationApiResult<MusiciansListDTO> resultPriceAsc;
+            PaginationApiResult<MusiciansListDTO> resultPriceDsc;
+
             // Act
             using (var context = new ApplicationDbContext(options))
             {
                 var controller = new MusiciansController(context);
+
                 result = (await controller.GetMusicians(pageIndex: 0, pageSize: 2)).Value;
+
                 resultSession = (await controller.GetMusicians(pageIndex: 0, pageSize: 3, type: 2)).Value;
                 resultJamming = (await controller.GetMusicians(type: 1)).Value;
                 resultTeacher = (await controller.GetMusicians(type: 0)).Value;
@@ -137,6 +146,12 @@ namespace SocialMediumForMusicians.Tests
                 resultAvgAbove45 = (await controller.GetMusicians(minAvgScore: 4.5)).Value;
                 resultTeacherDrumsMoreThan15 = (await controller.GetMusicians(minPrice: 15,
                     instrument: "Drums", type: 0)).Value;
+
+                resultAlphabetically = (await controller.GetMusicians(sort: 4)).Value;
+                resultScoreAsc = (await controller.GetMusicians(sort: 1)).Value;
+                resultScoreDsc = (await controller.GetMusicians(sort: 0)).Value;
+                resultPriceAsc = (await controller.GetMusicians(sort: 2)).Value;
+                resultPriceDsc = (await controller.GetMusicians(sort: 3)).Value;
             }
 
             // Assert
@@ -156,6 +171,13 @@ namespace SocialMediumForMusicians.Tests
             Assert.Equal(2, resultBetween15And25.Elements.Count);
             Assert.Single(resultAvgAbove45.Elements);
             Assert.Single(resultTeacherDrumsMoreThan15.Elements);
+
+            // Sorting
+            Assert.Equal("Aaa", resultAlphabetically.Elements[0].Name);
+            Assert.Equal(0, resultScoreAsc.Elements[0].AvgScore);
+            Assert.Equal(5, resultScoreDsc.Elements[0].AvgScore);
+            Assert.Equal(10.03M, resultPriceAsc.Elements[0].Price);
+            Assert.Equal(40.03M, resultPriceDsc.Elements[0].Price);
         }
     }
 }

@@ -11,6 +11,7 @@ import { MusiciansComponent } from './musicians/musicians.component';
 import { HomeFormComponent } from './home-form/home-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AngularMaterialModule } from './angular-material.module';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgbModule,
     BrowserAnimationsModule,
     AngularMaterialModule
   ],

@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SocialMediumForMusicians.Controllers;
 using SocialMediumForMusicians.Data.Models;
 
 namespace SocialMediumForMusicians.Data
 {
+    public enum SortMusicians
+    {
+        ByAvgScoreDesc,
+        ByAvgScoreAsc,
+        ByPriceAsc,
+        ByPriceDesc,
+        Alphabetically
+    }
+
     public class PaginationApiResult<T>
     {
         public List<T> Elements { get; set; }
@@ -39,7 +49,7 @@ namespace SocialMediumForMusicians.Data
         public static async Task<PaginationApiResult<MusiciansListDTO>> CreateAsync(
             IQueryable<MusiciansListDTO> srcElements, int pageIndex, int pageSize,
             int? type = null, string instrument = null, decimal minPrice = 0.0M, 
-            decimal maxPrice = 1000.0M, double minAvgScore = 0.0)
+            decimal maxPrice = 1000.0M, double minAvgScore = 0.0, int sort = 0)
         {
             // get all elements
             List<MusiciansListDTO> elements = await srcElements.ToListAsync();
@@ -64,8 +74,36 @@ namespace SocialMediumForMusicians.Data
             int totalCount = elements.Count;
 
             // sort
-            elements = elements.OrderByDescending(m => m.AvgScore).ToList();
-                        
+            switch ((SortMusicians)sort)
+            {
+                case SortMusicians.ByAvgScoreDesc:
+                    elements = elements.OrderByDescending(m => m.AvgScore)
+                                       .ThenBy(m => m.Price)
+                                       .ThenBy(m => m.Name).ToList();
+                    break;
+                case SortMusicians.ByAvgScoreAsc:
+                    elements = elements.OrderBy(m => m.AvgScore)
+                                       .ThenBy(m => m.Price)
+                                       .ThenBy(m => m.Price).ToList();
+                    break;
+                case SortMusicians.ByPriceAsc:
+                    elements = elements.OrderBy(m => m.Price)
+                                       .ThenByDescending(m => m.AvgScore)
+                                       .ThenBy(m => m.Name).ToList();
+                    break;
+                case SortMusicians.ByPriceDesc:
+                    elements = elements.OrderByDescending(m => m.Price)
+                                       .ThenByDescending(m => m.AvgScore)
+                                       .ThenBy(m => m.Name).ToList();
+                    break;
+                case SortMusicians.Alphabetically:
+                default:
+                    elements = elements.OrderBy(m => m.Name)
+                                       .ThenByDescending(m => m.AvgScore)
+                                       .ThenBy(m => m.Price).ToList();
+                    break;
+            }
+
             // pagination
             elements = elements.Skip(pageIndex * pageSize)
                                .Take(pageSize).ToList();

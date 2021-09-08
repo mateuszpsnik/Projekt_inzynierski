@@ -20,14 +20,15 @@ export class MusicianService {
 
     getMusicians<PaginationApiResult>(pageIndex: number, pageSize: number,
         type: number, instrument: string, minPrice: number, maxPrice: number,
-        minAvgScore: number)
+        minAvgScore: number, sort: number)
             : Observable<PaginationApiResult> {
         let url = this.baseUrl + "api/Musicians/";
         let params = new HttpParams().set("pageIndex", pageIndex.toString())
                                      .set("pageSize", pageSize.toString())
                                      .set("minPrice", minPrice.toString())
                                      .set("maxPrice", maxPrice.toString())
-                                     .set("minAvgScore", minAvgScore.toString());
+                                     .set("minAvgScore", minAvgScore.toString())
+                                     .set("sort", sort.toString());
         if (type !== null) {
             params = params.append("type", type.toString());
             console.log(type.toString());
