@@ -23,9 +23,26 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Reviews
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
+        public async Task<ActionResult<IEnumerable<ReviewsListDTO>>> GetReviews(
+            int? top = null)
         {
-            return await _context.Reviews.ToListAsync();
+            var elements = _context.Reviews.Select(r => new ReviewsListDTO()
+            {
+                Id = r.Id,
+                Rate = r.Rate,
+                Description = r.Description,
+                AuthorName = r.Author.Name,
+                AuthorProfilePicFilename = r.Author.ProfilePicFilename,
+                TargetId = r.TargetId,
+                TargetProfilePicFilename = r.Target.ProfilePicFilename
+            }).OrderByDescending(r => r.Id);
+
+            if (top.HasValue)
+            {
+                elements = (IOrderedQueryable<ReviewsListDTO>)elements.Take((int)top);
+            }
+
+            return await elements.ToListAsync();
         }
 
         // GET: api/Reviews/5

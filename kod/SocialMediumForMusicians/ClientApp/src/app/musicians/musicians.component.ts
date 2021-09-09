@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Musician } from "../musician/musician";
-import { MusicianService, PaginationApiResult } from "../musician/musicians.service";
+import { MusicianService, PaginationApiResult } from "../musician/musician.service";
 import { InstrumentItem } from "../home-form/home-form.component";
 import { HttpClient } from "@angular/common/http";
 
@@ -108,7 +108,6 @@ export class MusiciansComponent implements OnInit {
             this.paginator.pageIndex = result.pageIndex;
             this.paginator.pageSize = result.pageSize;
             this.musicians = result.elements;
-            console.log(this.musicians);
         }, err => console.error(err));
     }
 

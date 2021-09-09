@@ -9,9 +9,11 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { MusiciansComponent } from './musicians/musicians.component';
 import { HomeFormComponent } from './home-form/home-form.component';
+import { ReviewsWidgetComponent } from './reviews-widget/reviews-widget.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavMenuComponent,
     HomeComponent,
     MusiciansComponent,
-    HomeFormComponent
+    HomeFormComponent,
+    ReviewsWidgetComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,7 +32,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

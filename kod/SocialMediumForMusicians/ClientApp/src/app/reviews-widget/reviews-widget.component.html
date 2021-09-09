@@ -1,0 +1,26 @@
+<div class="container bg-light border border-secondary rounded" 
+        style="border-width: 3px !important;">
+    <div class="row">
+        <span class="text-center fs-4 fw-light mt-3">Najnowsze oceny</span>
+    </div>
+    <a href="#" class="row align-items-center my-3" *ngFor="let review of reviews">
+        <div class="col-4">
+            <div *ngIf="review.targetProfilePicFilename; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+                <img src="{{ review.targetProfilePicFilename }}" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block"
+                    style="max-height: 100px;">
+            </ng-template>
+            <ng-template #elseBlock>
+                <img src="default.png" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block"
+                    style="max-height: 100px;">
+            </ng-template>
+        </div>
+        <div class="col-8">
+            <span *ngFor="let i of [].constructor(review.rate)">
+                <fa-icon class="text-primary" [icon]="faStar"></fa-icon>
+            </span>
+        </div>
+    </a>
+</div>
