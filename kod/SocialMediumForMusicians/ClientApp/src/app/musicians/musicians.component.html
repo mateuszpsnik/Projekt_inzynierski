@@ -102,8 +102,8 @@
 </div>
 
 <!-- List -->
-<div class="container" [hidden]="!musicians">
-    <a href="#" class="row align-items-center text-dark text-decoration-none" *ngFor="let musician of musicians">
+<div class="container mt-4" [hidden]="!musicians">
+    <a href="#" class="row align-items-center text-dark text-decoration-none border" *ngFor="let musician of musicians">
         <div class="col-md-2">
             <div *ngIf="musician.profilePicFilename; then thenBlock; else elseBlock"></div>
             <ng-template #thenBlock>

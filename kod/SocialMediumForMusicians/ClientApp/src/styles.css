@@ -15,5 +15,18 @@ code {
   border-color: #1861ac;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%; position: relative; }
+body { margin: 0; padding-bottom: 100px; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* footer at the bottom of the page */
+app-root {
+  min-height: 100%;
+  display: block;
+}
+
+app-footer {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  width: 100%;
+}

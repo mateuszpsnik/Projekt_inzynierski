@@ -1,4 +1,5 @@
-<div class="form m-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+<div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
+        [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="btn-group d-flex justify-content-center" role="group" aria-label="Choose musician type button group">
         <input type="radio" class="btn-check" formControlName="btnradio" name="btnradio" id="btnradio1" value="0">
         <label class="btn btn-outline-secondary" for="btnradio1">Do nauki</label>
@@ -11,7 +12,7 @@
     </div>
     <div class="form-group text-center mt-3">
         <label for="instruments" class="fs-5">Instrument</label>
-        <select class="form-control" id="instruments" formControlName="instruments">
+        <select class="form-control mt-1" id="instruments" formControlName="instruments">
             <option></option>
             <option *ngFor="let instrument of options">{{ instrument.name }}</option> 
         </select>
@@ -44,8 +45,8 @@
             </div>
         </div>
     </div>
-    <div class="form-group commands mt-3 d-flex justify-content-center">
+    <div class="form-group commands mt-4 d-flex justify-content-center">
         <button type="submit" (click)="onSubmit()"
-            class="btn btn-secondary px-5">Szukaj</button>
+            class="btn btn-outline-primary px-5">Szukaj</button>
     </div>
 </div>

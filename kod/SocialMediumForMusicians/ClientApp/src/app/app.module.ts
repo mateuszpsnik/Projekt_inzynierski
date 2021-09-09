@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { MusiciansComponent } from './musicians/musicians.component';
 import { HomeFormComponent } from './home-form/home-form.component';
 import { ReviewsWidgetComponent } from './reviews-widget/reviews-widget.component';
+import { SignupWidgetComponent } from './signup-widget/signup-widget.component';
+import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +24,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HomeComponent,
     MusiciansComponent,
     HomeFormComponent,
-    ReviewsWidgetComponent
+    ReviewsWidgetComponent,
+    SignupWidgetComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
