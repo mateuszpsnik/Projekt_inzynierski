@@ -23,8 +23,8 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Reviews
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReviewsListDTO>>> GetReviews(
-            int? top = null)
+        public async Task<ActionResult<PaginationApiResult<ReviewsListDTO>>> GetReviews(
+            int? top = null, int? id = null, int pageIndex = 0, int pageSize = 3)
         {
             var elements = _context.Reviews.Select(r => new ReviewsListDTO()
             {
@@ -39,10 +39,17 @@ namespace SocialMediumForMusicians.Controllers
 
             if (top.HasValue)
             {
+                pageSize = (int)top;
                 elements = (IOrderedQueryable<ReviewsListDTO>)elements.Take((int)top);
             }
 
-            return await elements.ToListAsync();
+            if (id.HasValue)
+            {
+                elements = (IOrderedQueryable<ReviewsListDTO>)elements.Where(r => r.TargetId == id);
+            }
+
+            return await PaginationApiResult<ReviewsListDTO>.CreateAsync(
+                elements, pageIndex, pageSize);
         }
 
         // GET: api/Reviews/5

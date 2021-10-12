@@ -19,30 +19,59 @@ namespace SocialMediumForMusicians.Tests
 
             using (var context = new ApplicationDbContext(options))
             {
-                context.Add(new Musician()
+                var m1 = new Musician()
                 {
-                    Id = 11,
+                    Id = 115,
                     Email = "example@aaa.com",
-                    Name = "Example",
-                    Price = 20.03M
-                });
+                    Name = "Aaa",
+                    Price = 10.03M,
+                    Types = new List<MusicianType>() { MusicianType.Jamming,
+                        MusicianType.Session, MusicianType.Teacher },
+                    Instruments = new List<string>() { "Drums" }
+                };
+                var m4 = new Musician()
+                {
+                    Id = 221,
+                    Email = "example3@aaa.com",
+                    Name = "Ddd",
+                    Price = 40.03M
+                };
+                context.AddRange(new List<Musician>() { m1, m4 });
+
+                var r1 = new Review()
+                {
+                    Author = m4,
+                    Target = m1,
+                    Rate = 4
+                };
+                var r2 = new Review()
+                {
+                    Author = m4,
+                    Target = m1,
+                    Rate = 4
+                };
+                var r3 = new Review()
+                {
+                    Author = m4,
+                    Target = m1,
+                    Rate = 5
+                };
+                context.AddRange(new List<Review>() { r1, r2, r3 });
                 context.SaveChanges();
             }
 
-            Musician existing = null;
-            Musician notExisting = null;
+            MusicianDTO musician;
 
             // Act
             using (var context = new ApplicationDbContext(options))
             {
                 var controller = new MusiciansController(context);
-                existing = (await controller.GetMusician(11)).Value;
-                notExisting = (await controller.GetMusician(0)).Value;
+                musician = (await controller.GetMusician(id: 115)).Value;
             }
 
             // Assert
-            Assert.NotNull(existing);
-            Assert.Null(notExisting);
+            Assert.Equal(4, musician.FullStars);
+            Assert.True(musician.HalfStar);
         }
 
         [Fact]

@@ -1,0 +1,17 @@
+<div class="text-center" [hidden]="reviews">Loading reviews...</div>
+
+<!-- List -->
+<div class="container mt-4" [hidden]="!reviews">
+    <div class="row align-items-center text-dark text-decoration-none border" *ngFor="let review of reviews">
+        {{ review.rate }}
+    </div>
+</div>
+
+<!-- Paginator -->
+<mat-paginator
+    [hidden]="!musicians"
+    (page)="getElements($event)"
+    [pageSize]="defaultPageSize"
+    [pageSizeOptions]="[3, 5, 10]"
+    showFirstLastButtons>
+</mat-paginator>

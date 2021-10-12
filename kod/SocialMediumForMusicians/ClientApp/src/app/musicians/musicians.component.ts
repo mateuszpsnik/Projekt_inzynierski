@@ -1,4 +1,4 @@
-import { Component, Inject, NgModule, OnInit, ViewChild } from "@angular/core";
+import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
@@ -17,7 +17,7 @@ export class MusiciansComponent implements OnInit {
     form: FormGroup;
     options: Array<InstrumentItem>;
     musicianType: number = null;
-    instrument: string = null;
+    @Input() instrument: string = null;
     minPrice: number = 0.0;
     maxPrice: number = 1000.0;
     avgScore: number = 0.0;
@@ -50,8 +50,10 @@ export class MusiciansComponent implements OnInit {
         if (isNaN(this.musicianType)) {
             this.musicianType = null;
         }
-        this.instrument = this.activatedRoute.snapshot.queryParamMap
-                                .get("instrument");
+        if (this.instrument == null) {
+            this.instrument = this.activatedRoute.snapshot.queryParamMap
+                                  .get("instrument");
+        }
         this.minPrice = +this.activatedRoute.snapshot.queryParamMap
                                 .get("minPrice");
         this.maxPrice = +this.activatedRoute.snapshot.queryParamMap

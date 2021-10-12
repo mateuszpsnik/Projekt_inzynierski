@@ -23,7 +23,7 @@ export class ReviewsWidgetComponent implements OnInit {
 
     getReviews() {
         this.service.getReviews(this.top).subscribe(result => {
-            this.reviews = result
+            this.reviews = result.elements;
         }, err => console.error(err));
     }
 }

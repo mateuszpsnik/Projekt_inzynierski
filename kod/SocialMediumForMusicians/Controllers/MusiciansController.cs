@@ -47,9 +47,20 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Musicians/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Musician>> GetMusician(int id)
+        public async Task<ActionResult<MusicianDTO>> GetMusician(int id)
         {
-            var musician = await _context.Musicians.FindAsync(id);
+            var musician = await _context.Musicians.Select(m => new MusicianDTO()
+            {
+                Id = m.Id,
+                Name = m.Name,
+                ProfilePicFilename = m.ProfilePicFilename,
+                ShortDescription = m.Description,
+                LongDescription = m.LongDescription,
+                Price = m.Price,
+                Instruments = m.Instruments,
+                AvgScore = m.Reviews.Count != 0 ?
+                                (from r in m.Reviews select r.Rate).Average() : 0
+            }).Where(m => m.Id == id).FirstAsync();
 
             if (musician == null)
             {

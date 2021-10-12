@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Review } from "./review";
+import { PaginationApiResult } from "../musician/musician.service";
 
 @Injectable({ providedIn: "root" })
 export class ReviewService {
@@ -10,11 +11,20 @@ export class ReviewService {
         @Inject("BASE_URL")
         private baseUrl: string) { }
 
-    getReviews(top: number) : Observable<Array<Review>> {
+    getReviews(top: number) : Observable<PaginationApiResult<Review>> {
         let url = this.baseUrl + "api/Reviews/";
         let params = new HttpParams().set("top", top.toString());
 
-        return this.http.get<Array<Review>>(url, { params });
+        return this.http.get<PaginationApiResult<Review>>(url, { params });
+    }
+
+    getReviewsList(id: number, pageIndex: number, pageSize: number)
+            : Observable<PaginationApiResult<Review>> {
+        let url = this.baseUrl + "api/Reviews/";
+        let params = new HttpParams().set("id", id.toString())
+                                     .set("pageIndex", id.toString())
+                                     .set("pageSize", pageSize.toString());
+        return this.http.get<PaginationApiResult<Review>>(url, { params });
     }
 
     get(id): Observable<Review> {
