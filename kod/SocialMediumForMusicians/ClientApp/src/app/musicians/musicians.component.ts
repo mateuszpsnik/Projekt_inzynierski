@@ -18,6 +18,7 @@ export class MusiciansComponent implements OnInit {
     options: Array<InstrumentItem>;
     musicianType: number = null;
     @Input() instrument: string = null;
+    @Input() musicianId: number = null;
     minPrice: number = 0.0;
     maxPrice: number = 1000.0;
     avgScore: number = 0.0;
