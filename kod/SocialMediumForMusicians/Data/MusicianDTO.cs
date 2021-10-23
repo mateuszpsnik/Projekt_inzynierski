@@ -16,7 +16,8 @@ namespace SocialMediumForMusicians.Data
         public List<string> Instruments { get; set; }
         public double AvgScore { get; set; }
         public int FullStars => (int)Math.Round(AvgScore, 3, MidpointRounding.AwayFromZero);
-        // when AvgScore's fractional part is less than 0.5, then show a half star
-        public bool HalfStar => AvgScore - (int)Math.Floor(AvgScore) < 0.500;
+
+        private double fractionalPart => AvgScore - Math.Floor(AvgScore);
+        public bool HalfStar => fractionalPart > 0.000 && fractionalPart <= 0.500;
     }
 }

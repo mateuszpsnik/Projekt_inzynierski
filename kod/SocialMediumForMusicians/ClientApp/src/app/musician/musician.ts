@@ -8,4 +8,8 @@ export interface Musician {
     profilePicFilename: string;
     instruments: string[];
     avgScore: number;
+    fullStars: number;
+    halfStar: boolean;
+    shortDescription: string;
+    longDescription: string;
 }
