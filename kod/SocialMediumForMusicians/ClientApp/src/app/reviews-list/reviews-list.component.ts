@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Review } from "../review/review";
 import { ReviewService } from "../review/review.service";
 import { PaginationApiResult } from "../musician/musician.service";
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: "app-reviews-list",
@@ -16,12 +17,21 @@ export class ReviewsListComponent implements OnInit {
     private paginator: MatPaginator;
     public defaultPageSize: number;
 
+    // Font Awesome Star
+    faStar = faStar;
+
+    showPaginator = false;
+
     constructor(
         private service: ReviewService,
         @Inject("BASE_URL")
         private baseUrl: string) { }
-    
+
     ngOnInit() {
+        if (isNaN(this.defaultPageSize)) {
+            this.defaultPageSize = 3;
+        }
+
         let pageEvent = new PageEvent();
         // default page index
         pageEvent.pageIndex = 0;
@@ -31,7 +41,7 @@ export class ReviewsListComponent implements OnInit {
         // load reviews list
         this.getElements(pageEvent);
     }
-    
+
     getElements(event: PageEvent) {
         this.service.getReviewsList(this.musicianId, event.pageIndex,
             event.pageSize).subscribe(result => {
@@ -39,6 +49,9 @@ export class ReviewsListComponent implements OnInit {
                 this.paginator.pageIndex = result.pageIndex;
                 this.paginator.pageSize = result.pageSize;
                 this.reviews = result.elements;
+                if (result.elements.length > 0) {
+                    this.showPaginator = true;
+                }
             }, err => console.error(err));
     }
 
