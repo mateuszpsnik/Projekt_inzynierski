@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MusicianComponent } from './musician/musician.component';
+import { ReviewsListComponent } from './reviews-list/reviews-list.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NavMenuComponent,
     HomeComponent,
     MusiciansComponent,
+    MusicianComponent,
     HomeFormComponent,
     ReviewsWidgetComponent,
+    ReviewsListComponent,
     SignupWidgetComponent,
     FooterComponent
   ],

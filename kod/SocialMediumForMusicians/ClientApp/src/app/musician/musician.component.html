@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-3 mt-1 px-3 justify-content-center">
+        <div class="row" *ngIf="musician.profilePicFilename; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+                <img src="{{ musician.profilePicFilename }}" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block"
+                    style="max-height: 250px;">
+            </ng-template>
+            <ng-template #elseBlock>
+                <img src="default.png" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block"
+                    style="max-height: 250px;">
+            </ng-template>
+        <div class="row text-center mb-2">
+          <span class="fs-5">Cena za godzinę</span>
+        </div>
+        <div class="row text-center mb-2">
+          <span class="fs-4 fw-light">{{ musician.price }}</span>
+        </div>
+        <div class="row text-center mb-2">
+          <span class="fs-5">Ocena</span>
+        </div>
+        <!-- stars -->
+        <div class="row text-center mb-2 px-3">
+          <span class="fs-5 col" *ngFor="let i of [].constructor(musician.fullStars)">
+            <fa-icon class="text-primary" [icon]="faStar"></fa-icon>
+          </span>
+          <span class="fs-5 col" *ngIf="musician.halfStar">
+            <fa-icon class="text-primary" [icon]="faHalfStar"></fa-icon>
+          </span>
+        </div>
+        <div class="row text-center mb-2">
+          <span class="fs-4 fw-light">{{ musician.avgScore }}</span>
+        </div>
+      </div>
+      <div class="col-sm-6 px-5">
+        <div class="fs-2 text-center">{{ musician.name }}</div>
+        <div class="my-2 text-center fs-3 fw-light">
+          <span *ngFor="let instrument of musician.instruments; let i=index">
+              <span>{{ instrument }}</span>
+              <span *ngIf="i < musician.instruments.length - 1">&#44; </span>
+          </span>          
+        </div>
+        <div class="mt-3">
+          {{ musician.shortDescription }}
+        </div>
+        <app-reviews-list [musicianId]="id"></app-reviews-list>
+        <div class="mt-5 text-center fs-2">Napisz wiadomość</div>
+        <div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
+          [formGroup]="formMessage">
+            <textarea class="form-control" rows="5" formControlName="content"></textarea>
+            <div class="form-group mt-2">
+              <label class="fs-6" for="email">E-mail</label>
+              <input class="form-control mt-1" type="email" id="email" formControlName="email">
+            </div>
+            <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
+                <button type="submit" (click)="onSubmitMessage()"
+                    class="btn btn-outline-secondary px-5">Wyślij</button>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-3 mt-1 px-3">
+      </div>
+    </div> 
+    <div class="row mt-5">
+      <div class="col-md-1">
+  
+      </div> 
+      <div class="col-md-10">
+        <div class="row mt-3 fs-2">Więcej o mnie</div>
+        <div class="row mt-3">
+          {{ musician.longDescription }}
+        </div>
+        <div class="row mt-5 fs-2">Odwiedź też inne profile</div>
+        <div class="row mt-2">
+          <app-musicians-list [instrument]="musician.instruments[0]" [musicianId]="id" 
+            (click)="refreshComponent()">
+          </app-musicians-list>
+        </div>        
+      </div>
+      <div class="col-md-1">
+  
+      </div>
+    </div>
+</div>
