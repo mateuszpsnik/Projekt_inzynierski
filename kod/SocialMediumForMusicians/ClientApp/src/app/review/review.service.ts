@@ -22,7 +22,7 @@ export class ReviewService {
             : Observable<PaginationApiResult<Review>> {
         let url = this.baseUrl + "api/Reviews/";
         let params = new HttpParams().set("id", id.toString())
-                                     .set("pageIndex", id.toString())
+                                     .set("pageIndex", pageIndex.toString())
                                      .set("pageSize", pageSize.toString());
         return this.http.get<PaginationApiResult<Review>>(url, { params });
     }
