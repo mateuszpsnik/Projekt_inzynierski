@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SocialMediumForMusicians.Controllers;
 using SocialMediumForMusicians.Data;
 using SocialMediumForMusicians.Data.Models;
@@ -17,7 +19,9 @@ namespace SocialMediumForMusicians.Tests
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SocialMediumForMusicians").Options;
 
-            using (var context = new ApplicationDbContext(options))
+            var storeOptions = Options.Create(new OperationalStoreOptions());
+
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var m1 = new Musician()
                 {
@@ -63,7 +67,7 @@ namespace SocialMediumForMusicians.Tests
             MusicianDTO musician;
 
             // Act
-            using (var context = new ApplicationDbContext(options))
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var controller = new MusiciansController(context);
                 musician = (await controller.GetMusician(id: 115)).Value;
@@ -81,7 +85,9 @@ namespace SocialMediumForMusicians.Tests
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SocialMediumForMusicians").Options;
 
-            using (var context = new ApplicationDbContext(options))
+            var storeOptions = Options.Create(new OperationalStoreOptions());
+
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var m1 = new Musician()
                 {
@@ -158,7 +164,7 @@ namespace SocialMediumForMusicians.Tests
             PaginationApiResult<MusiciansListDTO> resultPriceDsc;
 
             // Act
-            using (var context = new ApplicationDbContext(options))
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var controller = new MusiciansController(context);
 

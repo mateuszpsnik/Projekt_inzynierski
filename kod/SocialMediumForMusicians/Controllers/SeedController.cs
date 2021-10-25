@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System.Security;
 using SocialMediumForMusicians.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace SocialMediumForMusicians.Controllers
 {
@@ -20,10 +21,16 @@ namespace SocialMediumForMusicians.Controllers
         private readonly ApplicationDbContext context;
         private readonly IWebHostEnvironment environment;
 
-        public SeedController(ApplicationDbContext context, IWebHostEnvironment env)
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<AuthUser> userManager;
+
+        public SeedController(ApplicationDbContext context, IWebHostEnvironment env,
+            RoleManager<IdentityRole> roleManager, UserManager<AuthUser> userManager)
         {
             this.context = context;
             environment = env;
+            this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -119,6 +126,97 @@ namespace SocialMediumForMusicians.Controllers
             return new JsonResult(new
             {
                 result = "OK"
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> CreateSampleAuthUsers()
+        {
+            // default role names
+            var role_RegisteredUser = "RegisteredUser";
+            var role_Musician = "Musician";
+            var role_Admin = "Admin";
+
+            // create the roles, if they don't exist yet
+            if (await roleManager.FindByIdAsync(role_RegisteredUser) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role_RegisteredUser));
+            }
+            if (await roleManager.FindByIdAsync(role_Musician) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role_Musician));
+            }
+            if (await roleManager.FindByIdAsync(role_Admin) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role_Admin));
+            }
+
+            var usersCount = 0;
+
+            var adminEmail = "admin@sample.com";
+            if (await userManager.FindByEmailAsync(adminEmail) == null)
+            {
+                var admin = new AuthUser()
+                {
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Email = adminEmail,
+                    UserName = adminEmail
+                };
+
+                await userManager.CreateAsync(admin, "!admin12");
+                await userManager.AddToRolesAsync(admin, 
+                    new List<string> { role_RegisteredUser, role_Admin });
+                admin.EmailConfirmed = true;
+                admin.LockoutEnabled = false;
+
+                usersCount++;
+            }
+
+            var musicianEmail = "musician@sample.com";
+            if (await userManager.FindByEmailAsync(musicianEmail) == null)
+            {
+                var musician = new AuthUser()
+                {
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Email = musicianEmail,
+                    UserName = musicianEmail
+                };
+
+                await userManager.CreateAsync(musician, "!musician1");
+                await userManager.AddToRolesAsync(musician,
+                    new List<string> { role_RegisteredUser, role_Musician });
+                musician.EmailConfirmed = true;
+                musician.LockoutEnabled = false;
+
+                usersCount++;
+            }
+
+            var userEmail = "user@sample.com";
+            if (await userManager.FindByEmailAsync(userEmail) == null)
+            {
+                var user = new AuthUser()
+                {
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    Email = userEmail,
+                    UserName = userEmail
+                };
+
+                await userManager.CreateAsync(user, "!user123");
+                await userManager.AddToRoleAsync(user, role_RegisteredUser);
+                user.EmailConfirmed = true;
+                user.LockoutEnabled = false;
+
+                usersCount++;
+            }
+
+            if (usersCount > 0)
+            {
+                await context.SaveChangesAsync();
+            }
+
+            return new JsonResult(new
+            {
+                AddedUsersCount = usersCount
             });
         }
     }

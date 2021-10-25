@@ -1,21 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using SocialMediumForMusicians.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Options;
 
 namespace SocialMediumForMusicians.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : ApiAuthorizationDbContext<AuthUser>
     {
-        public ApplicationDbContext() : base() { }
-
-        public ApplicationDbContext(DbContextOptions options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             var splitStringConverter = new ValueConverter<List<string>, string>(
                 v => string.Join(";", v),
                 v => v.Split(new[] { ';' }).ToList());

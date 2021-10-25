@@ -5,6 +5,8 @@ using SocialMediumForMusicians.Controllers;
 using SocialMediumForMusicians.Data;
 using SocialMediumForMusicians.Data.Models;
 using Xunit;
+using IdentityServer4.EntityFramework.Options;
+using Microsoft.Extensions.Options;
 
 namespace SocialMediumForMusicians.Tests
 {
@@ -16,8 +18,9 @@ namespace SocialMediumForMusicians.Tests
             // Arrange
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SocialMediumForMusicians2").Options;
+            var storeOptions = Options.Create(new OperationalStoreOptions());
 
-            using (var context = new ApplicationDbContext(options))
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var m1 = new Musician()
                 {
@@ -95,7 +98,7 @@ namespace SocialMediumForMusicians.Tests
             PaginationApiResult<ReviewsListDTO> resultPagination;
 
             // Act
-            using (var context = new ApplicationDbContext(options))
+            using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var controller = new ReviewsController(context);
 
