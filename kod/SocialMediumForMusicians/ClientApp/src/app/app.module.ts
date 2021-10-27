@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+
+import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
+import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -35,6 +38,7 @@ import { ReviewsListComponent } from './reviews-list/reviews-list.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    ApiAuthorizationModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -43,7 +47,11 @@ import { ReviewsListComponent } from './reviews-list/reviews-list.component';
     AngularMaterialModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthorizeInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 
