@@ -38,7 +38,7 @@ namespace SocialMediumForMusicians
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             // ASP.NET Core Identity 
-            services.AddDefaultIdentity<AuthUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                     options.Password.RequireDigit = true;
@@ -48,7 +48,7 @@ namespace SocialMediumForMusicians
                 })
                  .AddRoles<IdentityRole>()
                  .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddIdentityServer().AddApiAuthorization<AuthUser, ApplicationDbContext>();
+            services.AddIdentityServer().AddApiAuthorization<User, ApplicationDbContext>();
             services.AddAuthentication().AddIdentityServerJwt();
         }
 

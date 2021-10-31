@@ -11,9 +11,9 @@ namespace SocialMediumForMusicians.Data.Models
         [Required]
         public int Id { get; set; }
 
-        public int HostId { get; set; }
+        public string HostId { get; set; }
 
-        public int GuestId { get; set; }
+        public string GuestId { get; set; }
 
         [Required]
         public DateTime StartTime { get; set; }

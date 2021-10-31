@@ -47,7 +47,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Musicians/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MusicianDTO>> GetMusician(int id)
+        public async Task<ActionResult<MusicianDTO>> GetMusician(string id)
         {
             var musician = await _context.Musicians.Select(m => new MusicianDTO()
             {
@@ -73,7 +73,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Musicians/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMusician(int id, Musician musician)
+        public async Task<IActionResult> PutMusician(string id, Musician musician)
         {
             if (id != musician.Id)
             {
@@ -128,7 +128,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MusicianExists(int id)
+        private bool MusicianExists(string id)
         {
             return _context.Musicians.Any(e => e.Id == id);
         }

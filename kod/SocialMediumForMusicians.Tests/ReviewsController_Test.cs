@@ -24,7 +24,7 @@ namespace SocialMediumForMusicians.Tests
             {
                 var m1 = new Musician()
                 {
-                    Id = 1,
+                    Id = "1",
                     Email = "example@aaa.com",
                     Name = "Aaa",
                     Price = 10.03M,
@@ -34,7 +34,7 @@ namespace SocialMediumForMusicians.Tests
                 };
                 var m2 = new Musician()
                 {
-                    Id = 2,
+                    Id = "2",
                     Email = "example1@aaa.com",
                     Name = "Bbb",
                     Price = 20.03M,
@@ -43,7 +43,7 @@ namespace SocialMediumForMusicians.Tests
                 };
                 var m3 = new Musician()
                 {
-                    Id = 3,
+                    Id = "3",
                     Email = "example2@aaa.com",
                     Name = "Ccc",
                     Price = 20.03M,
@@ -52,7 +52,7 @@ namespace SocialMediumForMusicians.Tests
                 };
                 var m4 = new Musician()
                 {
-                    Id = 4,
+                    Id = "4",
                     Email = "example3@aaa.com",
                     Name = "Ddd",
                     Price = 40.03M
@@ -103,7 +103,7 @@ namespace SocialMediumForMusicians.Tests
                 var controller = new ReviewsController(context);
 
                 result = (await controller.GetReviews(top: 3)).Value;
-                resultPagination = (await controller.GetReviews(id: 1, pageIndex: 0, pageSize: 2)).Value;
+                resultPagination = (await controller.GetReviews(id: "1", pageIndex: 0, pageSize: 2)).Value;
             }
 
             // Assert

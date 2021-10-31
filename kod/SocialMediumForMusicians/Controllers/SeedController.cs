@@ -22,10 +22,10 @@ namespace SocialMediumForMusicians.Controllers
         private readonly IWebHostEnvironment environment;
 
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<AuthUser> userManager;
+        private readonly UserManager<User> userManager;
 
         public SeedController(ApplicationDbContext context, IWebHostEnvironment env,
-            RoleManager<IdentityRole> roleManager, UserManager<AuthUser> userManager)
+            RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             this.context = context;
             environment = env;
@@ -156,7 +156,7 @@ namespace SocialMediumForMusicians.Controllers
             var adminEmail = "admin@sample.com";
             if (await userManager.FindByEmailAsync(adminEmail) == null)
             {
-                var admin = new AuthUser()
+                var admin = new User()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Email = adminEmail,
@@ -175,7 +175,7 @@ namespace SocialMediumForMusicians.Controllers
             var musicianEmail = "musician@sample.com";
             if (await userManager.FindByEmailAsync(musicianEmail) == null)
             {
-                var musician = new AuthUser()
+                var musician = new User()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Email = musicianEmail,
@@ -194,7 +194,7 @@ namespace SocialMediumForMusicians.Controllers
             var userEmail = "user@sample.com";
             if (await userManager.FindByEmailAsync(userEmail) == null)
             {
-                var user = new AuthUser()
+                var user = new User()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Email = userEmail,

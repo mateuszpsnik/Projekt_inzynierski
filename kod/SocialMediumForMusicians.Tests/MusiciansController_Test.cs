@@ -25,7 +25,7 @@ namespace SocialMediumForMusicians.Tests
             {
                 var m1 = new Musician()
                 {
-                    Id = 115,
+                    Id = "aaa",
                     Email = "example@aaa.com",
                     Name = "Aaa",
                     Price = 10.03M,
@@ -35,7 +35,7 @@ namespace SocialMediumForMusicians.Tests
                 };
                 var m4 = new Musician()
                 {
-                    Id = 221,
+                    Id = "bbb",
                     Email = "example3@aaa.com",
                     Name = "Ddd",
                     Price = 40.03M
@@ -70,7 +70,7 @@ namespace SocialMediumForMusicians.Tests
             using (var context = new ApplicationDbContext(options, storeOptions))
             {
                 var controller = new MusiciansController(context);
-                musician = (await controller.GetMusician(id: 115)).Value;
+                musician = (await controller.GetMusician(id: "aaa")).Value;
             }
 
             // Assert

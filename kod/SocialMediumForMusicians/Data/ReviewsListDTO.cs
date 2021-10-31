@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string AuthorName { get; set; }
         public string AuthorProfilePicFilename { get; set; }
-        public int TargetId { get; set; }
+        public string TargetId { get; set; }
         public string TargetProfilePicFilename { get; set; }        
     }
 }

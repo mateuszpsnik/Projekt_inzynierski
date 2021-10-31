@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace SocialMediumForMusicians.Data.Models
 {
-    [Table("Users")]
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        [Required]
-        public int Id { get; set; }
+        public bool IsMusician { get; set; }
 
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
         public string ProfilePicFilename { get; set; }

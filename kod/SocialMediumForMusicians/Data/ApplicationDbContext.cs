@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace SocialMediumForMusicians.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<AuthUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions)
@@ -91,6 +91,6 @@ namespace SocialMediumForMusicians.Data
         public DbSet<Musician> Musicians { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
     }
 }
