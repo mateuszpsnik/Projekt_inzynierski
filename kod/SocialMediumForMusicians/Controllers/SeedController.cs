@@ -46,27 +46,33 @@ namespace SocialMediumForMusicians.Controllers
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 2, 3 },
                 ProfilePicFilename = "aaa.png",
-                Types = new List<MusicianType> { MusicianType.Jamming }
+                Types = new List<MusicianType> { MusicianType.Jamming },
+                IsMusician = true
             };
             var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Lorem Ipsum", Price = 30.00M,
                 Instruments = new List<string>() { "Bass Guitar" },
                 ProfilePicFilename = "aaa.png",
-                Types = new List<MusicianType> { MusicianType.Jamming, MusicianType.Session }
+                Types = new List<MusicianType> { MusicianType.Jamming, MusicianType.Session },
+                IsMusician = true
             };
             var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Adam Pierwszy", Price = 40.00M,
                 Instruments = new List<string>() { "Drums" }  ,
-                Types = new List<MusicianType> { MusicianType.Teacher, MusicianType.Session }
+                Types = new List<MusicianType> { MusicianType.Teacher, MusicianType.Session },
+                IsMusician = true
             };
             var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Adam Drugi", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
                 FavouriteMusiciansIds = new List<int>() { 1, 2, 3 },
-                ProfilePicFilename = "aaa.png"
+                ProfilePicFilename = "aaa.png",
+                IsMusician = true
             };
             var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Adam Trzeci", Price = 30.00M,
-                Instruments = new List<string>() { "Bass Guitar" }
+                Instruments = new List<string>() { "Bass Guitar" },
+                IsMusician = true
             };
             var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Adam Żyżyński", Price = 40.00M,
-                Instruments = new List<string>() { "Drums" }
+                Instruments = new List<string>() { "Drums" },
+                IsMusician = true
             };
             var musicians = new List<Musician>() { musician0, musician1, musician2, musician3,
                     musician4, musician5};
@@ -175,11 +181,14 @@ namespace SocialMediumForMusicians.Controllers
             var musicianEmail = "musician@sample.com";
             if (await userManager.FindByEmailAsync(musicianEmail) == null)
             {
-                var musician = new User()
+                var musician = new Musician()
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     Email = musicianEmail,
-                    UserName = musicianEmail
+                    UserName = musicianEmail,
+                    Name = "Aaa Bbb",
+                    Price = 0,
+                    IsMusician = true
                 };
 
                 await userManager.CreateAsync(musician, "!musician1");

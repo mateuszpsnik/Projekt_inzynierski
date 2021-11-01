@@ -7,7 +7,7 @@ namespace SocialMediumForMusicians.Data.Models
     public enum MusicianType
     {
         Teacher,
-        Jamming, 
+        Jamming,
         Session
     }
 

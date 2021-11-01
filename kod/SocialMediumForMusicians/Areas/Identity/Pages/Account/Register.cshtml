@@ -7,8 +7,8 @@
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div @*class="col-md-4"*@>
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -27,10 +27,58 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Description"></label>
+                <textarea asp-for="Input.Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.UploadFile"></label>
+                <input asp-for="Input.UploadFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.IsMusician"></label>
+                <input asp-for="Input.IsMusician" id="input-is-musician" onclick="collide()" />
+            </div>
+            <div class="form-group" id="price-collide" style="display: none">
+                <label asp-for="Input.Price"></label>
+                <input asp-for="Input.Price" class="form-control" />
+            </div>
+            <div class="form-group" id="desc-collide" style="display: none">
+                <label asp-for="Input.LongDescription"></label>
+                <textarea asp-for="Input.LongDescription" class="form-control"></textarea>
+            </div>
+            <div class="form-group" id="first-instr-collide" style="display: none">
+                <label asp-for="Input.FirstInstrument"></label>
+                <select asp-for="Input.FirstInstrument" class="form-control"
+                        asp-items="ViewBag.Instruments">
+                </select>
+            </div>
+            <div class="form-group" id="second-instr-collide" style="display: none">
+                <label asp-for="Input.SecondInstrument"></label>
+                <select asp-for="Input.SecondInstrument" class="form-control"
+                        asp-items="ViewBag.Instruments">
+                </select>
+            </div>
+            <div class="form-group" id="teacher-collide" style="display: none">
+                <label asp-for="Input.TeacherSelected"></label>
+                <input asp-for="Input.TeacherSelected" />
+            </div>
+            <div class="form-group" id="jamming-collide" style="display: none">
+                <label asp-for="Input.JammingSelected"></label>
+                <input asp-for="Input.JammingSelected" />
+            </div>
+            <div class="form-group" id="session-collide" style="display: none">
+                <label asp-for="Input.SessionSelected"></label>
+                <input asp-for="Input.SessionSelected" />
+            </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    @*<div class="col-md-6 col-md-offset-2">
         <section>
             <h4>Use another service to register.</h4>
             <hr />
@@ -59,8 +107,39 @@
                 }
             }
         </section>
-    </div>
+    </div>*@
 </div>
+
+<script>
+    function collide() {
+        let checkbox = document.querySelector('#input-is-musician');
+        let price = document.querySelector('#price-collide');
+        let desc = document.querySelector('#desc-collide')
+        let firstInstr = document.querySelector('#first-instr-collide');
+        let secondInstr = document.querySelector('#second-instr-collide');
+        let teacher = document.querySelector('#teacher-collide');
+        let jamming = document.querySelector('#jamming-collide');
+        let session = document.querySelector('#session-collide');
+
+        if (checkbox.checked) {
+            price.style.display = 'block';
+            desc.style.display = 'block';
+            firstInstr.style.display = 'block';
+            secondInstr.style.display = 'block';
+            teacher.style.display = 'block';
+            jamming.style.display = 'block';
+            session.style.display = 'block';
+        } else {
+            price.style.display = 'none';
+            desc.style.display = 'none';
+            firstInstr.style.display = 'none';
+            secondInstr.style.display = 'none';
+            teacher.style.display = 'none';
+            jamming.style.display = 'none';
+            session.style.display = 'none';
+        }
+    }
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
