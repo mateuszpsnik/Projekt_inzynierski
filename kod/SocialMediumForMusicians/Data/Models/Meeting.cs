@@ -28,5 +28,7 @@ namespace SocialMediumForMusicians.Data.Models
         public User Guest { get; set; }
 
         public string Notes { get; set; }
+
+        public bool Accepted { get; set; }
     }
 }

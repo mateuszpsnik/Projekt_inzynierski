@@ -44,7 +44,7 @@ namespace SocialMediumForMusicians.Controllers
 
             var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Adam Przykładowy", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
-                FavouriteMusiciansIds = new List<int>() { 2, 3 },
+                FavouriteMusiciansIds = new List<string>() { "2", "3" },
                 ProfilePicFilename = "aaa.png",
                 Types = new List<MusicianType> { MusicianType.Jamming },
                 IsMusician = true
@@ -62,7 +62,7 @@ namespace SocialMediumForMusicians.Controllers
             };
             var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Adam Drugi", Price = 20.00M,
                 Instruments = new List<string>() { "Guitar", "Piano" },
-                FavouriteMusiciansIds = new List<int>() { 1, 2, 3 },
+                FavouriteMusiciansIds = new List<string>() { "1", "2", "3" },
                 ProfilePicFilename = "aaa.png",
                 IsMusician = true
             };

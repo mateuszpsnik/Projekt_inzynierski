@@ -25,5 +25,7 @@ namespace SocialMediumForMusicians.Data.Models
         public List<string> Instruments { get; set; }
 
         public List<MusicianType> Types { get; set; }
+
+        public List<EmailMessage> EmailMessages { get; set; }
     }
 }

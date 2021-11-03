@@ -5,6 +5,8 @@ namespace SocialMediumForMusicians.Data.Models
 {
     public class User : IdentityUser
     {
+        public bool Blocked { get; set; }
+
         public bool IsMusician { get; set; }
 
         public string Name { get; set; }
@@ -23,6 +25,6 @@ namespace SocialMediumForMusicians.Data.Models
 
         public List<Review> MyReviews { get; set; }
 
-        public List<int> FavouriteMusiciansIds { get; set; }
+        public List<string> FavouriteMusiciansIds { get; set; }
     }
 }
