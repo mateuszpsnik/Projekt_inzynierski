@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Review } from "../review/review";
+import { Review } from "../../models/review";
 import { ReviewService } from "../review/review.service";
 import { PaginationApiResult } from "../musician/musician.service";
 import { faStar } from '@fortawesome/free-solid-svg-icons';

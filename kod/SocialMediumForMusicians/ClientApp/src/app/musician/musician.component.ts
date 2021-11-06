@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Musician } from './musician';
+import { Musician } from '../../models/musician';
 import { MusicianService } from './musician.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStarHalf } from '@fortawesome/free-solid-svg-icons';
@@ -43,6 +43,11 @@ export class MusicianComponent implements OnInit {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate([`/Musician/${this.id}`]);
         });
+    }
+
+
+    onAddToFavourites() {
+        alert('dupa');
     }
 
     onSubmitMessage() {}

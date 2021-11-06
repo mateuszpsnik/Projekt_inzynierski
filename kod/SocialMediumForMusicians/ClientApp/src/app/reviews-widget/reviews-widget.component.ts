@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Review } from "../review/review";
+import { Review } from "../../models/review";
 import { ReviewService } from "../review/review.service";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
