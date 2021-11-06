@@ -8,12 +8,16 @@ import { faStarHalf } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../user/user.service';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { User } from 'src/models/User';
+import { MessageService } from '../message/message.service';
+import { EmailMessageService } from '../message/email-message.service';
+import { EmailMessage, Message } from 'src/models/message';
 
 @Component({
     selector: 'app-musician',
     templateUrl: './musician.component.html'
 })
 export class MusicianComponent implements OnInit {
+    // id of the Musician shown to the user
     id: string;
     musician: Musician;
 
@@ -23,6 +27,7 @@ export class MusicianComponent implements OnInit {
     faHalfStar = faStarHalf;
 
     public isAuthenticated: boolean;
+    // id of the authenticated user
     public userId: string;
 
     constructor(
@@ -30,7 +35,9 @@ export class MusicianComponent implements OnInit {
         private router: Router,
         private service: MusicianService,
         private userService: UserService,
-        private authorizeService: AuthorizeService) { }
+        private authorizeService: AuthorizeService,
+        private messageService: MessageService,
+        private emailMessageService: EmailMessageService) { }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
@@ -75,5 +82,40 @@ export class MusicianComponent implements OnInit {
         }, err => console.error(err));
     }
 
-    onSubmitMessage() {}
+    onSubmitMessage() {
+        const content = this.formMessage.get('content').value;
+        const emailAddress = this.formMessage.get('email').value;
+
+        if (this.isAuthenticated) {
+            if (content !== '') {
+                const message: Message = {
+                    authorId: this.userId,
+                    recipentId: this.id,
+                    content: content,
+                    read: false,
+                    sentAt: new Date(Date.now())
+                };
+
+                this.messageService.post(message).subscribe(result => {
+                    console.log(result);
+                    alert('Wiadomość została wysłana');
+                }, err => console.error(err));
+            }
+        } else {
+            if (content !== '' && emailAddress !== '') {
+                const message: EmailMessage = {
+                    authorEmail: emailAddress,
+                    recipentId: this.id,
+                    content: content,
+                    read: false,
+                    sentAt: new Date(Date.now())
+                };
+
+                this.emailMessageService.post(message).subscribe(result => {
+                    console.log(result);
+                    alert('Wiadomość została wysłana');
+                }, err => console.error(err));
+            }
+        }
+    }
 }

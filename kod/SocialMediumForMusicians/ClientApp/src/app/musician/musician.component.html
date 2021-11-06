@@ -53,7 +53,7 @@
         <div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
           [formGroup]="formMessage">
             <textarea class="form-control" rows="5" formControlName="content"></textarea>
-            <div class="form-group mt-2">
+            <div class="form-group mt-2" *ngIf="!isAuthenticated">
               <label class="fs-6" for="email">E-mail</label>
               <input class="form-control mt-1" type="email" id="email" formControlName="email">
             </div>
