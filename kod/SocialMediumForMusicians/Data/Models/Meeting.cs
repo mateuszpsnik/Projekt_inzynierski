@@ -10,9 +10,11 @@ namespace SocialMediumForMusicians.Data.Models
         [Key]
         [Required]
         public int Id { get; set; }
-
+        
+        [Required]
         public string HostId { get; set; }
 
+        [Required]
         public string GuestId { get; set; }
 
         [Required]
@@ -21,10 +23,8 @@ namespace SocialMediumForMusicians.Data.Models
         [Required]
         public DateTime EndTime { get; set; }
 
-        [Required]
         public User Host { get; set; }
 
-        [Required]
         public User Guest { get; set; }
 
         public string Notes { get; set; }

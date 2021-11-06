@@ -1,9 +1,13 @@
 <ul class="navbar-nav" *ngIf="isAuthenticated | async">
-    <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Witaj {{ userName | async }}</a>
+    <li class="nav-item" ngbDropdown>
+        <a class="nav-link" href="#" id="navbarDropdown" role="button" (click)="isCollapsed = !isCollapsed" 
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseMenu" title="Manage">Witaj {{ userName | async }}</a>
+        <ul id="collapseMenu" [ngbCollapse]="isCollapsed">
+          <li><a class="dropdown-item" [routerLink]='["/authentication/profile"]' ngbDropdownItem>Action</a></li>
+        </ul>
     </li>
     <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Wyloguj się</a>
+        <a  class="nav-link" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Wyloguj się</a>
     </li>
 </ul>
 <ul class="navbar-nav flex-grow" *ngIf="!(isAuthenticated | async)">

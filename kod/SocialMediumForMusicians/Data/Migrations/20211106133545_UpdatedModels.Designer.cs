@@ -10,7 +10,7 @@ using SocialMediumForMusicians.Data;
 namespace SocialMediumForMusicians.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211103121140_UpdatedModels")]
+    [Migration("20211106133545_UpdatedModels")]
     partial class UpdatedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

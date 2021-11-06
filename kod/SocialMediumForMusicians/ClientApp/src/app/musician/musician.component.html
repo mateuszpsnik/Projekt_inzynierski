@@ -64,6 +64,8 @@
         </div>
       </div>
       <div class="col-sm-3 mt-1 px-3">
+        <app-meeting-planner *ngIf="isAuthenticated" [musicianId]="id"
+          [userId]="userId"></app-meeting-planner>
       </div>
     </div> 
     <div class="row mt-5">

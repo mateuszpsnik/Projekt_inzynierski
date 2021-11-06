@@ -12,9 +12,9 @@ namespace SocialMediumForMusicians.Data.Models
         [Required]
         public string AuthorEmail { get; set; }
 
+        [Required]
         public string RecipentId { get; set; }
 
-        [Required]
         public Musician Recipent { get; set; }
 
         [Required]

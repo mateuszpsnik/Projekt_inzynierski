@@ -14,7 +14,7 @@ import { User } from 'src/models/User';
     templateUrl: './musician.component.html'
 })
 export class MusicianComponent implements OnInit {
-    id: number;
+    id: string;
     musician: Musician;
 
     formMessage: FormGroup;
@@ -24,7 +24,6 @@ export class MusicianComponent implements OnInit {
 
     public isAuthenticated: boolean;
     public userId: string;
-    private user: User;
 
     constructor(
         private activatedRoute: ActivatedRoute,

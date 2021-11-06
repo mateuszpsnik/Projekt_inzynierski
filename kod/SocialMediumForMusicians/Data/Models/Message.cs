@@ -11,14 +11,14 @@ namespace SocialMediumForMusicians.Data.Models
         [Required]
         public int Id { get; set; }
 
+        [Required]
         public string AuthorId { get; set; }
 
+        [Required]
         public string RecipentId { get; set; }
 
-        [Required]
         public User Author { get; set; }
 
-        [Required]
         public User Recipent { get; set; }
 
         [Required]

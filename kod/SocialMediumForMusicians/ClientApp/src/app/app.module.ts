@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MusicianComponent } from './musician/musician.component';
 import { ReviewsListComponent } from './reviews-list/reviews-list.component';
+import { MeetingComponent } from './meeting/meeting.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ReviewsListComponent } from './reviews-list/reviews-list.component';
     ReviewsWidgetComponent,
     ReviewsListComponent,
     SignupWidgetComponent,
-    FooterComponent
+    FooterComponent,
+    MeetingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
