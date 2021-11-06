@@ -46,9 +46,6 @@
           {{ musician.shortDescription }}
         </div>
         <app-reviews-list [musicianId]="id"></app-reviews-list>
-        <div class="mt-3 text-center">
-          <button class="btn btn-outline-primary" (click)="onAddToFavourites()">Dodaj do ulubionych</button>
-        </div>
         <div class="mt-5 text-center fs-2">Napisz wiadomość</div>
         <div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
           [formGroup]="formMessage">
@@ -66,6 +63,10 @@
       <div class="col-sm-3 mt-1 px-3">
         <app-meeting-planner *ngIf="isAuthenticated" [musicianId]="id"
           [userId]="userId"></app-meeting-planner>
+        <div class="my-3 text-center" *ngIf="isAuthenticated">
+          <button class="btn btn-outline-primary" (click)="onAddToFavourites()">Dodaj do ulubionych</button>
+        </div>
+        <app-report-button [userId]="id" *ngIf="isAuthenticated"></app-report-button>
       </div>
     </div> 
     <div class="row mt-5">

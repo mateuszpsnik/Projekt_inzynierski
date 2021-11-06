@@ -22,6 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MusicianComponent } from './musician/musician.component';
 import { ReviewsListComponent } from './reviews-list/reviews-list.component';
 import { MeetingComponent } from './meeting/meeting.component';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MeetingComponent } from './meeting/meeting.component';
     ReviewsListComponent,
     SignupWidgetComponent,
     FooterComponent,
-    MeetingComponent
+    MeetingComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
