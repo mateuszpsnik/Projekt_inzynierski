@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { MeetingService } from "./meeting.service";
 import { Meeting } from "src/models/meeting";
+import { Guid } from "src/models/guid";
 
 @Component({
     selector: 'app-meeting-planner',
@@ -50,6 +51,7 @@ export class MeetingComponent implements OnInit {
         this.notes = notes;
 
         const meeting: Meeting = {
+            id: Guid.newGuid(),
             hostId: this.musicianId,
             guestId: this.userId,
             startTime: this.start,

@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { Report } from "src/models/report";
+import { Guid } from 'src/models/guid';
 
 @Component({
     selector: 'app-report-button',
@@ -37,6 +38,7 @@ export class ReportComponent implements OnInit {
 
         if (justification !== '') {
             const report: Report = {
+                id: Guid.newGuid(),
                 userId: this.userId,
                 justification: justification
             };

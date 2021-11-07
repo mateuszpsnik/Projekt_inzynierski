@@ -1,5 +1,5 @@
 export interface Meeting {
-    id?: number;
+    id: string;
     hostId: string;
     guestId: string;
     startTime: Date;

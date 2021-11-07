@@ -69,7 +69,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Reviews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(int id, Review review)
+        public async Task<IActionResult> PutReview(string id, Review review)
         {
             if (id != review.Id)
             {
@@ -124,7 +124,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool ReviewExists(int id)
+        private bool ReviewExists(string id)
         {
             return _context.Reviews.Any(e => e.Id == id);
         }

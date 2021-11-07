@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/EmailMessages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmailMessage(int id, EmailMessage emailMessage)
+        public async Task<IActionResult> PutEmailMessage(string id, EmailMessage emailMessage)
         {
             if (id != emailMessage.Id)
             {
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool EmailMessageExists(int id)
+        private bool EmailMessageExists(string id)
         {
             return _context.EmailMessage.Any(e => e.Id == id);
         }

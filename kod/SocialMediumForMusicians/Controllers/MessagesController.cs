@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Messages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMessage(int id, Message message)
+        public async Task<IActionResult> PutMessage(string id, Message message)
         {
             if (id != message.Id)
             {
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MessageExists(int id)
+        private bool MessageExists(string id)
         {
             return _context.Messages.Any(e => e.Id == id);
         }

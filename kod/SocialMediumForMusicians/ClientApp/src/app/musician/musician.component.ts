@@ -11,6 +11,7 @@ import { User } from 'src/models/User';
 import { MessageService } from '../message/message.service';
 import { EmailMessageService } from '../message/email-message.service';
 import { EmailMessage, Message } from 'src/models/message';
+import { Guid } from 'src/models/guid';
 
 @Component({
     selector: 'app-musician',
@@ -89,6 +90,7 @@ export class MusicianComponent implements OnInit {
         if (this.isAuthenticated) {
             if (content !== '') {
                 const message: Message = {
+                    id: Guid.newGuid(),
                     authorId: this.userId,
                     recipentId: this.id,
                     content: content,
@@ -104,6 +106,7 @@ export class MusicianComponent implements OnInit {
         } else {
             if (content !== '' && emailAddress !== '') {
                 const message: EmailMessage = {
+                    id: Guid.newGuid(),
                     authorEmail: emailAddress,
                     recipentId: this.id,
                     content: content,

@@ -101,24 +101,28 @@ namespace SocialMediumForMusicians.Controllers
 
             var review0 = new Review
             {
+                Id = Guid.NewGuid().ToString(),
                 Author = musician4,
                 Target = musician0,
                 Rate = 5
             };
             var review1 = new Review
             {
+                Id = Guid.NewGuid().ToString(),
                 Author = musician4,
                 Target = musician1,
                 Rate = 4
             };
             var review2 = new Review
             {
+                Id = Guid.NewGuid().ToString(),
                 Author = musician4,
                 Target = musician2,
                 Rate = 3
             };
             var review3 = new Review
             {
+                Id = Guid.NewGuid().ToString(),
                 Author = musician4,
                 Target = musician1,
                 Rate = 3

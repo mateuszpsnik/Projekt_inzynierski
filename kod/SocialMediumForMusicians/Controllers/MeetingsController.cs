@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Meetings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMeeting(int id, Meeting meeting)
+        public async Task<IActionResult> PutMeeting(string id, Meeting meeting)
         {
             if (id != meeting.Id)
             {
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MeetingExists(int id)
+        private bool MeetingExists(string id)
         {
             return _context.Meetings.Any(e => e.Id == id);
         }

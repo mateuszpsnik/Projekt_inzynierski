@@ -1,5 +1,5 @@
 export interface Message {
-    id?: number;
+    id: string;
     authorId: string;
     recipentId: string;
     content: string;
@@ -8,7 +8,7 @@ export interface Message {
 }
 
 export interface EmailMessage {
-    id?: number;
+    id: string;
     authorEmail: string;
     recipentId: string;
     content: string;

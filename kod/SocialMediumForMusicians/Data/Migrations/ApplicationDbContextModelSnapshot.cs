@@ -259,7 +259,7 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.EmailMessage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -269,6 +269,10 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -282,7 +286,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.HasIndex("RecipentId");
 
@@ -307,7 +311,7 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Meeting", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -326,13 +330,17 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.HasIndex("GuestId");
 
@@ -343,7 +351,7 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -353,6 +361,10 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -366,7 +378,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.HasIndex("AuthorId");
 
@@ -377,10 +389,14 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Report", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Justification")
                         .IsRequired()
@@ -390,7 +406,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.HasIndex("UserId");
 
@@ -399,7 +415,7 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Review", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Key")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -411,6 +427,10 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
@@ -418,7 +438,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Key");
 
                     b.HasIndex("AuthorId");
 

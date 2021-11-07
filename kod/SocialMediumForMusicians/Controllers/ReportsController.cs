@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Reports/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReport(int id, Report report)
+        public async Task<IActionResult> PutReport(string id, Report report)
         {
             if (id != report.Id)
             {
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool ReportExists(int id)
+        private bool ReportExists(string id)
         {
             return _context.Reports.Any(e => e.Id == id);
         }
