@@ -23,6 +23,7 @@ import { MusicianComponent } from './musician/musician.component';
 import { ReviewsListComponent } from './reviews-list/reviews-list.component';
 import { MeetingComponent } from './meeting/meeting.component';
 import { ReportComponent } from './report/report.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ReportComponent } from './report/report.component';
     SignupWidgetComponent,
     FooterComponent,
     MeetingComponent,
-    ReportComponent
+    ReportComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

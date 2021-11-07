@@ -1,0 +1,31 @@
+<div class="mb-3">
+    <div class="text-center">
+        <button class="btn btn-primary px-5" (click)="clicked()">Menu</button>
+    </div>
+    <div class="mt-1 border border-primary rounded p-3 ps-4" style="border-width: 3px !important;"
+        *ngIf="isVisible">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a [routerLink]='["/authentication/profile/"]' class="nav-link">Edytuj profil</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/messages"]' class="nav-link">Wiadomości</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/meetings"]' class="nav-link">Spotkania</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/opinionsUser"]' class="nav-link">Twoje opinie</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/opinionsMusician"]' class="nav-link" *ngIf="isMusician">Opinie o Tobie</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/favourites"]' class="nav-link">Ulubieni muzycy</a>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]='["/deleteAccount"]' class="nav-link text-danger">Usuń profil</a>
+            </li>
+        </ul>
+    </div>
+</div>
