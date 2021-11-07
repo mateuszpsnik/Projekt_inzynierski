@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Review } from "../../models/review";
-import { PaginationApiResult } from "../musician/musician.service";
+import { PaginationApiResult } from 'src/models/pagination_api_result';
 
 @Injectable({ providedIn: "root" })
 export class ReviewService {
@@ -18,7 +18,7 @@ export class ReviewService {
         return this.http.get<PaginationApiResult<Review>>(url, { params });
     }
 
-    getReviewsList(id: number, pageIndex: number, pageSize: number)
+    getReviewsList(id: string, pageIndex: number, pageSize: number)
             : Observable<PaginationApiResult<Review>> {
         let url = this.baseUrl + "api/Reviews/";
         let params = new HttpParams().set("id", id.toString())

@@ -6,4 +6,8 @@ export interface Meeting {
     endTime: Date;
     notes: string;
     accepted: boolean;
+    hostName?: string;
+    guestName?: string;
+    hostImgFilename?: string;
+    guestImgFilename?: string;
 }

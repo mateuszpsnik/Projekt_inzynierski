@@ -24,6 +24,9 @@ import { ReviewsListComponent } from './reviews-list/reviews-list.component';
 import { MeetingComponent } from './meeting/meeting.component';
 import { ReportComponent } from './report/report.component';
 import { MenuComponent } from './menu/menu.component';
+import { MeetingsComponent } from './meetings/meetings.component';
+import { MeetingsListComponent } from './meetings-list/meetings-list.component';
+import { MyDatePipe } from './meetings-list/date.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { MenuComponent } from './menu/menu.component';
     FooterComponent,
     MeetingComponent,
     ReportComponent,
-    MenuComponent
+    MenuComponent,
+    MeetingsComponent,
+    MeetingsListComponent,
+    MyDatePipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

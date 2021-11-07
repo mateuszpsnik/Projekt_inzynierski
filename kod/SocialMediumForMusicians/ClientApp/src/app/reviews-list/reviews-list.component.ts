@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Review } from "../../models/review";
 import { ReviewService } from "../review/review.service";
-import { PaginationApiResult } from "../musician/musician.service";
+import { PaginationApiResult } from 'src/models/pagination_api_result';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,7 +11,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 })
 export class ReviewsListComponent implements OnInit {
     public reviews: Array<Review>;
-    @Input() musicianId: number;
+    @Input() musicianId: string;
 
     @ViewChild(MatPaginator)
     private paginator: MatPaginator;

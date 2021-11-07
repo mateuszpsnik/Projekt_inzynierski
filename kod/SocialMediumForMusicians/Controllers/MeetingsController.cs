@@ -23,9 +23,35 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Meetings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Meeting>>> GetMeetings()
+        public async Task<ActionResult<PaginationApiResult<MeetingDTO>>> GetMeetings(
+            string hostId = null, string guestId = null, int pageIndex = 0,
+            int pageSize = 3)
         {
-            return await _context.Meetings.ToListAsync();
+            var elements = _context.Meetings.Select(m => new MeetingDTO
+            {
+                Id = m.Id,
+                HostId = m.HostId,
+                GuestId = m.GuestId,
+                StartTime = m.StartTime,
+                EndTime = m.EndTime,
+                Notes = m.Notes,
+                Accepted = m.Accepted,
+                HostName = m.Host.Name,
+                GuestName = m.Guest.Name,
+                HostImgFilename = m.Host.ProfilePicFilename,
+                GuestImgFilename = m.Guest.ProfilePicFilename
+            }).OrderByDescending(m => m.StartTime);
+
+            if (!string.IsNullOrEmpty(hostId))
+            {
+                elements = (IOrderedQueryable<MeetingDTO>)elements.Where(m => m.HostId == hostId);
+            }
+            else if (!string.IsNullOrEmpty(guestId))
+            {
+                elements = (IOrderedQueryable<MeetingDTO>)elements.Where(m => m.GuestId == guestId);
+            }
+
+            return await PaginationApiResult<MeetingDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/Meetings/5

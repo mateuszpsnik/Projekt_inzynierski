@@ -2,14 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Musician } from "../../models/musician";
-
-export interface PaginationApiResult<T> {
-    elements: T[];
-    totalCount: number;
-    totalPages: number;
-    pageIndex: number;
-    pageSize: number;
-}
+import { PaginationApiResult } from "src/models/pagination_api_result";
 
 @Injectable({ providedIn: "root" })
 export class MusicianService {

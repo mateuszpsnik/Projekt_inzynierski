@@ -3,9 +3,10 @@ import { ActivatedRoute } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Musician } from "../../models/musician";
-import { MusicianService, PaginationApiResult } from "../musician/musician.service";
+import { MusicianService } from "../musician/musician.service";
 import { InstrumentItem } from "../home-form/home-form.component";
 import { HttpClient } from "@angular/common/http";
+import { PaginationApiResult } from "src/models/pagination_api_result";
 
 @Component({
     selector: "app-musicians-list",
