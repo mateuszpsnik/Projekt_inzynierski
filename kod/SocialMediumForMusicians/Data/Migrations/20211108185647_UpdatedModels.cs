@@ -214,9 +214,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 name: "Meetings",
                 columns: table => new
                 {
-                    Key = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     HostId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GuestId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -226,7 +224,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meetings", x => x.Key);
+                    table.PrimaryKey("PK_Meetings", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Meetings_AspNetUsers_GuestId",
                         column: x => x.GuestId,
@@ -243,9 +241,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Key = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RecipentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -254,7 +250,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.Key);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Messages_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,
@@ -292,15 +288,13 @@ namespace SocialMediumForMusicians.Data.Migrations
                 name: "Reports",
                 columns: table => new
                 {
-                    Key = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Justification = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reports", x => x.Key);
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Reports_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -313,9 +307,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 name: "EmailMessage",
                 columns: table => new
                 {
-                    Key = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RecipentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -324,7 +316,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmailMessage", x => x.Key);
+                    table.PrimaryKey("PK_EmailMessage", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EmailMessage_Musicians_RecipentId",
                         column: x => x.RecipentId,
@@ -336,17 +328,16 @@ namespace SocialMediumForMusicians.Data.Migrations
                 name: "Reviews",
                 columns: table => new
                 {
-                    Key = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TargetId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.Key);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,

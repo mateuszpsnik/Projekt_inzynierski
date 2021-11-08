@@ -30,7 +30,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Messages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Message>> GetMessage(int id)
+        public async Task<ActionResult<Message>> GetMessage(Guid id)
         {
             var message = await _context.Messages.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Messages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMessage(string id, Message message)
+        public async Task<IActionResult> PutMessage(Guid id, Message message)
         {
             if (id != message.Id)
             {
@@ -86,7 +86,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // DELETE: api/Messages/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMessage(int id)
+        public async Task<IActionResult> DeleteMessage(Guid id)
         {
             var message = await _context.Messages.FindAsync(id);
             if (message == null)
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MessageExists(string id)
+        private bool MessageExists(Guid id)
         {
             return _context.Messages.Any(e => e.Id == id);
         }

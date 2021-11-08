@@ -38,7 +38,6 @@ export class ReportComponent implements OnInit {
 
         if (justification !== '') {
             const report: Report = {
-                id: Guid.newGuid(),
                 userId: this.userId,
                 justification: justification
             };

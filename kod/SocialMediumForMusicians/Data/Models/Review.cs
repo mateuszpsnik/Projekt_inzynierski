@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialMediumForMusicians.Data.Models
@@ -7,10 +8,7 @@ namespace SocialMediumForMusicians.Data.Models
     public class Review
     {
         [Key]
-        public int Key { get; set; }
-
-        [Required]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string AuthorId { get; set; }
@@ -26,5 +24,8 @@ namespace SocialMediumForMusicians.Data.Models
         public Musician Target { get; set; }
 
         public string Description { get; set; }
+
+        [Required]
+        public DateTime SentAt { get; set; }
     }
 }

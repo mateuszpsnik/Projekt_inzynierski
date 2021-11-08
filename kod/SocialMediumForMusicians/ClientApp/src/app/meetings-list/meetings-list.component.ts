@@ -3,6 +3,7 @@ import { MeetingService } from "../meeting/meeting.service";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { Meeting } from "src/models/meeting";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-meetings-list',
@@ -19,7 +20,8 @@ export class MeetingsListComponent implements OnInit {
     private paginator: MatPaginator;
     defaultPageSize = 3;
 
-    constructor(private meetingService: MeetingService) {}
+    constructor(private meetingService: MeetingService,
+        private router: Router) {}
 
     ngOnInit() {
         const pageEvent = new PageEvent();
@@ -30,8 +32,6 @@ export class MeetingsListComponent implements OnInit {
         // getMeetings() doesn't set the paginator
         this.getMeetings(pageEvent);
         this.getMeetings(pageEvent);
-
-        console.log('meeting', this.meetings);
     }
 
     getMeetings(event: PageEvent) {
@@ -53,5 +53,28 @@ export class MeetingsListComponent implements OnInit {
                     this.paginator.length = result.totalCount;
                 }, err => console.error(err));
         }
+    }
+
+    accept(meeting: Meeting) {
+        meeting.accepted = true;
+        this.meetingService.put(meeting).subscribe(result => {
+            console.log(result);
+
+            const pageEvent = new PageEvent();
+            pageEvent.pageIndex = 0;
+            pageEvent.pageSize = this.defaultPageSize;
+            this.getMeetings(pageEvent);
+        }, err => console.error(err));
+    }
+
+    cancel(meeting: Meeting) {
+        this.meetingService.delete(meeting).subscribe(result => {
+            console.log(result);
+
+            const pageEvent = new PageEvent();
+            pageEvent.pageIndex = 0;
+            pageEvent.pageSize = this.defaultPageSize;
+            this.getMeetings(pageEvent);
+        }, err => console.error(err));
     }
 }

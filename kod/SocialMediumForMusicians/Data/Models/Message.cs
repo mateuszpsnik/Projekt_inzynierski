@@ -8,10 +8,7 @@ namespace SocialMediumForMusicians.Data.Models
     public class Message
     {
         [Key]
-        public int Key { get; set; }
-
-        [Required]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string AuthorId { get; set; }

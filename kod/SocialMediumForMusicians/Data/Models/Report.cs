@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System;
 
 namespace SocialMediumForMusicians.Data.Models
 {
@@ -8,10 +9,7 @@ namespace SocialMediumForMusicians.Data.Models
     public class Report
     {
         [Key]
-        public int Key { get; set; }
-
-        [Required]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string UserId { get; set; }

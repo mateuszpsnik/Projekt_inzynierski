@@ -1,5 +1,5 @@
 export interface Report {
-    id: string;
+    id?: string;
     userId: string;
     justification: string;
 }

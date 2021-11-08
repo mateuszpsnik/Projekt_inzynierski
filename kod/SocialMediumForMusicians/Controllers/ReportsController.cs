@@ -30,7 +30,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Reports/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Report>> GetReport(int id)
+        public async Task<ActionResult<Report>> GetReport(Guid id)
         {
             var report = await _context.Reports.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Reports/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReport(string id, Report report)
+        public async Task<IActionResult> PutReport(Guid id, Report report)
         {
             if (id != report.Id)
             {
@@ -86,7 +86,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // DELETE: api/Reports/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReport(int id)
+        public async Task<IActionResult> DeleteReport(Guid id)
         {
             var report = await _context.Reports.FindAsync(id);
             if (report == null)
@@ -100,7 +100,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool ReportExists(string id)
+        private bool ReportExists(Guid id)
         {
             return _context.Reports.Any(e => e.Id == id);
         }

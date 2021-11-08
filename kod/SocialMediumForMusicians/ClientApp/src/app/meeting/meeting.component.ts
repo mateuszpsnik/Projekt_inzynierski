@@ -51,7 +51,6 @@ export class MeetingComponent implements OnInit {
         this.notes = notes;
 
         const meeting: Meeting = {
-            id: Guid.newGuid(),
             hostId: this.musicianId,
             guestId: this.userId,
             startTime: this.start,

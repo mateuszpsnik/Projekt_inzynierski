@@ -28,15 +28,15 @@ namespace SocialMediumForMusicians.Controllers
         {
             var elements = _context.Reviews.Select(r => new ReviewsListDTO()
             {
-                Id = r.Id,
+                Id = r.Id.ToString(),
                 Rate = r.Rate,
                 Description = r.Description,
                 AuthorName = r.Author.Name,
                 AuthorProfilePicFilename = r.Author.ProfilePicFilename,
                 TargetId = r.TargetId,
                 TargetProfilePicFilename = r.Target.ProfilePicFilename,
-                Key = r.Key
-            }).OrderByDescending(r => r.Key);
+                SentAt = r.SentAt
+            }).OrderByDescending(r => r.SentAt);
 
             if (top.HasValue)
             {
@@ -55,7 +55,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Reviews/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Review>> GetReview(int id)
+        public async Task<ActionResult<Review>> GetReview(Guid id)
         {
             var review = await _context.Reviews.FindAsync(id);
 
@@ -70,7 +70,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Reviews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(string id, Review review)
+        public async Task<IActionResult> PutReview(Guid id, Review review)
         {
             if (id != review.Id)
             {
@@ -111,7 +111,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // DELETE: api/Reviews/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReview(int id)
+        public async Task<IActionResult> DeleteReview(Guid id)
         {
             var review = await _context.Reviews.FindAsync(id);
             if (review == null)
@@ -125,7 +125,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool ReviewExists(string id)
+        private bool ReviewExists(Guid id)
         {
             return _context.Reviews.Any(e => e.Id == id);
         }

@@ -46,6 +46,8 @@ export class MusicianComponent implements OnInit {
         });
         this.service.get<Musician>(this.id).subscribe(musician => {
             this.musician = musician;
+            console.log(this.musician);
+            
         });
 
         this.formMessage = new FormGroup({
@@ -90,7 +92,6 @@ export class MusicianComponent implements OnInit {
         if (this.isAuthenticated) {
             if (content !== '') {
                 const message: Message = {
-                    id: Guid.newGuid(),
                     authorId: this.userId,
                     recipentId: this.id,
                     content: content,
@@ -106,7 +107,6 @@ export class MusicianComponent implements OnInit {
         } else {
             if (content !== '' && emailAddress !== '') {
                 const message: EmailMessage = {
-                    id: Guid.newGuid(),
                     authorEmail: emailAddress,
                     recipentId: this.id,
                     content: content,

@@ -63,31 +63,36 @@ namespace SocialMediumForMusicians.Tests
                 {
                     Author = m4,
                     Target = m1,
-                    Rate = 4
+                    Rate = 4,
+                    SentAt = new System.DateTime(2000, 12, 31, 15, 43, 23)
                 };
                 var r2 = new Review()
                 {
                     Author = m4,
                     Target = m1,
-                    Rate = 3
+                    Rate = 3,
+                    SentAt = new System.DateTime(2001, 12, 31, 15, 43, 23)
                 };
                 var r3 = new Review()
                 {
                     Author = m4,
                     Target = m2,
-                    Rate = 5
+                    Rate = 5,
+                    SentAt = new System.DateTime(2002, 12, 31, 15, 43, 23)
                 };
                 var r4 = new Review()
                 {
                     Author = m1,
                     Target = m2,
-                    Rate = 2
+                    Rate = 2,
+                    SentAt = new System.DateTime(2003, 12, 31, 15, 43, 23)
                 };
                 var r5 = new Review()
                 {
                     Author = m2,
                     Target = m1,
-                    Rate = 1
+                    Rate = 1,
+                    SentAt = new System.DateTime(2004, 12, 31, 15, 43, 23)
                 };
                 context.AddRange(new List<Review>() { r1, r2, r3, r4, r5 });
 

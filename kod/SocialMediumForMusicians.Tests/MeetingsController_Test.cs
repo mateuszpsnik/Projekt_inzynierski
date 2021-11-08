@@ -49,7 +49,7 @@ namespace SocialMediumForMusicians.Tests
 
                 var meet1 = new Meeting
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     Host = m1,
                     Guest = m2,
                     StartTime = DateTime.Now,
@@ -58,7 +58,7 @@ namespace SocialMediumForMusicians.Tests
 
                 var meet2 = new Meeting
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     Host = m2,
                     Guest = m1,
                     StartTime = DateTime.Now,
@@ -67,7 +67,7 @@ namespace SocialMediumForMusicians.Tests
 
                 var meet3 = new Meeting
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     Host = m2,
                     Guest = m1,
                     StartTime = DateTime.Now,
@@ -76,7 +76,7 @@ namespace SocialMediumForMusicians.Tests
 
                 var meet4 = new Meeting
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     Host = m2,
                     Guest = m1,
                     StartTime = DateTime.Now,
@@ -85,7 +85,7 @@ namespace SocialMediumForMusicians.Tests
 
                 var meet5 = new Meeting
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid(),
                     Host = m2,
                     Guest = m1,
                     StartTime = DateTime.Now,

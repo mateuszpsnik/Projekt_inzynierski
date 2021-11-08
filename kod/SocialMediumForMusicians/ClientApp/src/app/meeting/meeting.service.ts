@@ -40,4 +40,9 @@ export class MeetingService {
         const url = this.baseUrl + 'api/Meetings/';
         return this.http.post<Meeting>(url, meeting);
     }
+
+    delete(meeting: Meeting): Observable<Meeting> {
+        const url = this.baseUrl + 'api/Meetings/' + meeting.id;
+        return this.http.delete<Meeting>(url);
+    }
 }

@@ -8,11 +8,8 @@ namespace SocialMediumForMusicians.Data.Models
     public class Meeting
     {
         [Key]
-        public int Key { get; set; }
+        public Guid Id { get; set; }
 
-        [Required]
-        public string Id { get; set; }
-        
         [Required]
         public string HostId { get; set; }
 

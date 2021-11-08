@@ -27,6 +27,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MeetingsComponent } from './meetings/meetings.component';
 import { MeetingsListComponent } from './meetings-list/meetings-list.component';
 import { MyDatePipe } from './meetings-list/date.pipe';
+import { MyTimePipe } from './meetings-list/time.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { MyDatePipe } from './meetings-list/date.pipe';
     MenuComponent,
     MeetingsComponent,
     MeetingsListComponent,
-    MyDatePipe
+    MyDatePipe,
+    MyTimePipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -101,31 +101,35 @@ namespace SocialMediumForMusicians.Controllers
 
             var review0 = new Review
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician0,
-                Rate = 5
+                Rate = 5,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 03)
             };
             var review1 = new Review
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician1,
-                Rate = 4
+                Rate = 4,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 04)
             };
             var review2 = new Review
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician2,
-                Rate = 3
+                Rate = 3,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 05)
             };
             var review3 = new Review
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician1,
-                Rate = 3
+                Rate = 3,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 06)
             };
             var reviews = new List<Review> { review0, review1, review2, review3 };
 
@@ -192,7 +196,8 @@ namespace SocialMediumForMusicians.Controllers
                     UserName = musicianEmail,
                     Name = "Aaa Bbb",
                     Price = 0,
-                    IsMusician = true
+                    IsMusician = true,
+                    Instruments = new List<string>() { "Guitar", "Piano" }
                 };
 
                 await userManager.CreateAsync(musician, "!musician1");

@@ -29,7 +29,7 @@ namespace SocialMediumForMusicians.Controllers
         {
             var elements = _context.Meetings.Select(m => new MeetingDTO
             {
-                Id = m.Id,
+                Id = m.Id.ToString(),
                 HostId = m.HostId,
                 GuestId = m.GuestId,
                 StartTime = m.StartTime,
@@ -56,7 +56,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Meetings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Meeting>> GetMeeting(int id)
+        public async Task<ActionResult<Meeting>> GetMeeting(Guid id)
         {
             var meeting = await _context.Meetings.FindAsync(id);
 
@@ -71,7 +71,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/Meetings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMeeting(string id, Meeting meeting)
+        public async Task<IActionResult> PutMeeting(Guid id, Meeting meeting)
         {
             if (id != meeting.Id)
             {
@@ -112,7 +112,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // DELETE: api/Meetings/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMeeting(int id)
+        public async Task<IActionResult> DeleteMeeting(Guid id)
         {
             var meeting = await _context.Meetings.FindAsync(id);
             if (meeting == null)
@@ -126,7 +126,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MeetingExists(string id)
+        private bool MeetingExists(Guid id)
         {
             return _context.Meetings.Any(e => e.Id == id);
         }

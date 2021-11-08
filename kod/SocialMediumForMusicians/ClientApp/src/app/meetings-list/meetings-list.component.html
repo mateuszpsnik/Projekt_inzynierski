@@ -2,41 +2,69 @@
 <div class="container mt-4" [hidden]="!meetings">
     <div class="row align-items-center text-dark border" *ngFor="let meeting of meetings">
         <div class="row">
-            <div class="col-sm-2 px-1 py-2">
-                <div *ngIf="imgPath; then thenBlock; else elseBlock"></div>
-                <ng-template #thenBlock>
-                    <img src="{{ guestImgFilename }}" alt="Zdjęcie profilowe"
-                        class="img-fluid mx-auto d-block mx-md-0"
-                        style="max-height: 300px;" *ngIf="isHost">
-                    <img src="{{ hostImgFilename }}" alt="Zdjęcie profilowe"
-                        class="img-fluid mx-auto d-block mx-md-0"
-                        style="max-height: 300px;" *ngIf="isGuest">
-                </ng-template>
-                <ng-template #elseBlock>
-                    <img src="default.png" alt="Zdjęcie profilowe"
-                        class="img-fluid mx-auto d-block mx-md-0"
-                        style="max-height: 300px;">
-                </ng-template>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-2 px-1 py-2">
+                        <div *ngIf="imgPath; then thenBlock; else elseBlock"></div>
+                        <ng-template #thenBlock>
+                            <img src="{{ guestImgFilename }}" alt="Zdjęcie profilowe"
+                                class="img-fluid mx-auto d-block mx-md-0"
+                                style="max-height: 400px;" *ngIf="isHost">
+                            <img src="{{ hostImgFilename }}" alt="Zdjęcie profilowe"
+                                class="img-fluid mx-auto d-block mx-md-0"
+                                style="max-height: 300px;" *ngIf="isGuest">
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <img src="default.png" alt="Zdjęcie profilowe"
+                                class="img-fluid mx-auto d-block mx-md-0"
+                                style="max-height: 400px;">
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-8 ml-3 pt-2">
+                        <div class="row mt-2" *ngIf="isHost">
+                            <p class="fw-bold">{{ meeting.guestName }}</p>
+                        </div>  
+                        <div class="row mt-2" *ngIf="isGuest">
+                            <p class="fw-bold">{{ meeting.hostName }}</p>
+                        </div>  
+                        <div class="row mt-2 fs-5">
+                            <p class="fw-light">
+                                <span>{{ meeting.startTime | myDate }}&emsp;</span>
+                                <span>{{ meeting.startTime | myTime }}</span>
+                            </p>
+                        </div>               
+                        <div class="row mt-2 fs-5">
+                            <p class="fw-light">
+                                <span>{{ meeting.endTime | myDate }}&emsp;</span>
+                                <span>{{ meeting.endTime | myTime }}</span>
+                            </p>
+                        </div> 
+                    </div>                
+                </div>
+                <div class="row">
+                    <span class="my-2 mx-1">
+                        {{ meeting.notes }}
+                    </span>            
+                </div>
             </div>
-            <div class="col-sm-10 ml-3 pt-2">
-                <div class="row mt-2" *ngIf="isHost">
-                    <p class="fw-light">{{ meeting.guestName }}</p>
-                </div>  
-                <div class="row mt-2" *ngIf="isGuest">
-                    <p class="fw-light">{{ meeting.hostName }}</p>
-                </div>  
-                <div class="row mt-2">
-                    <p class="fw-light">{{ meeting.startTime | myDate }}</p>
-                </div>               
-                <div class="row mt-2">
-                    <p class="fw-light">{{ meeting.endTime | myDate }}</p>
-                </div> 
+            <div class="col-sm-2">
+                <div class="row mt-3" *ngIf="isHost && !meeting.accepted">
+                    <button class="btn btn-outline-success" (click)="accept(meeting)">
+                        Akceptuj
+                    </button>
+                </div>
+                <div class="row mt-3" *ngIf="meeting.accepted">
+                    <span class="text-success">Zaakceptowane</span>
+                </div>
+                <div class="row mt-3" *ngIf="isGuest && !meeting.accepted">
+                    <span class="text-muted">Niezaakceptowane</span>
+                </div>
+                <div class="row mt-3">
+                    <button class="btn btn-outline-danger" (click)="cancel(meeting)">
+                        Odwołaj spotkanie
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <span class="m-1">
-                {{ meeting.notes }}
-            </span>            
         </div>
     </div>        
 </div>

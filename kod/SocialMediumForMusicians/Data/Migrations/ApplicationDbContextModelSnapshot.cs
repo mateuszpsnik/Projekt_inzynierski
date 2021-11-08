@@ -259,20 +259,15 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.EmailMessage", b =>
                 {
-                    b.Property<int>("Key")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -286,7 +281,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("RecipentId");
 
@@ -311,10 +306,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Meeting", b =>
                 {
-                    b.Property<int>("Key")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
@@ -330,17 +324,13 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("GuestId");
 
@@ -351,20 +341,15 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Message", b =>
                 {
-                    b.Property<int>("Key")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -378,7 +363,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
@@ -389,14 +374,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Report", b =>
                 {
-                    b.Property<int>("Key")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Justification")
                         .IsRequired()
@@ -406,7 +386,7 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -415,10 +395,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Review", b =>
                 {
-                    b.Property<int>("Key")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
@@ -427,18 +406,17 @@ namespace SocialMediumForMusicians.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Rate")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TargetId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
