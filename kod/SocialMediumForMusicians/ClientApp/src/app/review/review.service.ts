@@ -11,7 +11,7 @@ export class ReviewService {
         @Inject("BASE_URL")
         private baseUrl: string) { }
 
-    getReviews(top: number) : Observable<PaginationApiResult<Review>> {
+    getReviews(top: number): Observable<PaginationApiResult<Review>> {
         let url = this.baseUrl + "api/Reviews/";
         let params = new HttpParams().set("top", top.toString());
 
@@ -24,6 +24,14 @@ export class ReviewService {
         let params = new HttpParams().set("id", id.toString())
                                      .set("pageIndex", pageIndex.toString())
                                      .set("pageSize", pageSize.toString());
+        return this.http.get<PaginationApiResult<Review>>(url, { params });
+    }
+
+    anyReviews(targetId: string, authorId: string)
+            : Observable<PaginationApiResult<Review>> {
+        const url = this.baseUrl + 'api/Reviews';
+        const params = new HttpParams().set('id', targetId)
+                                       .set('authorId', authorId);
         return this.http.get<PaginationApiResult<Review>>(url, { params });
     }
 

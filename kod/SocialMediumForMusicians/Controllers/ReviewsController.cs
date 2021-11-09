@@ -24,7 +24,8 @@ namespace SocialMediumForMusicians.Controllers
         // GET: api/Reviews
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<ReviewsListDTO>>> GetReviews(
-            int? top = null, string id = null, int pageIndex = 0, int pageSize = 3)
+            int? top = null, string id = null, int pageIndex = 0, int pageSize = 3,
+            string authorId = null)
         {
             var elements = _context.Reviews.Select(r => new ReviewsListDTO()
             {
@@ -35,7 +36,8 @@ namespace SocialMediumForMusicians.Controllers
                 AuthorProfilePicFilename = r.Author.ProfilePicFilename,
                 TargetId = r.TargetId,
                 TargetProfilePicFilename = r.Target.ProfilePicFilename,
-                SentAt = r.SentAt
+                SentAt = r.SentAt,
+                AuthorId = r.AuthorId
             }).OrderByDescending(r => r.SentAt);
 
             if (top.HasValue)
@@ -47,6 +49,11 @@ namespace SocialMediumForMusicians.Controllers
             if (!string.IsNullOrEmpty(id))
             {
                 elements = (IOrderedQueryable<ReviewsListDTO>)elements.Where(r => r.TargetId == id);
+            }
+
+            if (!string.IsNullOrEmpty(authorId))
+            {
+                elements = (IOrderedQueryable<ReviewsListDTO>)elements.Where(r => r.AuthorId == authorId);
             }
 
             return await PaginationApiResult<ReviewsListDTO>.CreateAsync(

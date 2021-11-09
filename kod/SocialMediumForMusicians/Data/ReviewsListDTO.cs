@@ -12,5 +12,6 @@ namespace SocialMediumForMusicians.Data
         public string TargetId { get; set; }
         public string TargetProfilePicFilename { get; set; }
         public DateTime SentAt { get; set; }
+        public string AuthorId { get; set; }
     }
 }

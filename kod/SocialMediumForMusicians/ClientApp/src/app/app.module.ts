@@ -28,6 +28,8 @@ import { MeetingsComponent } from './meetings/meetings.component';
 import { MeetingsListComponent } from './meetings-list/meetings-list.component';
 import { MyDatePipe } from './meetings-list/date.pipe';
 import { MyTimePipe } from './meetings-list/time.pipe';
+import { MyReviewPipe } from './meetings-list/review.pipe';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { MyTimePipe } from './meetings-list/time.pipe';
     MeetingsComponent,
     MeetingsListComponent,
     MyDatePipe,
-    MyTimePipe
+    MyTimePipe,
+    MyReviewPipe,
+    ReviewComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -59,6 +59,12 @@
                 <div class="row mt-3" *ngIf="isGuest && !meeting.accepted">
                     <span class="text-muted">Niezaakceptowane</span>
                 </div>
+                <div class="row mt-3" *ngIf="isGuest && meeting.accepted && (meeting.endTime | isReviewButton)">
+                    <a class="btn btn-outline-primary" [routerLink]="['/Reviews', meeting.hostId ]" 
+                        [queryParams]="{ name: meeting.hostName }">
+                        Oceń muzyka
+                    </a>
+                </div>
                 <div class="row mt-3">
                     <button class="btn btn-outline-danger" (click)="cancel(meeting)">
                         Odwołaj spotkanie
