@@ -23,9 +23,39 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/Messages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Message>>> GetMessages()
+        public async Task<ActionResult<PaginationApiResult<MessageDTO>>> GetMessages(
+            string id = null, string authorId = null, int pageIndex = 0, int pageSize = 10)
         {
-            return await _context.Messages.ToListAsync();
+            var elements = _context.Messages.Select(m => new MessageDTO()
+            {
+                Id = m.Id.ToString(),
+                AuthorId = m.AuthorId,
+                RecipentId = m.RecipentId,
+                Content = m.Content,
+                Read = m.Read,
+                SentAt = m.SentAt,
+                AuthorName = m.Author.Name,
+                AuthorImgFilename = m.Author.ProfilePicFilename
+            });
+
+            // protect from access to all messagess
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest();
+            }
+
+            if (string.IsNullOrEmpty(authorId))
+            {
+                elements = elements.Where(m => m.RecipentId == id).OrderByDescending(m => m.SentAt);
+            }
+            else
+            {
+                // take all messages in a thread (both directions)
+                elements = elements.Where(m => ((m.RecipentId == id && m.AuthorId == authorId) || 
+                    (m.AuthorId == id && m.RecipentId == authorId))).OrderBy(m => m.SentAt);
+            }
+
+            return await PaginationApiResult<MessageDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/Messages/5

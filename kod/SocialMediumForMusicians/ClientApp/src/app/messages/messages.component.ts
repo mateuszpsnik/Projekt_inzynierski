@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 
 @Component({
-    selector: 'app-meetings',
-    templateUrl: './meetings.component.html'
+    selector: 'app-messages',
+    templateUrl: './messages.component.html'
 })
-export class MeetingsComponent implements OnInit {
+export class MessagesComponent implements OnInit {
     isAuthenticated: boolean;
     userId: string;
 

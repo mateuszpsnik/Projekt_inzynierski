@@ -28,9 +28,6 @@ export class MeetingsListComponent implements OnInit {
         pageEvent.pageIndex = 0;
         pageEvent.pageSize = this.defaultPageSize;
 
-        // I don't know why but the first
-        // getMeetings() doesn't set the paginator
-        this.getMeetings(pageEvent);
         this.getMeetings(pageEvent);
     }
 

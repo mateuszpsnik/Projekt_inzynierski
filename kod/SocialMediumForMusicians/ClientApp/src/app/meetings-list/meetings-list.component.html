@@ -77,7 +77,6 @@
 
 <!-- Paginator -->
 <mat-paginator
-    *ngIf="meetings"
     (page)="getMeetings($event)"
     [pageSize]="defaultPageSize"
     [pageSizeOptions]="[3, 5, 10]"

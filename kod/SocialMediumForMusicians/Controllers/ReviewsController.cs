@@ -83,7 +83,7 @@ namespace SocialMediumForMusicians.Controllers
             {
                 return BadRequest();
             }
-
+            
             _context.Entry(review).State = EntityState.Modified;
 
             try

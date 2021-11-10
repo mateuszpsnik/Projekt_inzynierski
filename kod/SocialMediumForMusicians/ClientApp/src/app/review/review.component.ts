@@ -30,19 +30,19 @@ export class ReviewComponent implements OnInit {
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             this.targetId = params.id;
-        });
+        }, err => console.error(err));
         this.activatedRoute.queryParamMap.subscribe(params => {
             this.targetName = params.get('name');
-        });
+        }, err => console.error(err));
 
         this.authService.isAuthenticated().subscribe(isAuth => {
             this.isAuthenticated = isAuth;
-        });
+        }, err => console.error(err));
 
         if (this.isAuthenticated) {
             this.authService.getUser().subscribe(authUser => {
                 this.authorId = authUser.sub;
-            });
+            }, err => console.error(err));
 
             this.reviewService.anyReviews(this.targetId, this.authorId).subscribe(result => {
                 console.log(result);
@@ -51,7 +51,7 @@ export class ReviewComponent implements OnInit {
                 } else {
                     this.isAnyReview = false;
                 }
-            }, err => console.log(err));
+            }, err => console.error(err));
         }
 
         this.form = new FormGroup({

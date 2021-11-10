@@ -5,6 +5,8 @@ export interface Message {
     content: string;
     read: boolean;
     sentAt: Date;
+    authorName?: string;
+    authorImgFilename?: string;
 }
 
 export interface EmailMessage {

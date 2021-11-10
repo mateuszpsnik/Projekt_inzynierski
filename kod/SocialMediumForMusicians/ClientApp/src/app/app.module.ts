@@ -30,6 +30,10 @@ import { MyDatePipe } from './meetings-list/date.pipe';
 import { MyTimePipe } from './meetings-list/time.pipe';
 import { MyReviewPipe } from './meetings-list/review.pipe';
 import { ReviewComponent } from './review/review.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MessagesListComponent } from './messages-list/messages-list.component';
+import { MessagesThreadComponent } from './messages-thread/messages-thread.component';
+import { EmailMessagesListComponent } from './email-messages-list/email-messages-list.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +55,11 @@ import { ReviewComponent } from './review/review.component';
     MyDatePipe,
     MyTimePipe,
     MyReviewPipe,
-    ReviewComponent
+    ReviewComponent,
+    MessagesComponent,
+    MessagesListComponent,
+    MessagesThreadComponent,
+    EmailMessagesListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

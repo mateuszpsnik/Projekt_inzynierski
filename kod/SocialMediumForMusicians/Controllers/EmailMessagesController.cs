@@ -23,9 +23,28 @@ namespace SocialMediumForMusicians.Controllers
 
         // GET: api/EmailMessages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmailMessage>>> GetEmailMessage()
+        public async Task<ActionResult<PaginationApiResult<EmailMessageDTO>>> GetEmailMessage(
+            string id = null, int pageIndex = 0, int pageSize = 3)
         {
-            return await _context.EmailMessage.ToListAsync();
+            var elements = _context.EmailMessage.Select(m => new EmailMessageDTO()
+            {
+                Id = m.Id.ToString(),
+                AuthorEmail = m.AuthorEmail,
+                RecipentId = m.RecipentId,
+                Content = m.Content,
+                Read = m.Read,
+                SentAt = m.SentAt
+            });
+
+            // protect from access to all messagess
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest();
+            }
+
+            elements = elements.Where(m => m.RecipentId == id).OrderByDescending(m => m.SentAt);
+
+            return await PaginationApiResult<EmailMessageDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/EmailMessages/5

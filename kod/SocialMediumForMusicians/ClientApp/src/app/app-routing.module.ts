@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthorizeGuard } from "src/api-authorization/authorize.guard";
 import { HomeComponent } from "./home/home.component";
 import { MeetingsComponent } from "./meetings/meetings.component";
+import { MessagesThreadComponent } from "./messages-thread/messages-thread.component";
+import { MessagesComponent } from "./messages/messages.component";
 import { MusicianComponent } from "./musician/musician.component";
 import { MusiciansComponent } from "./musicians/musicians.component";
 import { ReviewComponent } from "./review/review.component";
@@ -14,6 +16,10 @@ const routes: Routes = [
     { path: 'Meetings', component: MeetingsComponent,
         canActivate: [AuthorizeGuard] },
     { path: 'Reviews/:id', component: ReviewComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'Messages', component: MessagesComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'Messages/:id', component: MessagesThreadComponent,
         canActivate: [AuthorizeGuard] }
 ];
 
