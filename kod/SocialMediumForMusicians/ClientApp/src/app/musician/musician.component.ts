@@ -44,7 +44,7 @@ export class MusicianComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             this.id = params.id;
         });
-        this.service.get<Musician>(this.id).subscribe(musician => {
+        this.service.get(this.id).subscribe(musician => {
             this.musician = musician;
             console.log(this.musician);
             

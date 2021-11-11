@@ -32,7 +32,7 @@ export class MusicianService {
         return this.http.get<PaginationApiResult>(url, { params });
     }
 
-    get<Musician>(id): Observable<Musician> {
+    get(id): Observable<Musician> {
         let url = this.baseUrl + "api/Musicians/" + id;
         return this.http.get<Musician>(url);
     }
