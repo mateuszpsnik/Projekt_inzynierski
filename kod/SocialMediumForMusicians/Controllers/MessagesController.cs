@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
 using SocialMediumForMusicians.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialMediumForMusicians.Controllers
 {
@@ -22,6 +23,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Messages
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<MessageDTO>>> GetMessages(
             string id = null, string authorId = null, int pageIndex = 0, int pageSize = 10)
@@ -59,6 +61,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Messages/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Message>> GetMessage(Guid id)
         {
@@ -74,6 +77,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Messages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMessage(Guid id, Message message)
         {
@@ -105,6 +109,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Messages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
@@ -115,6 +120,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Messages/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMessage(Guid id)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -72,6 +73,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Musicians/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMusician(string id, Musician musician)
         {
@@ -103,6 +105,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Musicians
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Musician>> PostMusician(Musician musician)
         {
@@ -113,6 +116,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Musicians/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMusician(int id)
         {

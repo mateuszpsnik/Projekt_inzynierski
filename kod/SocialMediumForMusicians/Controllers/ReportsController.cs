@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Reports
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Report>>> GetReports()
         {
@@ -29,6 +31,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Reports/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Report>> GetReport(Guid id)
         {
@@ -44,6 +47,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Reports/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReport(Guid id, Report report)
         {
@@ -75,6 +79,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Reports
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Report>> PostReport(Report report)
         {
@@ -85,6 +90,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Reports/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReport(Guid id)
         {

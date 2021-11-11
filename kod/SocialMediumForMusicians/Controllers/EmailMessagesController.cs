@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
 using SocialMediumForMusicians.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialMediumForMusicians.Controllers
 {
@@ -22,6 +23,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/EmailMessages
+        [Authorize(Roles = "Musician")]
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<EmailMessageDTO>>> GetEmailMessage(
             string id = null, int pageIndex = 0, int pageSize = 3)
@@ -48,6 +50,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/EmailMessages/5
+        [Authorize(Roles = "Musician")]
         [HttpGet("{id}")]
         public async Task<ActionResult<EmailMessage>> GetEmailMessage(Guid id)
         {
@@ -104,6 +107,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/EmailMessages/5
+        [Authorize(Roles = "Musician")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmailMessage(Guid id)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Meetings
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<MeetingDTO>>> GetMeetings(
             string hostId = null, string guestId = null, int pageIndex = 0,
@@ -50,11 +52,17 @@ namespace SocialMediumForMusicians.Controllers
             {
                 elements = (IOrderedQueryable<MeetingDTO>)elements.Where(m => m.GuestId == guestId);
             }
+            else
+            {
+                // protect from access to all meetings
+                return BadRequest();
+            }
 
             return await PaginationApiResult<MeetingDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/Meetings/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Meeting>> GetMeeting(Guid id)
         {
@@ -70,6 +78,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Meetings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMeeting(Guid id, Meeting meeting)
         {
@@ -101,6 +110,7 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Meetings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Meeting>> PostMeeting(Meeting meeting)
         {
@@ -111,6 +121,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Meetings/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMeeting(Guid id)
         {
