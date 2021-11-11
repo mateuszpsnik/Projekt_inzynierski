@@ -38,7 +38,8 @@ namespace SocialMediumForMusicians.Controllers
                 TargetId = r.TargetId,
                 TargetProfilePicFilename = r.Target.ProfilePicFilename,
                 SentAt = r.SentAt,
-                AuthorId = r.AuthorId
+                AuthorId = r.AuthorId,
+                TargetName = r.Target.Name
             }).OrderByDescending(r => r.SentAt);
 
             if (top.HasValue)

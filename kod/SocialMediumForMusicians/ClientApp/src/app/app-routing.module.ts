@@ -8,6 +8,8 @@ import { MessagesComponent } from "./messages/messages.component";
 import { MusicianComponent } from "./musician/musician.component";
 import { MusiciansComponent } from "./musicians/musicians.component";
 import { ReviewComponent } from "./review/review.component";
+import { ReviewsMusicianComponent } from "./reviews-musician/reviews-musician.component";
+import { ReviewsUserComponent } from "./reviews-user/reviews-user.component";
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -20,6 +22,10 @@ const routes: Routes = [
     { path: 'Messages', component: MessagesComponent,
         canActivate: [AuthorizeGuard] },
     { path: 'Messages/:id', component: MessagesThreadComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'UserReviews', component: ReviewsUserComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'MusicianReviews', component: ReviewsMusicianComponent,
         canActivate: [AuthorizeGuard] }
 ];
 

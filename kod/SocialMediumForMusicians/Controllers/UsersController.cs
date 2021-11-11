@@ -31,7 +31,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Users/5
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {

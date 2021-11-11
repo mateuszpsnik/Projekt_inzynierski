@@ -13,6 +13,10 @@ export class ReviewsListComponent implements OnInit {
     public reviews: Array<Review>;
     @Input() musicianId: string;
 
+    // if this component is used as a list
+    // of reviews given by the specified used
+    @Input() userId: string;
+
     @ViewChild(MatPaginator)
     private paginator: MatPaginator;
     public defaultPageSize: number;
@@ -43,16 +47,29 @@ export class ReviewsListComponent implements OnInit {
     }
 
     getElements(event: PageEvent) {
-        this.service.getReviewsList(this.musicianId, event.pageIndex,
-            event.pageSize).subscribe(result => {
-                this.paginator.length = result.totalCount;
-                this.paginator.pageIndex = result.pageIndex;
-                this.paginator.pageSize = result.pageSize;
-                this.reviews = result.elements;
-                if (result.elements.length > 0) {
-                    this.showPaginator = true;
-                }
-            }, err => console.error(err));
+        if (this.userId) {
+            this.service.getUserReviewsList(this.userId, event.pageIndex,
+                event.pageSize).subscribe(result => {
+                    this.paginator.length = result.totalCount;
+                    this.paginator.pageIndex = result.pageIndex;
+                    this.paginator.pageSize = result.pageSize;
+                    this.reviews = result.elements;
+                    if (result.elements.length > 0) {
+                        this.showPaginator = true;
+                    }
+                }, err => console.error(err));
+        } else {
+            this.service.getReviewsList(this.musicianId, event.pageIndex,
+                event.pageSize).subscribe(result => {
+                    this.paginator.length = result.totalCount;
+                    this.paginator.pageIndex = result.pageIndex;
+                    this.paginator.pageSize = result.pageSize;
+                    this.reviews = result.elements;
+                    if (result.elements.length > 0) {
+                        this.showPaginator = true;
+                    }
+                }, err => console.error(err));
+        }
     }
 
     onSubmit() {

@@ -32,11 +32,4 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-
-  isMusician() {
-    if (this.user) {
-      return this.user.isMusician;
-    }
-    return false;
-  }
 }

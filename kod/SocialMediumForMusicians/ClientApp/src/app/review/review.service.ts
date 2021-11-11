@@ -27,6 +27,15 @@ export class ReviewService {
         return this.http.get<PaginationApiResult<Review>>(url, { params });
     }
 
+    getUserReviewsList(userId: string, pageIndex: number, pageSize: number)
+            : Observable<PaginationApiResult<Review>> {
+        const url = this.baseUrl + 'api/Reviews/';
+        const params = new HttpParams().set('authorId', userId)
+                                       .set('pageIndex', pageIndex.toString())
+                                       .set('pageSize', pageSize.toString());
+        return this.http.get<PaginationApiResult<Review>>(url, { params });
+    }
+
     anyReviews(targetId: string, authorId: string)
             : Observable<PaginationApiResult<Review>> {
         const url = this.baseUrl + 'api/Reviews';

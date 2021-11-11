@@ -34,6 +34,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessagesThreadComponent } from './messages-thread/messages-thread.component';
 import { EmailMessagesListComponent } from './email-messages-list/email-messages-list.component';
+import { ReviewsUserComponent } from './reviews-user/reviews-user.component';
+import { ReviewsMusicianComponent } from './reviews-musician/reviews-musician.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { EmailMessagesListComponent } from './email-messages-list/email-messages
     MessagesComponent,
     MessagesListComponent,
     MessagesThreadComponent,
-    EmailMessagesListComponent
+    EmailMessagesListComponent,
+    ReviewsUserComponent,
+    ReviewsMusicianComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

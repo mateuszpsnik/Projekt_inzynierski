@@ -7,5 +7,6 @@ export interface Review {
     authorProfilePicFilename?: string;
     targetId: string;
     targetProfilePicFilename?: string;
+    targetName?: string;
     sentAt: Date;
 }
