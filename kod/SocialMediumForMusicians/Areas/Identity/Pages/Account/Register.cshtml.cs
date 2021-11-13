@@ -127,11 +127,13 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             // Save the profile image
-            string filePath = null;
+            string imgPath = null;
             if (Input.UploadFile != null)
             {
-                filePath = Path.Combine(_environment.ContentRootPath, "wwwroot/profile-img",
-                    Input.Email + "_" + Input.UploadFile.FileName);
+                imgPath = Path.Combine("profile-img", Input.Email + "_" + 
+                    Input.UploadFile.FileName);
+                var filePath = Path.Combine(_environment.ContentRootPath, "wwwroot",
+                    imgPath); 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await Input.UploadFile.CopyToAsync(fileStream);
@@ -168,7 +170,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         Email = Input.Email,
                         IsMusician = true,
                         Name = Input.Name,
-                        ProfilePicFilename = filePath,
+                        ProfilePicFilename = imgPath,
                         Description = Input.Description,
                         Price = Input.Price ?? 50.00M,
                         LongDescription = Input.LongDescription,
@@ -188,7 +190,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         Email = Input.Email,
                         IsMusician = false,
                         Name = Input.Name,
-                        ProfilePicFilename = filePath,
+                        ProfilePicFilename = imgPath,
                         Description = Input.Description
                     };
                     result = await _userManager.CreateAsync(user, Input.Password);
@@ -205,8 +207,8 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Potwierdź swój email",
+                    $"Potwierdź proszę swoje konto, klikając <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>tutaj</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
