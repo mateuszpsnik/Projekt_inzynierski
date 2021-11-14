@@ -1,0 +1,55 @@
+<!-- List -->
+<div class="container mt-4" [hidden]="!reports">
+    <div class="row align-items-center text-dark border" *ngFor="let report of reports">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-2 px-1 py-2">
+                        <div *ngIf="imgFilename; then thenBlock; else elseBlock"></div>
+                        <ng-template #thenBlock>
+                            <img src="{{ imgFilename }}" alt="Zdjęcie profilowe"
+                                class="img-fluid mx-auto d-block mx-md-0"
+                                style="max-height: 400px;" *ngIf="isHost">
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <img src="default.png" alt="Zdjęcie profilowe"
+                                class="img-fluid mx-auto d-block mx-md-0"
+                                style="max-height: 400px;">
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-8 ml-3 pt-2">
+                        <div class="row mt-2">
+                            <p class="fw-bold">{{ report.userName }}</p>
+                        </div>  
+                        <div class="row mt-2 fs-5">
+                            <p class="fw-light">
+                                <span>{{ report.sentAt | myDate }}&emsp;</span>
+                                <span>{{ report.sentAt | myTime }}</span>
+                            </p>
+                        </div>
+                    </div>                
+                </div>
+                <div class="row">
+                    <span class="my-2 mx-1">
+                        {{ report.justification }}
+                    </span>            
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="row mt-3">
+                    <a [routerLink]="['/Block', report.userId]" class="btn btn-outline-danger">
+                        Blokuj
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>        
+</div>
+
+<!-- Paginator -->
+<mat-paginator
+    (page)="getReports($event)"
+    [pageSize]="defaultPageSize"
+    [pageSizeOptions]="[3, 5, 10]"
+    showFirstLastButtons>
+</mat-paginator>

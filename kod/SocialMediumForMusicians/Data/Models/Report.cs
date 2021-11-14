@@ -18,5 +18,7 @@ namespace SocialMediumForMusicians.Data.Models
 
         [Required]
         public string Justification { get; set; }
+
+        public DateTime SentAt { get; set; }
     }
 }

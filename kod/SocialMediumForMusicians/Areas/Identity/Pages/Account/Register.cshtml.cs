@@ -65,7 +65,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Podaj hasło")]
-            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]
             public string Password { get; set; }

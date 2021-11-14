@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
@@ -16,18 +17,40 @@ namespace SocialMediumForMusicians.Controllers
     public class ReportsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public ReportsController(ApplicationDbContext context)
+        public ReportsController(ApplicationDbContext context,
+            UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Reports
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Report>>> GetReports()
+        public async Task<ActionResult<PaginationApiResult<ReportDTO>>> GetReports(
+            string userId, int pageIndex = 0, int pageSize = 3)
         {
-            return await _context.Reports.ToListAsync();
+            var user = await _userManager.FindByIdAsync(userId);
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                var elements = _context.Reports.Select(r => new ReportDTO
+                {
+                    Id = r.Id.ToString(),
+                    UserId = r.UserId,
+                    UserName = r.User.Name,
+                    ImgFilename = r.User.ProfilePicFilename,
+                    Justification = r.Justification,
+                    SentAt = r.SentAt
+                }).OrderByDescending(r => r.SentAt);
+
+                return await PaginationApiResult<ReportDTO>.CreateAsync(elements, pageIndex, pageSize);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // GET: api/Reports/5

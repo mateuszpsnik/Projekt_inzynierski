@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
@@ -17,7 +18,8 @@ namespace SocialMediumForMusicians.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context,
+            UserManager<User> userManager)
         {
             _context = context;
         }

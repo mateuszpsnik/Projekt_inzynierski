@@ -10,7 +10,7 @@ using SocialMediumForMusicians.Data;
 namespace SocialMediumForMusicians.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211108185647_UpdatedModels")]
+    [Migration("20211114105553_UpdatedModels")]
     partial class UpdatedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -384,6 +384,9 @@ namespace SocialMediumForMusicians.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -434,9 +437,6 @@ namespace SocialMediumForMusicians.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Blocked")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

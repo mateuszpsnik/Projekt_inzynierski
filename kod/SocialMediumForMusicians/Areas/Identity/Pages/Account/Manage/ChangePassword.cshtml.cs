@@ -40,7 +40,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Nowe hasło")]
             public string NewPassword { get; set; }

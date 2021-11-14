@@ -1,6 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthorizeGuard } from "src/api-authorization/authorize.guard";
+import { AdminComponent } from "./admin/admin.component";
+import { BlockComponent } from "./block/block.component";
 import { FavouritesComponent } from "./favourites/favourites.component";
 import { HomeComponent } from "./home/home.component";
 import { MeetingsComponent } from "./meetings/meetings.component";
@@ -29,6 +31,10 @@ const routes: Routes = [
     { path: 'MusicianReviews', component: ReviewsMusicianComponent,
         canActivate: [AuthorizeGuard] },
     { path: 'Favourites', component: FavouritesComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'Admin', component: AdminComponent,
+        canActivate: [AuthorizeGuard] },
+    { path: 'Block/:id', component: BlockComponent,
         canActivate: [AuthorizeGuard] }
 ];
 

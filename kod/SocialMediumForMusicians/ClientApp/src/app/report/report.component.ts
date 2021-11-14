@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { Report } from "src/models/report";
 import { Guid } from 'src/models/guid';
+import { ReportService } from "./report.service";
 
 @Component({
     selector: 'app-report-button',
@@ -18,9 +19,7 @@ export class ReportComponent implements OnInit {
     @Input() userId: string;
 
     constructor(
-        private http: HttpClient,
-        @Inject('BASE_URL')
-        private baseUrl: string) {}
+        private service: ReportService) {}
 
     ngOnInit () {
         this.form = new FormGroup({
@@ -34,15 +33,15 @@ export class ReportComponent implements OnInit {
 
     onSubmit() {
         const justification = this.form.get('justification').value;
-        const url = this.baseUrl + 'api/Reports/';
 
         if (justification !== '') {
             const report: Report = {
                 userId: this.userId,
-                justification: justification
+                justification: justification,
+                sentAt: new Date(Date.now())
             };
 
-            this.http.post<Report>(url, report).subscribe(result => {
+            this.service.post(report).subscribe(result => {
                 console.log(result);
                 alert('Zgłoszenie zostało wysłane');
             }, err => console.error(err));

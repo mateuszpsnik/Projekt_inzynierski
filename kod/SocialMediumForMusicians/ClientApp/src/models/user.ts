@@ -4,7 +4,6 @@ import { Review } from "./review";
 
 export interface User {
     id: string;
-    blocked: boolean;
     isMusician: boolean;
     name: string;
     profilePicFilename: string;

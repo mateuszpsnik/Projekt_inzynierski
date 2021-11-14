@@ -26,7 +26,6 @@ namespace SocialMediumForMusicians.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Blocked = table.Column<bool>(type: "bit", nullable: false),
                     IsMusician = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProfilePicFilename = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -290,7 +289,8 @@ namespace SocialMediumForMusicians.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Justification = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Justification = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

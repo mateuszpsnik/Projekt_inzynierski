@@ -45,6 +45,10 @@ namespace SocialMediumForMusicians
                     options.Password.RequireNonAlphanumeric = true;
                     options.Password.RequiredLength = 8;
                     options.Password.RequireUppercase = false;
+
+                    options.Lockout.AllowedForNewUsers = true;
+                    options.Lockout.DefaultLockoutTimeSpan = System.TimeSpan.FromHours(3);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
                 })
                  .AddRoles<IdentityRole>()
                  .AddEntityFrameworkStores<ApplicationDbContext>();

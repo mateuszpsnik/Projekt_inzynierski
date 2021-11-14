@@ -37,6 +37,8 @@ import { EmailMessagesListComponent } from './email-messages-list/email-messages
 import { ReviewsUserComponent } from './reviews-user/reviews-user.component';
 import { ReviewsMusicianComponent } from './reviews-musician/reviews-musician.component';
 import { FavouritesComponent } from './favourites/favourites.component';
+import { AdminComponent } from './admin/admin.component';
+import { BlockComponent } from './block/block.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { FavouritesComponent } from './favourites/favourites.component';
     EmailMessagesListComponent,
     ReviewsUserComponent,
     ReviewsMusicianComponent,
-    FavouritesComponent
+    FavouritesComponent,
+    AdminComponent,
+    BlockComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
