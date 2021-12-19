@@ -45,4 +45,9 @@ export class MeetingService {
         const url = this.baseUrl + 'api/Meetings/' + meeting.id;
         return this.http.delete<Meeting>(url);
     }
+
+    isEndTimeInvalid(meeting: Meeting): Observable<boolean> {
+        const url = this.baseUrl + 'api/Meetings/IsEndTimeInvalid';
+        return this.http.post<boolean>(url, meeting);
+    }
 }

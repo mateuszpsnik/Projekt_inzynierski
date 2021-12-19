@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { Report } from "src/models/report";
 import { Guid } from 'src/models/guid';
@@ -8,7 +8,8 @@ import { ReportService } from "./report.service";
 
 @Component({
     selector: 'app-report-button',
-    templateUrl: './report.component.html'
+    templateUrl: './report.component.html',
+    styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
     form: FormGroup;
@@ -23,7 +24,7 @@ export class ReportComponent implements OnInit {
 
     ngOnInit () {
         this.form = new FormGroup({
-            justification: new FormControl('')
+            justification: new FormControl('', Validators.required)
         });
     }
 
@@ -44,6 +45,7 @@ export class ReportComponent implements OnInit {
             this.service.post(report).subscribe(result => {
                 console.log(result);
                 alert('Zgłoszenie zostało wysłane');
+                this.form.reset();
             }, err => console.error(err));
         }
     }

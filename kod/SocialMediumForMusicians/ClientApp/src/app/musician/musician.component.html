@@ -50,9 +50,24 @@
         <div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
           [formGroup]="formMessage">
             <textarea class="form-control" rows="5" formControlName="content"></textarea>
+            <div *ngIf="formMessage.get('content').invalid && (formMessage.get('content').dirty || 
+              formMessage.get('content').touched)" class="invalid">
+                <div *ngIf="formMessage.get('content').errors?.required">
+                    Podaj treść wiadomości
+                </div>
+            </div>
             <div class="form-group mt-2" *ngIf="!isAuthenticated">
               <label class="fs-6" for="email">E-mail</label>
               <input class="form-control mt-1" type="email" id="email" formControlName="email">
+              <div *ngIf="formMessage.get('email').invalid && 
+                  (formMessage.get('email').dirty || formMessage.get('email').touched)" class="invalid">
+                <div *ngIf="formMessage.get('email').errors?.email">
+                    Format adresu email jest niepoprawny
+                </div>
+                <div *ngIf="formMessage.get('email').errors?.required">
+                  Podaj poprawny adres email
+              </div>
+            </div>
             </div>
             <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
                 <button type="submit" (click)="onSubmitMessage()"

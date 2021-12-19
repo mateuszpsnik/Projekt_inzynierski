@@ -114,6 +114,9 @@ namespace SocialMediumForMusicians.Controllers
         [HttpPost]
         public async Task<ActionResult<Meeting>> PostMeeting(Meeting meeting)
         {
+            if (IsEndTimeInvalid(meeting))
+                return BadRequest("StartTime is greater than or equal to EndTime");
+
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
 
@@ -140,6 +143,13 @@ namespace SocialMediumForMusicians.Controllers
         private bool MeetingExists(Guid id)
         {
             return _context.Meetings.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsEndTimeInvalid")]
+        public bool IsEndTimeInvalid(Meeting meeting)
+        {
+            return meeting.StartTime >= meeting.EndTime;
         }
     }
 }
