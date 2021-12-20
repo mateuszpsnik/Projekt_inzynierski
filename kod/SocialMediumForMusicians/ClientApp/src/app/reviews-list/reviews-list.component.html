@@ -18,10 +18,7 @@
                 </ng-template>
             </div>
             <div class="col-sm-10 ml-3 pt-2">
-                <span class="fs-5" *ngFor="let i of [].constructor(review.rate)">
-                    <fa-icon class="text-primary" [icon]="faStar"></fa-icon>
-                </span>  
-                <div class="row mt-2">
+                <div class="row">
                     <p class="fw-light">{{ review.authorName }}</p>
                 </div>                
             </div>
@@ -44,8 +41,8 @@
                 <span class="fs-5" *ngFor="let i of [].constructor(review.rate)">
                     <fa-icon class="text-primary" [icon]="faStar"></fa-icon>
                 </span>  
-                <div class="row mt-2">
-                    <a [routerLink]="['/Musician', review.targetId]" class="fw-light text-decoration-none">
+                <div class="row mt-3">
+                    <a [routerLink]="['/Musician', review.targetId]" class="fw-light fs-1 text-decoration-none">
                         {{ review.targetName }}
                     </a>
                 </div>                

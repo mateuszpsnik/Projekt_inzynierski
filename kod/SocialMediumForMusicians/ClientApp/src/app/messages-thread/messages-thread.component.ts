@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { Message } from "src/models/message";
@@ -7,7 +7,8 @@ import { MessageService } from "../message/message.service";
 
 @Component({
     selector: 'app-messages-thread',
-    templateUrl: './messages-thread.component.html'
+    templateUrl: './messages-thread.component.html',
+    styleUrls: ['./messages-thread.component.css']
 })
 export class MessagesThreadComponent implements OnInit {
     isAuthenticated: boolean;
@@ -44,7 +45,7 @@ export class MessagesThreadComponent implements OnInit {
         }, err => console.error(err));
 
         this.form = new FormGroup({
-            content: new FormControl('')
+            content: new FormControl('', Validators.required)
         });
     }
 
@@ -63,6 +64,7 @@ export class MessagesThreadComponent implements OnInit {
             this.messageService.post(message).subscribe(result => {
                 console.log(result);
                 alert('Wiadomość została wysłana');
+                window.location.reload();
             }, err => console.error(err));
         }
     }

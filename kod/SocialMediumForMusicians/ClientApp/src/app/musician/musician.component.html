@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-      <div class="col-sm-3 mt-1 px-3 justify-content-center">
+      <div class="col-lg-3 mt-1 px-3 justify-content-center">
         <div class="row" *ngIf="musician.profilePicFilename; then thenBlock; else elseBlock"></div>
             <ng-template #thenBlock>
                 <img src="{{ musician.profilePicFilename }}" alt="Zdjęcie profilowe"
@@ -34,7 +34,7 @@
           <span class="fs-4 fw-light">{{ musician.avgScore }}</span>
         </div>
       </div>
-      <div class="col-sm-6 px-5">
+      <div class="col-lg-6 px-5">
         <div class="fs-2 text-center">{{ musician.name }}</div>
         <div class="my-2 text-center fs-3 fw-light">
           <span *ngFor="let instrument of musician.instruments; let i=index">
@@ -75,7 +75,7 @@
             </div>
         </div>
       </div>
-      <div class="col-sm-3 mt-1 px-3">
+      <div class="col-lg-3 mt-1 px-5 px-lg-2">
         <app-meeting-planner *ngIf="isAuthenticated" [musicianId]="id"
           [userId]="userId"></app-meeting-planner>
         <div class="my-3 text-center" *ngIf="isAuthenticated">
@@ -89,11 +89,11 @@
   
       </div> 
       <div class="col-md-10">
-        <div class="row mt-3 fs-2">Więcej o mnie</div>
+        <div class="row mt-3 fs-2 ms-3">Więcej o mnie</div>
         <div class="row mt-3">
           {{ musician.longDescription }}
         </div>
-        <div class="row mt-5 fs-2">Odwiedź też inne profile</div>
+        <div class="row mt-5 fs-2 ms-3">Odwiedź też inne profile</div>
         <div class="row mt-2">
           <app-musicians-list [instrument]="musician.instruments[0]" [musicianId]="id" 
             (click)="refreshComponent()">
