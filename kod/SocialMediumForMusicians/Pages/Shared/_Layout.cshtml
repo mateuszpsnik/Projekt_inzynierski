@@ -13,9 +13,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-toggleable-sm bg-primary border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="~/">SocialMediumForMusicians</a>
+                <a class="navbar-brand text-white" href="~/">SocialMediumForMusicians</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,13 +40,13 @@
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="p-3">
             @RenderBody()
         </main>
     </div>
-    <footer class="footer border-top text-muted">
+    <footer class="footer border-top text-white bg-primary">
         <div class="container">
-            &copy; 2021 - SocialMediumForMusicians - <a asp-area="" asp-page="Privacy">Privacy</a>
+            &copy; 2021 - SocialMediumForMusicians
         </div>
     </footer>
     <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
