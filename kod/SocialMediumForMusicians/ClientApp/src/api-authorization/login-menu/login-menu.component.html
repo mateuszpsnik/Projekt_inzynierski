@@ -1,23 +1,23 @@
 <ul class="navbar-nav" *ngIf="isAuthenticated | async">
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]='["/authentication/profile"]' id="navbarDropdown" role="button"
-          title="Manage">Witaj {{ userName | async }}</a>
+    <li class="nav-item me-3">
+        <a class="nav-link text-white" [routerLink]='["/authentication/profile"]' id="navbarDropdown" role="button"
+          title="Manage">Witaj, {{ userName | async }}</a>
     </li>
     <li class="nav-item">
-        <a  class="nav-link" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Wyloguj się</a>
+        <a class="btn btn-outline-light" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Wyloguj się</a>
     </li>
 </ul>
 <ul class="navbar-nav flex-grow" *ngIf="!(isAuthenticated | async)">
     <li
-      class="nav-item"
+      class="nav-item me-3 mt-2 mt-md-0"
       [routerLinkActive]="['link-active']"
       [routerLink]='["/authentication/login"]'
       [routerLinkActiveOptions]="{ exact: true }"
     >
-      <a class="btn btn-outline-light">Zaloguj się</a>
+      <a class="btn btn-outline-light px-4">Zaloguj się</a>
     </li>
     <li
-      class="nav-item"
+      class="nav-item mt-2 mt-md-0"
       [routerLinkActive]="['link-active']"      
       [routerLink]='["/authentication/register"]'
       [routerLinkActiveOptions]="{ exact: true }"
