@@ -58,4 +58,9 @@ export class ReviewService {
         let url = this.baseUrl + "api/Reviews/";
         return this.http.post<Review>(url, review);
     }
+
+    isNotInRange(review: Review): Observable<boolean> {
+        const url = this.baseUrl + 'api/Reviews/IsNotInRange';
+        return this.http.post<boolean>(url, review);
+    }
 }

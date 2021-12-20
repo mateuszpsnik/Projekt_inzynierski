@@ -1,13 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, AsyncValidatorFn, AbstractControl, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ReviewService } from "./review.service";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { Review } from "src/models/review";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
     selector: 'app-add-review-panel',
-    templateUrl: './review.component.html'
+    templateUrl: './review.component.html',
+    styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
     form: FormGroup;
@@ -55,12 +58,13 @@ export class ReviewComponent implements OnInit {
         }
 
         this.form = new FormGroup({
-            rate: new FormControl(''),
-            description: new FormControl('')
-        });
+            rate: new FormControl('', [Validators.required,
+                Validators.min(1), Validators.max(5)]),
+            description: new FormControl('', Validators.required)
+        }, null, this.isNotInRange());
     }
 
-    onSubmit() {
+    getReview() {
         const review: Review = {
             rate: this.form.get('rate').value,
             description: this.form.get('description').value,
@@ -69,10 +73,26 @@ export class ReviewComponent implements OnInit {
             sentAt: new Date(Date.now())
         };
 
+        return review;
+    }
+
+    onSubmit() {
+        const review = this.getReview();
+
         this.reviewService.post(review).subscribe(result => {
             console.log(result);
             alert('Opinia została wysłana. Dziękujemy!');
             this.router.navigateByUrl('/');
         }, err => console.error(err));
+    }
+
+    isNotInRange(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+            const review = this.getReview();
+            return this.reviewService.isNotInRange(review)
+                        .pipe(map(result => {
+                            return (result ? { isNotInRange: true } : null);
+                    }));
+        };
     }
 }

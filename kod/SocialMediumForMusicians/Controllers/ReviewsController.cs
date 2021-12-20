@@ -115,6 +115,9 @@ namespace SocialMediumForMusicians.Controllers
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
+            if (IsNotInRange(review))
+                return BadRequest("The rate must be between 1 and 5");
+
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 
@@ -141,6 +144,14 @@ namespace SocialMediumForMusicians.Controllers
         private bool ReviewExists(Guid id)
         {
             return _context.Reviews.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsNotInRange")]
+        public bool IsNotInRange(Review review)
+        {
+            int rate = review.Rate;
+            return rate < 1 || rate > 5;
         }
     }
 }
