@@ -24,7 +24,8 @@ export class ReportComponent implements OnInit {
 
     ngOnInit () {
         this.form = new FormGroup({
-            justification: new FormControl('', Validators.required)
+            justification: new FormControl('', [ Validators.required,
+                Validators.minLength(50), Validators.maxLength(300) ])
         });
     }
 
@@ -46,6 +47,7 @@ export class ReportComponent implements OnInit {
                 console.log(result);
                 alert('Zgłoszenie zostało wysłane');
                 this.form.reset();
+                this.formVisible = false;
             }, err => console.error(err));
         }
     }

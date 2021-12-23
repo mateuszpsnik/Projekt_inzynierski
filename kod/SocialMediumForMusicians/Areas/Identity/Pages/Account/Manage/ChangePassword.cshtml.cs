@@ -34,12 +34,12 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Niepoprawne hasło")]
             [DataType(DataType.Password)]
             [Display(Name = "Obecne hasło")]
             public string OldPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Nowe hasło jest wymagane")]
             [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Nowe hasło")]

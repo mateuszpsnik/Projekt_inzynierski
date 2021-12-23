@@ -31,7 +31,7 @@ export class MeetingComponent implements OnInit {
             startTime: new FormControl('', Validators.required),
             endTime: new FormControl('', Validators.required),
             notes: new FormControl('')
-        }, null, this.isEndTimeInvalid());
+        }, null, [ this.isStartTimeInvalid(), this.isEndTimeInvalid() ]);
     }
 
     getMeeting(): Meeting {
@@ -73,6 +73,16 @@ export class MeetingComponent implements OnInit {
             alert('Propozycja spotkania została wysłana');
             this.form.reset();
         }, err => console.error(err));
+    }
+
+    isStartTimeInvalid(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+            const meeting = this.getMeeting();
+            return this.service.isStartTimeInvalid(meeting)
+                        .pipe(map(result => {
+                            return (result ? { isStartTimeInvalid: true } : null);
+                    }));
+        };
     }
 
     isEndTimeInvalid(): AsyncValidatorFn {

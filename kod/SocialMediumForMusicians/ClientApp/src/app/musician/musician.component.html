@@ -55,6 +55,9 @@
                 <div *ngIf="formMessage.get('content').errors?.required">
                     Podaj treść wiadomości
                 </div>
+                <div *ngIf="formMessage.get('content').errors?.maxlength">
+                  Wiadomość może mieć maksymalnie 2000 znaków
+                </div>
             </div>
             <div class="form-group mt-2" *ngIf="!isAuthenticated">
               <label class="fs-6" for="email">E-mail</label>
@@ -71,7 +74,8 @@
             </div>
             <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
                 <button type="submit" (click)="onSubmitMessage()"
-                    class="btn btn-outline-secondary px-5">Wyślij</button>
+                    class="btn btn-outline-secondary px-5"
+                    [disabled]="formMessage.invalid">Wyślij</button>
             </div>
         </div>
       </div>

@@ -23,7 +23,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/EmailMessages
-        [Authorize(Roles = "Musician")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<EmailMessageDTO>>> GetEmailMessage(
             string id = null, int pageIndex = 0, int pageSize = 3)
@@ -50,7 +50,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/EmailMessages/5
-        [Authorize(Roles = "Musician")]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<EmailMessage>> GetEmailMessage(Guid id)
         {
@@ -107,7 +107,7 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/EmailMessages/5
-        [Authorize(Roles = "Musician")]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmailMessage(Guid id)
         {

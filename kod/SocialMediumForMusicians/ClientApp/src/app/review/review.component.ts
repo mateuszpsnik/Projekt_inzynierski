@@ -58,9 +58,9 @@ export class ReviewComponent implements OnInit {
         }
 
         this.form = new FormGroup({
-            rate: new FormControl('', [Validators.required,
-                Validators.min(1), Validators.max(5)]),
-            description: new FormControl('', Validators.required)
+            rate: new FormControl('', [ Validators.required,
+                Validators.min(1), Validators.max(5) ]),
+            description: new FormControl('', [ Validators.required, Validators.maxLength(200) ])
         }, null, this.isNotInRange());
     }
 

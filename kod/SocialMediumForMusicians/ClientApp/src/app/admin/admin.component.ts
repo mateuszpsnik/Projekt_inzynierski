@@ -40,6 +40,7 @@ export class AdminComponent implements OnInit {
             this.paginator.pageIndex = result.pageIndex;
             this.paginator.pageSize = result.pageSize;
             this.paginator.length = result.totalCount;
+            console.log(this.reports);
         }, err => console.log(err));
     }
 }

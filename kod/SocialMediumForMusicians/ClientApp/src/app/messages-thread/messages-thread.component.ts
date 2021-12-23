@@ -45,7 +45,7 @@ export class MessagesThreadComponent implements OnInit {
         }, err => console.error(err));
 
         this.form = new FormGroup({
-            content: new FormControl('', Validators.required)
+            content: new FormControl('', [ Validators.required, Validators.maxLength(2000) ])
         });
     }
 

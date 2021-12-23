@@ -33,6 +33,9 @@
                 <div *ngIf="form.get('description').errors?.required">
                     Podaj opis
                 </div>
+                <div *ngIf="form.get('description').errors?.maxlength">
+                    Maksymalna długość wynosi 200 znaków
+                </div>
             </div>
     </div>
     <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">

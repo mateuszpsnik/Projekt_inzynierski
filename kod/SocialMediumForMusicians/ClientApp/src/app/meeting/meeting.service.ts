@@ -46,6 +46,11 @@ export class MeetingService {
         return this.http.delete<Meeting>(url);
     }
 
+    isStartTimeInvalid(meeting: Meeting): Observable<boolean> {
+        const url = this.baseUrl + 'api/Meetings/IsStartTimeInvalid';
+        return this.http.post<boolean>(url, meeting);
+    }
+
     isEndTimeInvalid(meeting: Meeting): Observable<boolean> {
         const url = this.baseUrl + 'api/Meetings/IsEndTimeInvalid';
         return this.http.post<boolean>(url, meeting);

@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { UserService } from "../user/user.service";
 import { User } from "src/models/User";
 
 @Component({
     selector: 'app-block-component',
-    templateUrl: './block.component.html'
+    templateUrl: './block.component.html',
+    styleUrls: ['./block.component.css']
 })
 export class BlockComponent implements OnInit {
     form: FormGroup;
@@ -21,7 +22,8 @@ export class BlockComponent implements OnInit {
     constructor(
         private userService: UserService,
         private authService: AuthorizeService,
-        private activateRoute: ActivatedRoute) {}
+        private activateRoute: ActivatedRoute,
+        private router: Router) {}
 
     ngOnInit() {
         this.authService.getUser().subscribe(authUser => {
@@ -37,7 +39,7 @@ export class BlockComponent implements OnInit {
         }, err => console.error(err));
 
         this.form = new FormGroup({
-            lockoutEnd: new FormControl('')
+            lockoutEnd: new FormControl('', Validators.required)
         });
     }
 
@@ -50,6 +52,8 @@ export class BlockComponent implements OnInit {
             this.userService.lockout(this.userId, this.adminId, this.lockoutEnd)
                 .subscribe(result => {
                     console.log(result);
+                    alert('Użytkownik został zablokowany');
+                    this.router.navigateByUrl('/Admin');
                 }, err => console.error(err));
         }
     }

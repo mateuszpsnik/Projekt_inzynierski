@@ -50,6 +50,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
         {
             [Required(ErrorMessage = "Podaj swoje imię i nazwisko")]
             [Display(Name = "Imię i nazwisko")]
+            [StringLength(50, ErrorMessage = "Imię i nazwisko mogą mieć razem maksymalnie 50 znaków.")]
             public string Name { get; set; }
 
             [Required(ErrorMessage = "Napisz krótki opis")]
@@ -62,6 +63,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Cena za godzinę (zł)", Prompt = "50.00")]
             [RegularExpression(@"[0-9.]*$", ErrorMessage = "Cena musi być w formacie 0.00.")]
+            [Range(0.0, 1000.0, ErrorMessage = "Cena nie może być liczbą ujemną i nie może przekraczać 1000")]
             public decimal? Price { get; set; }
 
             [StringLength(1500, ErrorMessage = "Opis może mieć maksymalnie 1500 znaków.")]
@@ -107,8 +109,8 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
                 Description = musician.Description,
                 Price = musician.Price,
                 LongDescription = musician.LongDescription,
-                FirstInstrument = musician.Instruments[0] ?? "",
-                SecondInstrument = musician.Instruments[1] ?? "",
+                FirstInstrument = musician.Instruments.Count > 0 ?  musician.Instruments[0] : "",
+                SecondInstrument = musician.Instruments.Count > 1 ? musician.Instruments[1] : "",
                 TeacherSelected = musician.Types != null ? 
                                     musician.Types.Contains(MusicianType.Teacher) : false,
                 JammingSelected = musician.Types != null ?
@@ -135,7 +137,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account.Manage
 
             if (IsMusician)
             {
-                var musician = _context.Musicians.Single(m => m.Id == user.Id);
+                var musician = await _context.Musicians.FindAsync(user.Id);
                 await LoadMusicianAsync(musician);
             }
             else

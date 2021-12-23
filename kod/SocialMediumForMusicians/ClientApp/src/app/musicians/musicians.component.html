@@ -64,6 +64,30 @@
                                 </div>
                             </div>                        
                         </div>
+                        <div class="row my-2 invalid" *ngIf="
+                                (form.get('min').invalid && 
+                                    (form.get('min').dirty || form.get('min').touched)) || 
+                                (form.get('max').invalid && 
+                                    (form.get('max').dirty || form.get('max').touched)) ||
+                                (form.get('avg').invalid && 
+                                    (form.get('avg').dirty || form.get('avg').touched))">
+                            <div *ngIf="form.get('min').errors?.min || form.get('max').errors?.min">
+                                Wartość nie może być ujemna
+                            </div>
+                            <div *ngIf="form.get('min').errors?.max || form.get('max').errors?.max">
+                                Wartość może wynosić maksymalnie 1000
+                            </div>
+                            <div *ngIf="form.get('avg').errors?.min">
+                                Wartość nie może być ujemna
+                            </div>
+                            <div *ngIf="form.get('avg').errors?.max">
+                                Wartość może wynosić maksymalnie 5
+                            </div>
+                        </div>
+                        <div class="row alert alert-danger my-2" 
+                            *ngIf="form.invalid && form.errors && form.errors?.isMinMaxInvalid">
+                            Wartość "od" musi być mniejsza od wartości "do"
+                        </div>
                     </div>
                 <div class="col-md-3">
                     <div class="row">
@@ -93,7 +117,8 @@
                     </div>
                     <div class="form-group commands mt-3 d-flex justify-content-center">
                         <button type="submit" (click)="onSubmit()"
-                            class="btn btn-outline-secondary px-5">Zastosuj</button>
+                            class="btn btn-outline-secondary px-5"
+                            [disabled]="form.invalid">Zastosuj</button>
                     </div>
                 </div>
             </div>

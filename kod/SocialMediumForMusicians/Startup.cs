@@ -54,6 +54,7 @@ namespace SocialMediumForMusicians
                  .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddIdentityServer().AddApiAuthorization<User, ApplicationDbContext>();
             services.AddAuthentication().AddIdentityServerJwt();
+            services.AddScoped<IdentityErrorDescriber, IdentityPolishErrorDescriber>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

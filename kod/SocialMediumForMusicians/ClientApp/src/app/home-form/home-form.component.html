@@ -44,9 +44,34 @@
                 </div>
             </div>
         </div>
+        <div class="row my-2 invalid" *ngIf="
+                (form.get('from').invalid && 
+                    (form.get('from').dirty || form.get('from').touched)) || 
+                (form.get('to').invalid && 
+                    (form.get('to').dirty || form.get('to').touched)) ||
+                (form.get('avgScore').invalid && 
+                    (form.get('avgScore').dirty || form.get('avgScore').touched))">
+            <div *ngIf="form.get('from').errors?.min || form.get('to').errors?.min">
+                Wartość nie może być ujemna
+            </div>
+            <div *ngIf="form.get('from').errors?.max || form.get('to').errors?.max">
+                Wartość może wynosić maksymalnie 1000
+            </div>
+            <div *ngIf="form.get('avgScore').errors?.min">
+                Wartość nie może być ujemna
+            </div>
+            <div *ngIf="form.get('avgScore').errors?.max">
+                Wartość może wynosić maksymalnie 5
+            </div>
+        </div>
+    </div>
+    <div class="row alert alert-danger my-2" 
+        *ngIf="form.invalid && form.errors && form.errors?.isToFromInvalid">
+        Wartość "od" musi być mniejsza od wartości "do"
     </div>
     <div class="form-group commands mt-4 d-flex justify-content-center">
         <button type="submit" (click)="onSubmit()"
-            class="btn btn-outline-primary px-5">Szukaj</button>
+            class="btn btn-outline-primary px-5"
+            [disabled]="form.invalid">Szukaj</button>
     </div>
 </div>

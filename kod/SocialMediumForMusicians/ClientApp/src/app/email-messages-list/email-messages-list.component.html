@@ -2,7 +2,7 @@
 <div class="container mt-2">
     <a class="row align-items-center text-dark text-decoration-none border" 
             *ngFor="let message of messages" (click)="onClick()">
-        <div class="col-sm-3 px-1 py-2">
+        <div class="col-sm-3">
             <div *ngIf="imgPath; then thenBlock; else elseBlock"></div>
             <ng-template #thenBlock>
                 <img src="{{ message.authorImgFilename }}" alt="Zdjęcie profilowe"
@@ -15,11 +15,11 @@
                     style="max-height: 400px;">
             </ng-template>
         </div>
-        <div class="col-sm-9 m-2">
-            <div class="row text-strong">
-                {{ message.authorEmail }}
+        <div class="col-sm-9">
+            <div class="row">
+                <strong class="fs-2">{{ message.authorEmail }}</strong>
             </div>
-            <div class="row mt-1">
+            <div class="row m-3">
                 {{ message.content }}
             </div>            
         </div>

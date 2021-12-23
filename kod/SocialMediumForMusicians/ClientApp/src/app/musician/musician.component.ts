@@ -51,8 +51,8 @@ export class MusicianComponent implements OnInit {
         });
 
         this.formMessage = new FormGroup({
-            content: new FormControl('', Validators.required),
-            email: new FormControl('', [Validators.email, Validators.required])
+            content: new FormControl('', [ Validators.required, Validators.maxLength(2000) ]),
+            email: new FormControl('', [ Validators.email ])
         });
 
         this.authorizeService.isAuthenticated().subscribe(isAuthenticated => {
@@ -73,15 +73,20 @@ export class MusicianComponent implements OnInit {
 
 
     onAddToFavourites() {
-        this.userService.get(this.userId).subscribe(user => {
+      this.userService.get(this.userId).subscribe(user => {
             if (user.favouriteMusiciansIds == null) {
                 user.favouriteMusiciansIds = [];
             }
-            user.favouriteMusiciansIds.push(this.musician.id);
-            this.userService.put(user).subscribe(result => {
-                console.log(result);
-                alert('Muzyk został dodany do ulubionych.');
-            }, err => console.error(err));
+            if (user.favouriteMusiciansIds.includes(this.musician.id)) {
+                alert('Muzyk już został dodany do ulubionych.');
+            } else {
+                user.favouriteMusiciansIds.push(this.musician.id);
+                this.userService.put(user).subscribe(result => {
+                    // console.log(result);
+                    alert('Muzyk został dodany do ulubionych.');
+                }, err => console.error(err));
+            }
+            console.log(user);
         }, err => console.error(err));
     }
 
@@ -123,7 +128,7 @@ export class MusicianComponent implements OnInit {
                     this.formMessage.reset();
                 }, err => console.error(err));
             } else {
-                alert('Podaj treść wiadomości i poprawny adres email');
+                alert('Podaj poprawny adres email');
             }
         }
     }

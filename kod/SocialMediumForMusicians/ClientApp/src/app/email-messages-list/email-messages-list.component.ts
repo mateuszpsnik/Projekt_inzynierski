@@ -33,11 +33,13 @@ export class EmailMessagesListComponent implements OnInit {
                 this.paginator.pageIndex = result.pageIndex;
                 this.paginator.pageSize = result.pageSize;
                 this.paginator.length = result.totalCount;
+                console.log(`Messages: ${result.elements}`);
             }, err => console.error(err));
     }
 
     onClick() {
         alert('Wiadomość pochodzi od niezarejestrowanego użytkownika - ' +
-            'nie możesz na nią odpowiedzieć.');
+            'nie możesz na nią odpowiedzieć tutaj. Jeśli chcesz odpowiedzieć, ' +
+            'wyślij samodzielnie email na podany adres.');
     }
 }

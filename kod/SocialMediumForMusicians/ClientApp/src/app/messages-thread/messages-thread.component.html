@@ -30,6 +30,9 @@
         <div *ngIf="form.get('content').errors?.required">
             Podaj treść wiadomości
         </div>
+        <div *ngIf="form.get('content').errors?.maxlength">
+            Wiadomość może mieć maksymalnie 2000 znaków
+        </div>
     </div>
     <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
         <button type="submit" (click)="onSubmit()"

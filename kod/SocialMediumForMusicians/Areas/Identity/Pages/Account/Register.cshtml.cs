@@ -60,19 +60,20 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage = "Podaj email")]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Podaj adres email we właściwym formacie")]
             [Display(Name = "Email")]
+            [StringLength(50, ErrorMessage = "Adres email może mieć maksymalnie 50 znaków.")]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Podaj hasło")]
-            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 8)]
+            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Potwierdź hasło")]
-            [Compare("Password", ErrorMessage = "Hasła się różnią.")]
+            [Compare("Password", ErrorMessage = "Hasła się różnią")]
             public string ConfirmPassword { get; set; }
 
             [Display(Name = "Jesteś muzykiem?")]
@@ -80,10 +81,11 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Podaj swoje imię i nazwisko")]
             [Display(Name = "Imię i nazwisko")]
+            [StringLength(50, ErrorMessage = "Imię i nazwisko mogą mieć razem maksymalnie 50 znaków.")]
             public string Name { get; set; }
 
             [Required(ErrorMessage = "Napisz krótki opis")]
-            [StringLength(150, ErrorMessage = "Opis może mieć maksymalnie 150 znaków.")]
+            [StringLength(150, ErrorMessage = "Opis może mieć maksymalnie 150 znaków")]
             [Display(Name = "Krótki opis")]
             public string Description { get; set; }
 
@@ -91,10 +93,11 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
             public IFormFile UploadFile { get; set; }
 
             [Display(Name = "Cena za godzinę (zł)", Prompt = "50.00")]
-            [RegularExpression(@"[0-9.]*$", ErrorMessage = "Cena musi być w formacie 0.00.")]
+            [RegularExpression(@"[0-9.]*$", ErrorMessage = "Cena musi być w formacie 0.00")]
+            [Range(0.0, 1000.0, ErrorMessage = "Cena nie może być liczbą ujemną i nie może przekraczać 1000")]
             public decimal? Price { get; set; }
 
-            [StringLength(1500, ErrorMessage = "Opis może mieć maksymalnie 1500 znaków.")]
+            [StringLength(1500, ErrorMessage = "Opis może mieć maksymalnie 1500 znaków")]
             [Display(Name = "Długi opis")]
             public string LongDescription { get; set; }
 

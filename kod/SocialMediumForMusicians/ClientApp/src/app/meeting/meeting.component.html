@@ -6,6 +6,10 @@
         </span>
     </div>
     <div class="row alert alert-danger my-4" 
+        *ngIf="form.invalid && form.errors && form.errors?.isStartTimeInvalid">
+        Godzina rozpoczęcia musi być późniejsza niż aktualny czas.
+    </div>
+    <div class="row alert alert-danger my-4" 
         *ngIf="form.invalid && form.errors && form.errors?.isEndTimeInvalid">
         Godzina rozpoczęcia musi być wcześniejsza niż godzina zakończenia.
     </div>

@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SocialMediumForMusicians.Controllers;
@@ -10,11 +11,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Moq;
 
 namespace SocialMediumForMusicians.Tests
 {
     public class ReportsController_Test
     {
+        // Based on code from: https://stackoverflow.com/questions/49165810/how-to-mock-usermanager-in-net-core-testing
+        public static Mock<UserManager<TUser>> MockUserManager<TUser>()
+            where TUser : class
+        {
+            var store = new Mock<IUserStore<TUser>>();
+            var manager = new Mock<UserManager<TUser>>(store.Object,
+                null, null, null, null, null, null, null, null);
+
+            var user = new Mock<TUser>();
+            manager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
+               .ReturnsAsync(user.Object);
+            manager.Setup(x => x.IsInRoleAsync(It.IsAny<TUser>(), It.IsAny<string>()))
+               .ReturnsAsync(true);
+
+            return manager;
+        }
+
         [Fact]
         public async void GetReports()
         {
@@ -86,9 +105,10 @@ namespace SocialMediumForMusicians.Tests
             // Act 
             using (var context = new ApplicationDbContext(options, storeOptions))
             {
-                var controller = new ReportsController(context);
+                var userManager = MockUserManager<User>();
+                var controller = new ReportsController(context, userManager.Object);
 
-                result = (await controller.GetReports(pageIndex: 0, pageSize: 2)).Value;
+                result = (await controller.GetReports(userId: "", pageIndex: 0, pageSize: 2)).Value;
             }
 
             // Assert

@@ -5,11 +5,11 @@
             <div class="col-sm-10">
                 <div class="row">
                     <div class="col-sm-2 px-1 py-2">
-                        <div *ngIf="imgFilename; then thenBlock; else elseBlock"></div>
+                        <div *ngIf="report.imgFilename; then thenBlock; else elseBlock"></div>
                         <ng-template #thenBlock>
-                            <img src="{{ imgFilename }}" alt="Zdjęcie profilowe"
+                            <img src="{{ report.imgFilename }}" alt="Zdjęcie profilowe"
                                 class="img-fluid mx-auto d-block mx-md-0"
-                                style="max-height: 400px;" *ngIf="isHost">
+                                style="max-height: 400px;">
                         </ng-template>
                         <ng-template #elseBlock>
                             <img src="default.png" alt="Zdjęcie profilowe"
