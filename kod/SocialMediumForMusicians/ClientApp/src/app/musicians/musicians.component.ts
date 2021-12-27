@@ -1,15 +1,19 @@
 import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Musician } from "../../models/musician";
-import { MusicianService, PaginationApiResult } from "../musician/musician.service";
+import { MusicianService } from "../musician/musician.service";
 import { InstrumentItem } from "../home-form/home-form.component";
 import { HttpClient } from "@angular/common/http";
+import { PaginationApiResult } from "src/models/pagination_api_result";
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
     selector: "app-musicians-list",
-    templateUrl: "./musicians.component.html"
+    templateUrl: "./musicians.component.html",
+    styleUrls: ['./musicians.component.css']
 })
 export class MusiciansComponent implements OnInit {
     public musicians: Musician[];
@@ -40,11 +44,11 @@ export class MusiciansComponent implements OnInit {
         this.form = new FormGroup({
             musicianTypeRadio: new FormControl(""),
             instrumentsList: new FormControl(""),
-            min: new FormControl(""),
-            max: new FormControl(""),
-            avg: new FormControl(""),
+            min: new FormControl("", [ Validators.min(0), Validators.max(1000) ]),
+            max: new FormControl("", [ Validators.min(0), Validators.max(1000) ]),
+            avg: new FormControl("", [ Validators.min(0), Validators.max(5) ]),
             sortRadio: new FormControl("")
-        });
+        }, null, this.isMinMaxInvalid());
 
         this.musicianType = parseInt(this.activatedRoute.snapshot.queryParamMap
                                 .get("type"));
@@ -116,27 +120,27 @@ export class MusiciansComponent implements OnInit {
 
     onSubmit() {
         // get data from the form
-        if (this.form.get("musicianTypeRadio").value != "") {
+        if (this.form.get("musicianTypeRadio").value) {
             this.musicianType = this.form.get("musicianTypeRadio").value;
             console.log(this.musicianType);
         }
-        if (this.form.get("instrumentsList").value != "") {
+        if (this.form.get("instrumentsList").value) {
             this.instrument = this.form.get("instrumentsList").value;
             console.log(this.instrument);
         }
-        if (this.form.get("min").value != "") {
+        if (this.form.get("min").value) {
             this.minPrice = this.form.get("min").value;
             console.log(this.minPrice);
         }
-        if (this.form.get("max").value != "") {
+        if (this.form.get("max").value) {
             this.maxPrice = this.form.get("max").value;
             console.log(this.maxPrice);
         }
-        if (this.form.get("avg").value != "") {
+        if (this.form.get("avg").value) {
             this.avgScore = this.form.get("avg").value;
             console.log(this.avgScore);
         }
-        if (this.form.get("sortRadio").value != "") {
+        if (this.form.get("sortRadio").value) {
             this.sort = this.form.get("sortRadio").value;
             console.log(this.sort);
         }
@@ -153,4 +157,39 @@ export class MusiciansComponent implements OnInit {
         // collapse the filtering/sorting panel
         this.isCollapsed = true;
     }
+
+    getMinMax() {
+        let min = 0;
+        let max = 1000;
+        if (this.form) {
+            if (this.form.get("min").value !== null && 
+                    this.form.get("min").value !== "") {
+                min = this.form.get("min").value;
+            }
+            if (this.form.get("max").value !== null && 
+                    this.form.get("max").value !== "") {
+                max = this.form.get("max").value;
+            }
+        }
+
+        return [min, max];
+    }
+
+    // returns true if values 'min' and 'max' are invalid
+    checkValues(): Observable<boolean> {
+        const [min, max] = this.getMinMax();
+
+        console.log(min, max);
+
+        return of(min >= max);
+    }
+
+    isMinMaxInvalid(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+            return this.checkValues().pipe(map(result => {
+                            return (result ? { isMinMaxInvalid: true } : null);
+                    }));
+        };
+    }
 }
+

@@ -10,7 +10,7 @@ using SocialMediumForMusicians.Data;
 namespace SocialMediumForMusicians.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211106133545_UpdatedModels")]
+    [Migration("20211114105553_UpdatedModels")]
     partial class UpdatedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,10 +261,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.EmailMessage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorEmail")
                         .IsRequired()
@@ -309,10 +308,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Meeting", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
@@ -345,10 +343,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
@@ -379,14 +376,16 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Report", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Justification")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -401,10 +400,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
             modelBuilder.Entity("SocialMediumForMusicians.Data.Models.Review", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
@@ -415,6 +413,9 @@ namespace SocialMediumForMusicians.Data.Migrations
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("TargetId")
                         .IsRequired()
@@ -436,9 +437,6 @@ namespace SocialMediumForMusicians.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Blocked")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

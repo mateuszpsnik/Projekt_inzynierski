@@ -60,19 +60,20 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage = "Podaj email")]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Podaj adres email we właściwym formacie")]
             [Display(Name = "Email")]
+            [StringLength(50, ErrorMessage = "Adres email może mieć maksymalnie 50 znaków.")]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Podaj hasło")]
-            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Hasło musi mieć minimum {2} i maksimum {1} znaków", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Potwierdź hasło")]
-            [Compare("Password", ErrorMessage = "Hasła się różnią.")]
+            [Compare("Password", ErrorMessage = "Hasła się różnią")]
             public string ConfirmPassword { get; set; }
 
             [Display(Name = "Jesteś muzykiem?")]
@@ -80,10 +81,11 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Podaj swoje imię i nazwisko")]
             [Display(Name = "Imię i nazwisko")]
+            [StringLength(50, ErrorMessage = "Imię i nazwisko mogą mieć razem maksymalnie 50 znaków.")]
             public string Name { get; set; }
 
             [Required(ErrorMessage = "Napisz krótki opis")]
-            [StringLength(150, ErrorMessage = "Opis może mieć maksymalnie 150 znaków.")]
+            [StringLength(150, ErrorMessage = "Opis może mieć maksymalnie 150 znaków")]
             [Display(Name = "Krótki opis")]
             public string Description { get; set; }
 
@@ -91,10 +93,11 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
             public IFormFile UploadFile { get; set; }
 
             [Display(Name = "Cena za godzinę (zł)", Prompt = "50.00")]
-            [RegularExpression(@"[0-9.]*$", ErrorMessage = "Cena musi być w formacie 0.00.")]
+            [RegularExpression(@"[0-9.]*$", ErrorMessage = "Cena musi być w formacie 0.00")]
+            [Range(0.0, 1000.0, ErrorMessage = "Cena nie może być liczbą ujemną i nie może przekraczać 1000")]
             public decimal? Price { get; set; }
 
-            [StringLength(1500, ErrorMessage = "Opis może mieć maksymalnie 1500 znaków.")]
+            [StringLength(1500, ErrorMessage = "Opis może mieć maksymalnie 1500 znaków")]
             [Display(Name = "Długi opis")]
             public string LongDescription { get; set; }
 
@@ -127,11 +130,13 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             // Save the profile image
-            string filePath = null;
+            string imgPath = null;
             if (Input.UploadFile != null)
             {
-                filePath = Path.Combine(_environment.ContentRootPath, "wwwroot/profile-img",
-                    Input.Email + "_" + Input.UploadFile.FileName);
+                imgPath = Path.Combine("profile-img", Input.Email + "_" + 
+                    Input.UploadFile.FileName);
+                var filePath = Path.Combine(_environment.ContentRootPath, "wwwroot",
+                    imgPath); 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await Input.UploadFile.CopyToAsync(fileStream);
@@ -168,7 +173,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         Email = Input.Email,
                         IsMusician = true,
                         Name = Input.Name,
-                        ProfilePicFilename = filePath,
+                        ProfilePicFilename = imgPath,
                         Description = Input.Description,
                         Price = Input.Price ?? 50.00M,
                         LongDescription = Input.LongDescription,
@@ -188,7 +193,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         Email = Input.Email,
                         IsMusician = false,
                         Name = Input.Name,
-                        ProfilePicFilename = filePath,
+                        ProfilePicFilename = imgPath,
                         Description = Input.Description
                     };
                     result = await _userManager.CreateAsync(user, Input.Password);
@@ -205,8 +210,8 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Potwierdź swój email",
+                    $"Potwierdź proszę swoje konto, klikając <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>tutaj</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

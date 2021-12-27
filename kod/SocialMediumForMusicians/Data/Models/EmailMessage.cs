@@ -6,8 +6,7 @@ namespace SocialMediumForMusicians.Data.Models
     public class EmailMessage
     {
         [Key]
-        [Required]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string AuthorEmail { get; set; }

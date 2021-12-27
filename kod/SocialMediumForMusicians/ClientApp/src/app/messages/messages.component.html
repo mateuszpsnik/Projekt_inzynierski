@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row mt-3 fs-2 ms-3">Wiadomości od użytkowników serwisu</div>
+    <div class="row">
+        <app-messages-list [userId]="userId"></app-messages-list>
+    </div>
+    <div class="row mt-3 fs-2 ms-3">Wiadomości e-mail</div>
+    <div class="row">
+        <app-email-messages-list [userId]="userId"></app-email-messages-list>
+    </div>
+</div>

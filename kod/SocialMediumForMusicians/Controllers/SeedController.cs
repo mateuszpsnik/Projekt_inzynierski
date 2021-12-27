@@ -42,36 +42,56 @@ namespace SocialMediumForMusicians.Controllers
                 throw new SecurityException("Seeding not allowed in the prod env.");
             }
 
+            var guitar = new Instrument
+            {
+                Name = "Gitara"
+            };
+            var piano = new Instrument
+            {
+                Name = "Pianino"
+            };
+            var bass = new Instrument
+            {
+                Name = "Gitara basowa"
+            };
+            var drums = new Instrument
+            {
+                Name = "Perkusja"
+            };
+            var instruments = new List<Instrument> { guitar, piano, bass, drums };
+
+            await context.Instruments.AddRangeAsync(instruments);
+
             var musician0 = new Musician() { Email = "aaa@bbb.com", Name = "Adam Przykładowy", Price = 20.00M,
-                Instruments = new List<string>() { "Guitar", "Piano" },
+                Instruments = new List<string>() { guitar.Name, piano.Name },
                 FavouriteMusiciansIds = new List<string>() { "2", "3" },
                 ProfilePicFilename = "aaa.png",
                 Types = new List<MusicianType> { MusicianType.Jamming },
                 IsMusician = true
             };
             var musician1 = new Musician() { Email = "bbb@ccc.com", Name = "Lorem Ipsum", Price = 30.00M,
-                Instruments = new List<string>() { "Bass Guitar" },
+                Instruments = new List<string>() { bass.Name },
                 ProfilePicFilename = "aaa.png",
                 Types = new List<MusicianType> { MusicianType.Jamming, MusicianType.Session },
                 IsMusician = true
             };
             var musician2 = new Musician() { Email = "ccc@ddd.com", Name = "Adam Pierwszy", Price = 40.00M,
-                Instruments = new List<string>() { "Drums" }  ,
+                Instruments = new List<string>() { drums.Name }  ,
                 Types = new List<MusicianType> { MusicianType.Teacher, MusicianType.Session },
                 IsMusician = true
             };
             var musician3 = new Musician() { Email = "aaa1@bbb.com", Name = "Adam Drugi", Price = 20.00M,
-                Instruments = new List<string>() { "Guitar", "Piano" },
+                Instruments = new List<string>() { guitar.Name, drums.Name },
                 FavouriteMusiciansIds = new List<string>() { "1", "2", "3" },
                 ProfilePicFilename = "aaa.png",
                 IsMusician = true
             };
             var musician4 = new Musician() { Email = "bbb1@ccc.com", Name = "Adam Trzeci", Price = 30.00M,
-                Instruments = new List<string>() { "Bass Guitar" },
+                Instruments = new List<string>() { bass.Name },
                 IsMusician = true
             };
             var musician5 = new Musician() { Email = "ccc1@ddd.com", Name = "Adam Żyżyński", Price = 40.00M,
-                Instruments = new List<string>() { "Drums" },
+                Instruments = new List<string>() { drums.Name },
                 IsMusician = true
             };
             var musicians = new List<Musician>() { musician0, musician1, musician2, musician3,
@@ -79,49 +99,37 @@ namespace SocialMediumForMusicians.Controllers
 
             await context.Musicians.AddRangeAsync(musicians);
 
-            var guitar = new Instrument
-            {
-                Name = "Guitar"
-            };
-            var piano = new Instrument
-            {
-                Name = "Piano"
-            };
-            var bass = new Instrument
-            {
-                Name = "Bass Guitar"
-            };
-            var drums = new Instrument
-            {
-                Name = "Drums"
-            };
-            var instruments = new List<Instrument> { guitar, piano, bass, drums };
-
-            await context.Instruments.AddRangeAsync(instruments);
-
             var review0 = new Review
             {
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician0,
-                Rate = 5
+                Rate = 5,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 03)
             };
             var review1 = new Review
             {
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician1,
-                Rate = 4
+                Rate = 4,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 04)
             };
             var review2 = new Review
             {
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician2,
-                Rate = 3
+                Rate = 3,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 05)
             };
             var review3 = new Review
             {
+                Id = Guid.NewGuid(),
                 Author = musician4,
                 Target = musician1,
-                Rate = 3
+                Rate = 3,
+                SentAt = new DateTime(2000, 12, 03, 12, 02, 06)
             };
             var reviews = new List<Review> { review0, review1, review2, review3 };
 
@@ -138,6 +146,12 @@ namespace SocialMediumForMusicians.Controllers
         [HttpGet]
         public async Task<ActionResult> CreateSampleAuthUsers()
         {
+            // do not run this in production environments
+            if (!environment.IsDevelopment())
+            {
+                throw new SecurityException("Seeding not allowed in the prod env.");
+            }
+
             // default role names
             var role_RegisteredUser = "RegisteredUser";
             var role_Musician = "Musician";
@@ -188,7 +202,8 @@ namespace SocialMediumForMusicians.Controllers
                     UserName = musicianEmail,
                     Name = "Aaa Bbb",
                     Price = 0,
-                    IsMusician = true
+                    IsMusician = true,
+                    Instruments = new List<string>() { "Guitar", "Piano" }
                 };
 
                 await userManager.CreateAsync(musician, "!musician1");

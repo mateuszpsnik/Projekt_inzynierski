@@ -63,31 +63,36 @@ namespace SocialMediumForMusicians.Tests
                 {
                     Author = m4,
                     Target = m1,
-                    Rate = 4
+                    Rate = 4,
+                    SentAt = new System.DateTime(2000, 12, 31, 15, 43, 23)
                 };
                 var r2 = new Review()
                 {
                     Author = m4,
                     Target = m1,
-                    Rate = 3
+                    Rate = 3,
+                    SentAt = new System.DateTime(2001, 12, 31, 15, 43, 23)
                 };
                 var r3 = new Review()
                 {
                     Author = m4,
                     Target = m2,
-                    Rate = 5
+                    Rate = 5,
+                    SentAt = new System.DateTime(2002, 12, 31, 15, 43, 23)
                 };
                 var r4 = new Review()
                 {
                     Author = m1,
                     Target = m2,
-                    Rate = 2
+                    Rate = 2,
+                    SentAt = new System.DateTime(2003, 12, 31, 15, 43, 23)
                 };
                 var r5 = new Review()
                 {
                     Author = m2,
                     Target = m1,
-                    Rate = 1
+                    Rate = 1,
+                    SentAt = new System.DateTime(2004, 12, 31, 15, 43, 23)
                 };
                 context.AddRange(new List<Review>() { r1, r2, r3, r4, r5 });
 
@@ -96,6 +101,7 @@ namespace SocialMediumForMusicians.Tests
 
             PaginationApiResult<ReviewsListDTO> result;
             PaginationApiResult<ReviewsListDTO> resultPagination;
+            PaginationApiResult<ReviewsListDTO> resultAuthor;
 
             // Act
             using (var context = new ApplicationDbContext(options, storeOptions))
@@ -104,6 +110,7 @@ namespace SocialMediumForMusicians.Tests
 
                 result = (await controller.GetReviews(top: 3)).Value;
                 resultPagination = (await controller.GetReviews(id: "1", pageIndex: 0, pageSize: 2)).Value;
+                resultAuthor = (await controller.GetReviews(id: "1", authorId: "4")).Value;
             }
 
             // Assert
@@ -115,6 +122,8 @@ namespace SocialMediumForMusicians.Tests
             Assert.Equal(2, resultPagination.Elements.Count);
             Assert.Equal(3, resultPagination.TotalCount);
             Assert.Equal(2, resultPagination.TotalPages);
+
+            Assert.Equal(2, resultAuthor.Elements.Count);
         }
     }
 }

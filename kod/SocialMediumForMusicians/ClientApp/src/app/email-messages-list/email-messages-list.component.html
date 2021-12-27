@@ -1,0 +1,35 @@
+<!-- list -->
+<div class="container mt-2">
+    <a class="row align-items-center text-dark text-decoration-none border" 
+            *ngFor="let message of messages" (click)="onClick()">
+        <div class="col-sm-3">
+            <div *ngIf="imgPath; then thenBlock; else elseBlock"></div>
+            <ng-template #thenBlock>
+                <img src="{{ message.authorImgFilename }}" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block mx-md-0"
+                    style="max-height: 400px;">
+            </ng-template>
+            <ng-template #elseBlock>
+                <img src="default.png" alt="Zdjęcie profilowe"
+                    class="img-fluid mx-auto d-block mx-md-0"
+                    style="max-height: 400px;">
+            </ng-template>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <strong class="fs-2">{{ message.authorEmail }}</strong>
+            </div>
+            <div class="row m-3">
+                {{ message.content }}
+            </div>            
+        </div>
+    </a>
+</div>
+
+<!-- Paginator -->
+<mat-paginator
+    (page)="getMeetings($event)"
+    [pageSize]="defaultPageSize"
+    [pageSizeOptions]="[3, 5, 10]"
+    showFirstLastButtons>
+</mat-paginator>

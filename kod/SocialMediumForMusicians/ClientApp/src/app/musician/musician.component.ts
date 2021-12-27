@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Musician } from '../../models/musician';
 import { MusicianService } from './musician.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -11,10 +11,12 @@ import { User } from 'src/models/User';
 import { MessageService } from '../message/message.service';
 import { EmailMessageService } from '../message/email-message.service';
 import { EmailMessage, Message } from 'src/models/message';
+import { Guid } from 'src/models/guid';
 
 @Component({
     selector: 'app-musician',
-    templateUrl: './musician.component.html'
+    templateUrl: './musician.component.html',
+    styleUrls: ['./musician.component.css']
 })
 export class MusicianComponent implements OnInit {
     // id of the Musician shown to the user
@@ -43,13 +45,14 @@ export class MusicianComponent implements OnInit {
         this.activatedRoute.params.subscribe(params => {
             this.id = params.id;
         });
-        this.service.get<Musician>(this.id).subscribe(musician => {
+        this.service.get(this.id).subscribe(musician => {
             this.musician = musician;
+            console.log(this.musician);
         });
 
         this.formMessage = new FormGroup({
-            content: new FormControl(''),
-            email: new FormControl('')
+            content: new FormControl('', [ Validators.required, Validators.maxLength(2000) ]),
+            email: new FormControl('', [ Validators.email ])
         });
 
         this.authorizeService.isAuthenticated().subscribe(isAuthenticated => {
@@ -70,15 +73,20 @@ export class MusicianComponent implements OnInit {
 
 
     onAddToFavourites() {
-        this.userService.get(this.userId).subscribe(user => {
+      this.userService.get(this.userId).subscribe(user => {
             if (user.favouriteMusiciansIds == null) {
                 user.favouriteMusiciansIds = [];
             }
-            user.favouriteMusiciansIds.push(this.musician.id);
-            this.userService.put(user).subscribe(result => {
-                console.log(result);
-                alert('Muzyk został dodany do ulubionych.');
-            }, err => console.error(err));
+            if (user.favouriteMusiciansIds.includes(this.musician.id)) {
+                alert('Muzyk już został dodany do ulubionych.');
+            } else {
+                user.favouriteMusiciansIds.push(this.musician.id);
+                this.userService.put(user).subscribe(result => {
+                    // console.log(result);
+                    alert('Muzyk został dodany do ulubionych.');
+                }, err => console.error(err));
+            }
+            console.log(user);
         }, err => console.error(err));
     }
 
@@ -99,7 +107,10 @@ export class MusicianComponent implements OnInit {
                 this.messageService.post(message).subscribe(result => {
                     console.log(result);
                     alert('Wiadomość została wysłana');
+                    this.formMessage.reset();
                 }, err => console.error(err));
+            } else {
+                alert('Podaj treść wiadomości');
             }
         } else {
             if (content !== '' && emailAddress !== '') {
@@ -114,7 +125,10 @@ export class MusicianComponent implements OnInit {
                 this.emailMessageService.post(message).subscribe(result => {
                     console.log(result);
                     alert('Wiadomość została wysłana');
+                    this.formMessage.reset();
                 }, err => console.error(err));
+            } else {
+                alert('Podaj poprawny adres email');
             }
         }
     }

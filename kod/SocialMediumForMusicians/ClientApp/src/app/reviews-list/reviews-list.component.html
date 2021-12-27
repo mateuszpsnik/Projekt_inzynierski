@@ -3,7 +3,7 @@
 <!-- List -->
 <div class="container mt-4" [hidden]="!reviews">
     <div class="row align-items-center text-dark border" *ngFor="let review of reviews">
-        <div class="row">
+        <div class="row" *ngIf="musicianId">
             <div class="col-sm-2 px-1 py-2">
                 <div *ngIf="review.authorProfilePicFilename; then thenBlock; else elseBlock"></div>
                 <ng-template #thenBlock>
@@ -18,11 +18,33 @@
                 </ng-template>
             </div>
             <div class="col-sm-10 ml-3 pt-2">
+                <div class="row">
+                    <p class="fw-light">{{ review.authorName }}</p>
+                </div>                
+            </div>
+        </div>
+        <div class="row" *ngIf="userId">
+            <div class="col-sm-2 px-1 py-2">
+                <div *ngIf="review.targetProfilePicFilename; then thenBlock; else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <img src="{{ review.targetProfilePicFilename }}" alt="Zdjęcie profilowe"
+                        class="img-fluid mx-auto d-block mx-md-0"
+                        style="max-height: 300px;">
+                </ng-template>
+                <ng-template #elseBlock>
+                    <img src="default.png" alt="Zdjęcie profilowe"
+                        class="img-fluid mx-auto d-block mx-md-0"
+                        style="max-height: 300px;">
+                </ng-template>
+            </div>
+            <div class="col-sm-10 ml-3 pt-2">
                 <span class="fs-5" *ngFor="let i of [].constructor(review.rate)">
                     <fa-icon class="text-primary" [icon]="faStar"></fa-icon>
                 </span>  
-                <div class="row mt-2">
-                    <p class="fw-light">{{ review.authorName }}</p>
+                <div class="row mt-3">
+                    <a [routerLink]="['/Musician', review.targetId]" class="fw-light fs-1 text-decoration-none">
+                        {{ review.targetName }}
+                    </a>
                 </div>                
             </div>
         </div>

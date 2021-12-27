@@ -1,12 +1,16 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators, AsyncValidatorFn, AbstractControl } from "@angular/forms";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { MeetingService } from "./meeting.service";
 import { Meeting } from "src/models/meeting";
+import { Guid } from "src/models/guid";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
     selector: 'app-meeting-planner',
-    templateUrl: './meeting.component.html'
+    templateUrl: './meeting.component.html',
+    styleUrls: ['./meeting.component.css']
 })
 export class MeetingComponent implements OnInit {
     form: FormGroup;
@@ -23,14 +27,14 @@ export class MeetingComponent implements OnInit {
 
     ngOnInit() {
         this.form = new FormGroup({
-            day: new FormControl(''),
-            startTime: new FormControl(''),
-            endTime: new FormControl(''),
+            day: new FormControl('', Validators.required),
+            startTime: new FormControl('', Validators.required),
+            endTime: new FormControl('', Validators.required),
             notes: new FormControl('')
-        });
+        }, null, [ this.isStartTimeInvalid(), this.isEndTimeInvalid() ]);
     }
 
-    onSubmit() {
+    getMeeting(): Meeting {
         const day = this.form.get('day').value;
         const startTime = this.form.get('startTime').value;
         const endTime = this.form.get('endTime').value;
@@ -58,9 +62,36 @@ export class MeetingComponent implements OnInit {
             accepted: false
         };
 
+        return meeting;
+    }
+
+    onSubmit() {
+        const meeting = this.getMeeting();
+
         this.service.post(meeting).subscribe(result => {
             console.log(result);
             alert('Propozycja spotkania została wysłana');
+            this.form.reset();
         }, err => console.error(err));
+    }
+
+    isStartTimeInvalid(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+            const meeting = this.getMeeting();
+            return this.service.isStartTimeInvalid(meeting)
+                        .pipe(map(result => {
+                            return (result ? { isStartTimeInvalid: true } : null);
+                    }));
+        };
+    }
+
+    isEndTimeInvalid(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+            const meeting = this.getMeeting();
+            return this.service.isEndTimeInvalid(meeting)
+                        .pipe(map(result => {
+                            return (result ? { isEndTimeInvalid: true } : null);
+                    }));
+        };
     }
 }

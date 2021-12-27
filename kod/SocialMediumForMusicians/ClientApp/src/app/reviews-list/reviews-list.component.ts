@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { Review } from "../../models/review";
 import { ReviewService } from "../review/review.service";
-import { PaginationApiResult } from "../musician/musician.service";
+import { PaginationApiResult } from 'src/models/pagination_api_result';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,7 +11,11 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 })
 export class ReviewsListComponent implements OnInit {
     public reviews: Array<Review>;
-    @Input() musicianId: number;
+    @Input() musicianId: string;
+
+    // if this component is used as a list
+    // of reviews given by the specified used
+    @Input() userId: string;
 
     @ViewChild(MatPaginator)
     private paginator: MatPaginator;
@@ -43,16 +47,29 @@ export class ReviewsListComponent implements OnInit {
     }
 
     getElements(event: PageEvent) {
-        this.service.getReviewsList(this.musicianId, event.pageIndex,
-            event.pageSize).subscribe(result => {
-                this.paginator.length = result.totalCount;
-                this.paginator.pageIndex = result.pageIndex;
-                this.paginator.pageSize = result.pageSize;
-                this.reviews = result.elements;
-                if (result.elements.length > 0) {
-                    this.showPaginator = true;
-                }
-            }, err => console.error(err));
+        if (this.userId) {
+            this.service.getUserReviewsList(this.userId, event.pageIndex,
+                event.pageSize).subscribe(result => {
+                    this.paginator.length = result.totalCount;
+                    this.paginator.pageIndex = result.pageIndex;
+                    this.paginator.pageSize = result.pageSize;
+                    this.reviews = result.elements;
+                    if (result.elements.length > 0) {
+                        this.showPaginator = true;
+                    }
+                }, err => console.error(err));
+        } else {
+            this.service.getReviewsList(this.musicianId, event.pageIndex,
+                event.pageSize).subscribe(result => {
+                    this.paginator.length = result.totalCount;
+                    this.paginator.pageIndex = result.pageIndex;
+                    this.paginator.pageSize = result.pageSize;
+                    this.reviews = result.elements;
+                    if (result.elements.length > 0) {
+                        this.showPaginator = true;
+                    }
+                }, err => console.error(err));
+        }
     }
 
     onSubmit() {

@@ -1,0 +1,13 @@
+textarea.ng-valid {
+    border: 2px solid green;
+}
+
+textarea.ng-invalid.ng-dirty,
+textarea.ng-invalid.ng-touched {
+    border: 2px solid red;
+}
+
+textarea.ng-invalid ~ .invalid {
+    display: block;
+    color: red;
+}

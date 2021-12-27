@@ -1,0 +1,26 @@
+<div class="container bg-light border border-secondary rounded w-50"
+    style="border-width: 3px !important;">
+    <div class="row">
+        <span class="text-center fs-4 fw-light mt-3 text-danger">
+            Zablokuj użytkownika
+        </span>
+    </div>
+    <div class="row form text-center my-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label class="fs-6" for="day">Koniec blokady</label>
+            <input class="form-control mt-1" type="date" id="lockoutEnd" formControlName="lockoutEnd" required>
+            <div *ngIf="form.get('lockoutEnd').invalid && 
+                (form.get('lockoutEnd').dirty || form.get('lockoutEnd').touched)"
+                class="invalid">
+                <div *ngIf="form.get('lockoutEnd').errors?.required">
+                    Podaj datę zakończenia blokady
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group commands my-3 d-flex justify-content-center">
+        <button type="submit" (click)="onSubmit()"
+            class="btn btn-outline-secondary px-5"
+            [disabled]="form.invalid">Zatwierdź</button>
+    </div>
+</div>

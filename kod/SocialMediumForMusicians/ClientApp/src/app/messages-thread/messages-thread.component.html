@@ -1,0 +1,42 @@
+<!-- thread -->
+<div class="container mt-2">
+    <div class="row align-items-center text-dark border" *ngFor="let message of messages">
+        <div class="row m-2" *ngIf="message.authorId == interlocutorId">
+            <div class="row">
+                <strong class="fs-4">{{ message.authorName }}</strong>
+            </div>
+            <div class="row my-2 mx-3 mx-md-5">
+                {{ message.content }}
+            </div>            
+        </div>
+        <div class="row m-2" *ngIf="message.authorId == userId">
+            <div class="row">
+                <strong class="fs-4">Twoja wiadomość</strong>
+            </div>
+            <div class="row my-2 mx-3 mx-md-5">
+                {{ message.content }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- form -->
+<div class="form m-3 border border-primary rounded p-4 pb-3" 
+        style="border-width: 3px !important;" [formGroup]="form">
+    <textarea class="form-control" rows="5" formControlName="content"></textarea>
+    <div *ngIf="form.get('content').invalid && 
+                (form.get('content').dirty || form.get('content').touched)"
+                class="invalid">
+        <div *ngIf="form.get('content').errors?.required">
+            Podaj treść wiadomości
+        </div>
+        <div *ngIf="form.get('content').errors?.maxlength">
+            Wiadomość może mieć maksymalnie 2000 znaków
+        </div>
+    </div>
+    <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
+        <button type="submit" (click)="onSubmit()"
+            class="btn btn-outline-secondary px-5"
+            [disabled]="form.invalid">Wyślij</button>
+    </div>
+</div>

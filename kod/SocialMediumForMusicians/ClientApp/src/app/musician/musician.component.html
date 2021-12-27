@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-      <div class="col-sm-3 mt-1 px-3 justify-content-center">
+      <div class="col-lg-3 mt-1 px-3 justify-content-center">
         <div class="row" *ngIf="musician.profilePicFilename; then thenBlock; else elseBlock"></div>
             <ng-template #thenBlock>
                 <img src="{{ musician.profilePicFilename }}" alt="Zdjęcie profilowe"
@@ -34,7 +34,7 @@
           <span class="fs-4 fw-light">{{ musician.avgScore }}</span>
         </div>
       </div>
-      <div class="col-sm-6 px-5">
+      <div class="col-lg-6 px-5">
         <div class="fs-2 text-center">{{ musician.name }}</div>
         <div class="my-2 text-center fs-3 fw-light">
           <span *ngFor="let instrument of musician.instruments; let i=index">
@@ -50,17 +50,36 @@
         <div class="form m-3 border border-primary rounded p-4 pb-3" style="border-width: 3px !important;"
           [formGroup]="formMessage">
             <textarea class="form-control" rows="5" formControlName="content"></textarea>
+            <div *ngIf="formMessage.get('content').invalid && (formMessage.get('content').dirty || 
+              formMessage.get('content').touched)" class="invalid">
+                <div *ngIf="formMessage.get('content').errors?.required">
+                    Podaj treść wiadomości
+                </div>
+                <div *ngIf="formMessage.get('content').errors?.maxlength">
+                  Wiadomość może mieć maksymalnie 2000 znaków
+                </div>
+            </div>
             <div class="form-group mt-2" *ngIf="!isAuthenticated">
               <label class="fs-6" for="email">E-mail</label>
               <input class="form-control mt-1" type="email" id="email" formControlName="email">
+              <div *ngIf="formMessage.get('email').invalid && 
+                  (formMessage.get('email').dirty || formMessage.get('email').touched)" class="invalid">
+                <div *ngIf="formMessage.get('email').errors?.email">
+                    Format adresu email jest niepoprawny
+                </div>
+                <div *ngIf="formMessage.get('email').errors?.required">
+                  Podaj poprawny adres email
+              </div>
+            </div>
             </div>
             <div class="form-group commands mt-3 mb-1 d-flex justify-content-center">
                 <button type="submit" (click)="onSubmitMessage()"
-                    class="btn btn-outline-secondary px-5">Wyślij</button>
+                    class="btn btn-outline-secondary px-5"
+                    [disabled]="formMessage.invalid">Wyślij</button>
             </div>
         </div>
       </div>
-      <div class="col-sm-3 mt-1 px-3">
+      <div class="col-lg-3 mt-1 px-5 px-lg-2">
         <app-meeting-planner *ngIf="isAuthenticated" [musicianId]="id"
           [userId]="userId"></app-meeting-planner>
         <div class="my-3 text-center" *ngIf="isAuthenticated">
@@ -74,11 +93,11 @@
   
       </div> 
       <div class="col-md-10">
-        <div class="row mt-3 fs-2">Więcej o mnie</div>
+        <div class="row mt-3 fs-2 ms-3">Więcej o mnie</div>
         <div class="row mt-3">
           {{ musician.longDescription }}
         </div>
-        <div class="row mt-5 fs-2">Odwiedź też inne profile</div>
+        <div class="row mt-5 fs-2 ms-3">Odwiedź też inne profile</div>
         <div class="row mt-2">
           <app-musicians-list [instrument]="musician.instruments[0]" [musicianId]="id" 
             (click)="refreshComponent()">

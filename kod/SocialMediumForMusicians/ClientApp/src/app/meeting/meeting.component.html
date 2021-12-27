@@ -5,18 +5,47 @@
             Zaproponuj spotkanie
         </span>
     </div>
+    <div class="row alert alert-danger my-4" 
+        *ngIf="form.invalid && form.errors && form.errors?.isStartTimeInvalid">
+        Godzina rozpoczęcia musi być późniejsza niż aktualny czas.
+    </div>
+    <div class="row alert alert-danger my-4" 
+        *ngIf="form.invalid && form.errors && form.errors?.isEndTimeInvalid">
+        Godzina rozpoczęcia musi być wcześniejsza niż godzina zakończenia.
+    </div>
     <div class="row form text-center my-4" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label class="fs-6" for="day">Dzień</label>
             <input class="form-control mt-1" type="date" id="day" formControlName="day" required>
+            <div *ngIf="form.get('day').invalid && 
+                (form.get('day').dirty || form.get('day').touched)"
+                class="invalid">
+                <div *ngIf="form.get('day').errors?.required">
+                    Podaj dzień spotkania
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label class="fs-6" for="startTime">Od</label>
             <input class="form-control mt-1" type="time" id="startTime" formControlName="startTime" required>
+            <div *ngIf="form.get('startTime').invalid && 
+                (form.get('startTime').dirty || form.get('startTime').touched)"
+                class="invalid">
+                <div *ngIf="form.get('startTime').errors?.required">
+                    Podaj, kiedy ma się rozpocząć spotkanie
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="endTime" class="fs-6">Do</label>
             <input type="time" class="form-control mt-1" id="endTime" formControlName="endTime" required>
+            <div *ngIf="form.get('endTime').invalid && 
+                (form.get('endTime').dirty || form.get('endTime').touched)"
+                class="invalid">
+                <div *ngIf="form.get('endTime').errors?.required">
+                    Podaj, kiedy ma się zakończyć spotkanie
+                </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="notes" class="fs-6">Krótki opis</label>
@@ -25,6 +54,7 @@
     </div>
     <div class="form-group commands my-3 d-flex justify-content-center">
         <button type="submit" (click)="onSubmit()"
-            class="btn btn-outline-secondary px-5">Wyślij</button>
+            class="btn btn-outline-secondary px-5"
+            [disabled]="form.invalid">Wyślij</button>
     </div>
 </div>

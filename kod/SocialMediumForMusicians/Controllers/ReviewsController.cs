@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
@@ -24,18 +26,22 @@ namespace SocialMediumForMusicians.Controllers
         // GET: api/Reviews
         [HttpGet]
         public async Task<ActionResult<PaginationApiResult<ReviewsListDTO>>> GetReviews(
-            int? top = null, string id = null, int pageIndex = 0, int pageSize = 3)
+            int? top = null, string id = null, int pageIndex = 0, int pageSize = 3,
+            string authorId = null)
         {
             var elements = _context.Reviews.Select(r => new ReviewsListDTO()
             {
-                Id = r.Id,
+                Id = r.Id.ToString(),
                 Rate = r.Rate,
                 Description = r.Description,
                 AuthorName = r.Author.Name,
                 AuthorProfilePicFilename = r.Author.ProfilePicFilename,
                 TargetId = r.TargetId,
-                TargetProfilePicFilename = r.Target.ProfilePicFilename
-            }).OrderByDescending(r => r.Id);
+                TargetProfilePicFilename = r.Target.ProfilePicFilename,
+                SentAt = r.SentAt,
+                AuthorId = r.AuthorId,
+                TargetName = r.Target.Name
+            }).OrderByDescending(r => r.SentAt);
 
             if (top.HasValue)
             {
@@ -48,13 +54,19 @@ namespace SocialMediumForMusicians.Controllers
                 elements = (IOrderedQueryable<ReviewsListDTO>)elements.Where(r => r.TargetId == id);
             }
 
+            if (!string.IsNullOrEmpty(authorId))
+            {
+                elements = (IOrderedQueryable<ReviewsListDTO>)elements.Where(r => r.AuthorId == authorId);
+            }
+
             return await PaginationApiResult<ReviewsListDTO>.CreateAsync(
                 elements, pageIndex, pageSize);
         }
 
         // GET: api/Reviews/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Review>> GetReview(int id)
+        public async Task<ActionResult<Review>> GetReview(Guid id)
         {
             var review = await _context.Reviews.FindAsync(id);
 
@@ -68,14 +80,15 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Reviews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(int id, Review review)
+        public async Task<IActionResult> PutReview(Guid id, Review review)
         {
             if (id != review.Id)
             {
                 return BadRequest();
             }
-
+            
             _context.Entry(review).State = EntityState.Modified;
 
             try
@@ -99,9 +112,13 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Reviews
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Review>> PostReview(Review review)
         {
+            if (IsNotInRange(review))
+                return BadRequest("The rate must be between 1 and 5");
+
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
 
@@ -109,8 +126,9 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Reviews/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReview(int id)
+        public async Task<IActionResult> DeleteReview(Guid id)
         {
             var review = await _context.Reviews.FindAsync(id);
             if (review == null)
@@ -124,9 +142,17 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool ReviewExists(int id)
+        private bool ReviewExists(Guid id)
         {
             return _context.Reviews.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsNotInRange")]
+        public bool IsNotInRange(Review review)
+        {
+            int rate = review.Rate;
+            return rate < 1 || rate > 5;
         }
     }
 }

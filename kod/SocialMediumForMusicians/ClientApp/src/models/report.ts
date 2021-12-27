@@ -1,5 +1,8 @@
 export interface Report {
-    id?: number;
+    id?: string;
     userId: string;
     justification: string;
+    sentAt: Date;
+    userName?: string;
+    imgFilename?: string;
 }

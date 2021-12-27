@@ -19,4 +19,11 @@ export class UserService {
         const url = this.baseUrl + 'api/Users/' + user.id;
         return this.http.put<User>(url, user);
     }
+
+    lockout(userId: string, adminId: string, end: Date): Observable<User> {
+        const url = this.baseUrl + 'api/Lockout/' + userId;
+        const params = new HttpParams().set('adminId', adminId)
+                                       .set('end', end.toUTCString());
+        return this.http.get<User>(url, { params });
+    }
 }

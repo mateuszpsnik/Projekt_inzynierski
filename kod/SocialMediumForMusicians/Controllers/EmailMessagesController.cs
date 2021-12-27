@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMediumForMusicians.Data;
 using SocialMediumForMusicians.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialMediumForMusicians.Controllers
 {
@@ -22,15 +23,36 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/EmailMessages
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmailMessage>>> GetEmailMessage()
+        public async Task<ActionResult<PaginationApiResult<EmailMessageDTO>>> GetEmailMessage(
+            string id = null, int pageIndex = 0, int pageSize = 3)
         {
-            return await _context.EmailMessage.ToListAsync();
+            var elements = _context.EmailMessage.Select(m => new EmailMessageDTO()
+            {
+                Id = m.Id.ToString(),
+                AuthorEmail = m.AuthorEmail,
+                RecipentId = m.RecipentId,
+                Content = m.Content,
+                Read = m.Read,
+                SentAt = m.SentAt
+            });
+
+            // protect from access to all messagess
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest();
+            }
+
+            elements = elements.Where(m => m.RecipentId == id).OrderByDescending(m => m.SentAt);
+
+            return await PaginationApiResult<EmailMessageDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/EmailMessages/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmailMessage>> GetEmailMessage(int id)
+        public async Task<ActionResult<EmailMessage>> GetEmailMessage(Guid id)
         {
             var emailMessage = await _context.EmailMessage.FindAsync(id);
 
@@ -45,7 +67,7 @@ namespace SocialMediumForMusicians.Controllers
         // PUT: api/EmailMessages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmailMessage(int id, EmailMessage emailMessage)
+        public async Task<IActionResult> PutEmailMessage(Guid id, EmailMessage emailMessage)
         {
             if (id != emailMessage.Id)
             {
@@ -85,8 +107,9 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/EmailMessages/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmailMessage(int id)
+        public async Task<IActionResult> DeleteEmailMessage(Guid id)
         {
             var emailMessage = await _context.EmailMessage.FindAsync(id);
             if (emailMessage == null)
@@ -100,7 +123,7 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool EmailMessageExists(int id)
+        private bool EmailMessageExists(Guid id)
         {
             return _context.EmailMessage.Any(e => e.Id == id);
         }

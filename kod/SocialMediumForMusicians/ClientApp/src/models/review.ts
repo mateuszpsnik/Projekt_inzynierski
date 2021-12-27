@@ -1,9 +1,12 @@
 export interface Review {
-    id?: number;
+    id?: string;
     rate: number;
     description: string;
-    authorName: string;
-    authorProfilePicFilename: string;
-    targetId: number;
-    targetProfilePicFilename: string;
+    authorName?: string;
+    authorId: string;
+    authorProfilePicFilename?: string;
+    targetId: string;
+    targetProfilePicFilename?: string;
+    targetName?: string;
+    sentAt: Date;
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,15 +23,48 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // GET: api/Meetings
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Meeting>>> GetMeetings()
+        public async Task<ActionResult<PaginationApiResult<MeetingDTO>>> GetMeetings(
+            string hostId = null, string guestId = null, int pageIndex = 0,
+            int pageSize = 3)
         {
-            return await _context.Meetings.ToListAsync();
+            var elements = _context.Meetings.Select(m => new MeetingDTO
+            {
+                Id = m.Id.ToString(),
+                HostId = m.HostId,
+                GuestId = m.GuestId,
+                StartTime = m.StartTime,
+                EndTime = m.EndTime,
+                Notes = m.Notes,
+                Accepted = m.Accepted,
+                HostName = m.Host.Name,
+                GuestName = m.Guest.Name,
+                HostImgFilename = m.Host.ProfilePicFilename,
+                GuestImgFilename = m.Guest.ProfilePicFilename
+            }).OrderByDescending(m => m.StartTime);
+
+            if (!string.IsNullOrEmpty(hostId))
+            {
+                elements = (IOrderedQueryable<MeetingDTO>)elements.Where(m => m.HostId == hostId);
+            }
+            else if (!string.IsNullOrEmpty(guestId))
+            {
+                elements = (IOrderedQueryable<MeetingDTO>)elements.Where(m => m.GuestId == guestId);
+            }
+            else
+            {
+                // protect from access to all meetings
+                return BadRequest();
+            }
+
+            return await PaginationApiResult<MeetingDTO>.CreateAsync(elements, pageIndex, pageSize);
         }
 
         // GET: api/Meetings/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Meeting>> GetMeeting(int id)
+        public async Task<ActionResult<Meeting>> GetMeeting(Guid id)
         {
             var meeting = await _context.Meetings.FindAsync(id);
 
@@ -44,8 +78,9 @@ namespace SocialMediumForMusicians.Controllers
 
         // PUT: api/Meetings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMeeting(int id, Meeting meeting)
+        public async Task<IActionResult> PutMeeting(Guid id, Meeting meeting)
         {
             if (id != meeting.Id)
             {
@@ -75,9 +110,16 @@ namespace SocialMediumForMusicians.Controllers
 
         // POST: api/Meetings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Meeting>> PostMeeting(Meeting meeting)
         {
+            if (IsStartTimeInvalid(meeting))
+                return BadRequest("StartTime must be greater than current time");
+
+            if (IsEndTimeInvalid(meeting))
+                return BadRequest("StartTime is greater than or equal to EndTime");
+
             _context.Meetings.Add(meeting);
             await _context.SaveChangesAsync();
 
@@ -85,8 +127,9 @@ namespace SocialMediumForMusicians.Controllers
         }
 
         // DELETE: api/Meetings/5
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMeeting(int id)
+        public async Task<IActionResult> DeleteMeeting(Guid id)
         {
             var meeting = await _context.Meetings.FindAsync(id);
             if (meeting == null)
@@ -100,9 +143,23 @@ namespace SocialMediumForMusicians.Controllers
             return NoContent();
         }
 
-        private bool MeetingExists(int id)
+        private bool MeetingExists(Guid id)
         {
             return _context.Meetings.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("IsStartTimeInvalid")]
+        public bool IsStartTimeInvalid(Meeting meeting)
+        {
+            return meeting.StartTime <= DateTime.Now.ToUniversalTime();
+        }
+
+        [HttpPost]
+        [Route("IsEndTimeInvalid")]
+        public bool IsEndTimeInvalid(Meeting meeting)
+        {
+            return meeting.StartTime >= meeting.EndTime;
         }
     }
 }

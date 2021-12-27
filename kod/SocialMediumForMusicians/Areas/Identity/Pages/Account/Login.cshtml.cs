@@ -43,15 +43,16 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Podaj email")]
+            [EmailAddress(ErrorMessage = "Podaj adres email we właściwym formacie")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Zapamiętaj mnie")]
             public bool RememberMe { get; set; }
         }
 
@@ -99,7 +100,7 @@ namespace SocialMediumForMusicians.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Adres email i/lub hasło jest niepoprawne");
                     return Page();
                 }
             }

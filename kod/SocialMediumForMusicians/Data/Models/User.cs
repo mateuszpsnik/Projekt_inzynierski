@@ -5,8 +5,6 @@ namespace SocialMediumForMusicians.Data.Models
 {
     public class User : IdentityUser
     {
-        public bool Blocked { get; set; }
-
         public bool IsMusician { get; set; }
 
         public string Name { get; set; }
