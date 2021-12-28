@@ -30,7 +30,7 @@ export class MeetingComponent implements OnInit {
             day: new FormControl('', Validators.required),
             startTime: new FormControl('', Validators.required),
             endTime: new FormControl('', Validators.required),
-            notes: new FormControl('')
+            notes: new FormControl('', [ Validators.required, Validators.maxLength(150) ])
         }, null, [ this.isStartTimeInvalid(), this.isEndTimeInvalid() ]);
     }
 
