@@ -50,6 +50,16 @@
         <div class="form-group">
             <label for="notes" class="fs-6">Krótki opis</label>
             <textarea rows="4" class="form-control mt-1" id="notes" formControlName="notes"></textarea>
+            <div *ngIf="form.get('notes').invalid && 
+                (form.get('notes').dirty || form.get('notes').touched)"
+                class="invalid">
+                <div *ngIf="form.get('notes').errors?.required">
+                    Podaj krótki opis/wiadomość do muzyka
+                </div>
+                <div *ngIf="form.get('notes').errors?.maxlength">
+                    Maksymalna długość tekstu to 150 znaków
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group commands my-3 d-flex justify-content-center">
